@@ -33,6 +33,24 @@ $(document).ready(function() {
     }
 
 
+    // Load the question, the preloaded code, and the appropriate hint
+    function loadQuestions(){
+        var url = ""; //this is the url to call
+        var param = "callback=?"; //add the related parameters
+
+        $.getJSON(url, param, function(data) {
+            console.log(JSON.stringify(data));
+            var question = data.question;
+            var hint = data.hint;
+            var code = data.code;
+
+            $('#question').append(question);
+            $('#hint').append(hint);
+            setupEditor();
+            editor.setValue(code);
+
+        });
+    }
 
 
 

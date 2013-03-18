@@ -1,6 +1,7 @@
 body {
-    padding-top: 60px;
+    padding-top: 70px;
     padding-bottom: 40px;
+    overflow-x:hidden;
 }
 
 .sidebar-nav {
@@ -17,15 +18,11 @@ body {
     height: 400px;
 }
 
-.actionbutton {
+.actionbutton, #nextClass, #hint{
     float: right;
-    width: 100%;
 }
 
 #console{
     width: 100%;
 
-}
-#hint{
-    float: right;
 }

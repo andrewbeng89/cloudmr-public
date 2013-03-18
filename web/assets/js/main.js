@@ -21,9 +21,7 @@ $(document).ready(function() {
         editor.setValue("");
         console.log('reset');
     });
+    
+    
 
-
-    function exportCode() {
-
-    }
 });

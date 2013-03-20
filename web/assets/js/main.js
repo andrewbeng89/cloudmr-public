@@ -7,7 +7,7 @@ $(document).ready(function() {
     //-----------
 
     function setupEditor() {
-        editor.setValue("function(){ console.log('hello world!')}");
+        editor.setValue("function test(){ console.log('hello world!')}");
         editor.setTheme("ace/theme/idle_fingers");
         editor.getSession().setMode("ace/mode/javascript");
         editor.setShowPrintMargin(false);
@@ -15,7 +15,7 @@ $(document).ready(function() {
         editor.resize();
         editor.setBehavioursEnabled(true);
         editor.getSession().setUseWrapMode(true);
-        document.getElementById('editor').style.fontSize='16px';
+        document.getElementById('editor').style.fontSize='12px';
     }
 
     $("#run").click(function() {

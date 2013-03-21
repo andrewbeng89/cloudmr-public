@@ -57,6 +57,31 @@ app.get('/questions', function(req, res) {
 	});
 });
 
+app.get('/verify', function(req, res) {
+	var data = {"solution":"a=1;b=7;","tests":"assert_equal(1,a);\nassert_equal(2,b);"};
+	var verified_results = '';
+	var options = {
+		host : 'ec2-54-251-193-188.ap-southeast-1.compute.amazonaws.com',
+		path : '/js?jsonrequest=' + new Buffer(JSON.stringify(data)).toString('base64'),
+		method : 'GET'
+	};
+	res.set('Content-Type', 'application/json');
+	http.get(options, function(response) {
+		console.log("Got response: " + response.statusCode);
+
+		response.on("data", function(chunk) {
+			//console.log("BODY: " + chunk);
+			verified_results += chunk.toString();
+		});
+
+		response.on("end", function() {
+			res.jsonp(JSON.parse(verified_results));
+		});
+	}).on('error', function(e) {
+		console.log("Got error: " + e.message);
+	});
+});
+
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });

@@ -3,6 +3,7 @@ var mongoose = require('mongoose')
   
   var QuestionSchema = new Schema({
     question_id : Number,
+    question : String,
     hint : String,
     js_code : String,
     py_code : String

@@ -13,7 +13,7 @@ $(document).ready(function() {
     // ----------------------------- Setup files -----------------------------
     setupEditor();
     loadQuestions();
-   
+
 
     function setupEditor() {
         // editor.setValue("function test(){ console.log('hello world!')}");
@@ -37,10 +37,10 @@ $(document).ready(function() {
     });
     $("#reset").click(function() {
         var c = "";
-        if(currentLang=="py"){
-            c=py_code;
-        }else{
-            c=js_code;
+        if (currentLang == "py") {
+            c = py_code;
+        } else {
+            c = js_code;
         }
         editor.setValue(c);
     });
@@ -105,15 +105,22 @@ $(document).ready(function() {
         var url = verifyEndpoint; //this is the url to call
         var code = editor.getValue();
         console.log(code);
-        var param = "callback=?&lang="+currentLang+"&q_id="+question_id+"&solution="+code;//lang, q_id, solution
+        var param = "callback=?&lang=" + currentLang + "&q_id=" + question_id + "&solution=" + code; //lang, q_id, solution
         $.getJSON(url, param, function(data) {
             console.log(JSON.stringify(data));
-            var call = data.results[0].call; //array
-            var correct = data.results[0].correct; //array
-            var solved = data.solved;//boolean
+            var error = data.errors;
+            if (error == null) {
+                var call = data.results[0].call; //array
+                var correct = data.results[0].correct; //array
+                var solved = data.solved; //boolean
+                $('#console').append("Call: " + call + "\nCorrect: " + correct + "\nSolved: " + solved + "\n....\n");
+                $('#console').scrollTop($('#console')[0].scrollHeight);
+            } else {
+                if (error != null) {
+                    alert(error);
+                }
+            }
 
-            $('#console').append("Call: "+call+"\nCorrect: "+correct+"\nSolved: "+solved+"\n....\n");
-            $('#console').scrollTop($('#console')[0].scrollHeight);
         });
     }
 
@@ -152,4 +159,3 @@ $(document).ready(function() {
 
 
 });
-

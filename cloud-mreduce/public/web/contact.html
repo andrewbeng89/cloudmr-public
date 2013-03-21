@@ -1,101 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
-    <title>MReduce</title>
+    <title>
+        MReduce
+    </title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <!-- Le styles -->
-    <link href="../assets/css/bootstrap.css" rel="stylesheet">
-	<link href="../assets/css/mreduce.css" rel="stylesheet">
-    <style type="text/css">
-      body {
-        padding-top: 60px;
-        padding-bottom: 40px;
-      }
-    </style>
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/css/main.css" rel="stylesheet">
     <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
-
+    <link href="../assets/css/mreduce.css" rel="stylesheet">
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+                                                                                                            
+            </script>
+            <![endif]-->
+            <!-- Fav and touch icons -->
+            <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+            <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+            <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+            <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+            <link rel="shortcut icon" href="../assets/ico/favicon.png">
+        </head>
 
-    <!-- Fav and touch icons -->
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-                    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-                                   <link rel="shortcut icon" href="../assets/ico/favicon.png">
-  </head>
+        <body>
+            <!--Facebook
+            <div id="fb-root"></div>
+            <script src="http://connect.facebook.net/en_US/all.js"></script>
+            <script src="../assets/js/facebook.js"></script>
+            End Facebook-->
 
-  <body>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="brand" href="index.html"><img id="img-logo" src="../assets/img/logo.png" /></a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
+            <div class="navbar navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container-fluid">
+                        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </a>
+                        <a class="brand" href="index.html"><img id="img-logo" src="../assets/img/logo.png" /></a>
+                        <div class="nav-collapse collapse">
+                            <form class="navbar-form pull-right">
+                              <button class="btn" id='fbsignin'>Log on</button>
+                          </form>
+                          <ul class="nav">
+                            <li class="active">
+                   <ul class="nav">
               <li class="active"><a href="index.html">Home</a></li>
               <li><a href="about.html">About</a></li>
               <li><a href="contact.html">Contact</a></li>
-              <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Quick Launch <b class="caret"></b></a>
-                <ul class="dropdown-menu">
-                  <li><a href="discover_tutorial.html">Discover</a></li>
-                  <li><a href="learn_single_player.html">Learn</a></li>
-                  <li><a href="collaborate_lobby.html">Collaborate</a></li>
-                </ul>
-              </li>
-            </ul>
-            <form class="navbar-form pull-right">
-              <input class="span2" type="text" placeholder="Email">
-              <input class="span2" type="password" placeholder="Password">
-              <button type="submit" class="btn">Sign in</button>
-            </form>
-          </div><!--/.nav-collapse -->
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Quick Launch <b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="discover_tutorial.html"><i class="icon-zoom-in"></i> Discover</a></li>
+                                    <li><a href="learn_single_player.html"><i class="icon-book"></i> Learn</a></li>
+                                    <li><a href="collaborate_lobby.html"><i class="icon-resize-small"></i> Collaborate</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
         </div>
+        <!--end of navigation bar-->
+        <div class="row-fluid">
+            <div class="span12 offset1">
+                <div class="page-header">
+                  <h1>MReduce Contact <small>Reachable Us</small></h1>
+              </div>
+          </div>
       </div>
-    </div>
 
     <div class="container">
-
-      <!-- Main hero unit for a primary marketing message or call to action -->
-      <h1>MReduce Contact</h1>
-	  <div class="background-settings">
+	  	<div class="background-settings">
         
-		<p>If you have any questions, please email to our IT Director, </p>
+				<p>If you have any questions, please email to our IT Director, </p>
 		
-		<table class="table table-hover">
-			<tr>
-				<th>Name</th>
-				<th>Email</th>
-			</tr>
-			<tr>
-				<td>Andrew Beng</td>
-				<td>andrew.beng.2010@smu.edu.sg</td>
-			</tr>
-			<tr>
-				<td>Kenneth Wong</td>
-				<td>kenneth.wong.2010@smu.edu.sg</td>
-			</tr>
+				<table class="table table-hover">
+					<tr>
+						<th>Name</th>
+						<th>Email</th>
+					</tr>
+					<tr>
+						<td>Andrew Beng</td>
+						<td>andrew.beng.2010@smu.edu.sg</td>
+					</tr>
+					<tr>
+						<td>Kenneth Wong</td>
+						<td>kenneth.wong.2010@smu.edu.sg</td>
+					</tr>
+				</table>
 		
-		</table>
-		<p>
-		Your feedback is greatly appreciated.</br>
-		</r>
-      </div>
-
-		
-      <hr>
+				<p>
+					Your feedback is greatly appreciated.</br>
+				</p>
+			</div>
 
       <footer>
         <p>&copy; MReduce 2013</p>
@@ -119,6 +125,8 @@
     <script src="../assets/js/bootstrap-collapse.js"></script>
     <script src="../assets/js/bootstrap-carousel.js"></script>
     <script src="../assets/js/bootstrap-typeahead.js"></script>
+    <!--google analytic js-->
+    <script src="../assets/js/google-analytic.js"></script>
 
   </body>
 </html>

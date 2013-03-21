@@ -1,17 +1,21 @@
 
 #img-discover,#img-collaborate {
   width:90%;
-  height:90%;
+  height:100%;
 }
 
 #img-singleplayer {
-  width:75%;
-  height:75%;
+  width:80%;
+  height:80%;
+  margin-left: 10%;
+  margin-right: auto;
 }
 
 #img-logo {
   width:140px;
   height:35px;
+  margin-bottom: -25px;
+  margin-top: -25px;
 }
 
 #background-basic {

@@ -103,8 +103,8 @@ $(document).ready(function() {
 
     function run() {
         var url = verifyEndpoint; //this is the url to call
-        var code = editor.getValue();
-        console.log(code);
+        var code = editor.getValue();   
+        code = encodeURIComponent(code);
         var param = "callback=?&lang=" + currentLang + "&q_id=" + question_id + "&solution=" + code; //lang, q_id, solution
         $.getJSON(url, param, function(data) {
             console.log(JSON.stringify(data));

@@ -8,7 +8,9 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , url = require('url');
+  , url = require('url')
+  , btoa = require('btoa')
+  , querystring = require('querystring');
 
 var app = express();
 
@@ -61,7 +63,11 @@ app.get('/verify', function(req, res) {
 	var _get = url.parse(req.url, true).query;
 	var question_id = _get['q_id'];
 	var lang = _get['lang'];
+	if (lang === 'py') {
+		lang = 'python';
+	}
 	var solution = _get['solution'];
+	console.log(solution);
 	question.findOne({
 		question_id : question_id
 	}, function(err, selected_question) {
@@ -73,30 +79,37 @@ app.get('/verify', function(req, res) {
 		if (selected_question !== null) {
 			// Returns question
 			var data = {
-				"solution":solution,
-				"tests": (lang === 'js') ? selected_question.js_tests : selected_question.py_tests
+				solution:solution,
+				tests: (lang === 'js') ? selected_question.js_tests : selected_question.py_tests
 			};
+			json_data = querystring.stringify({jsonrequest:JSON.stringify(data)});
+			console.log(json_data);
+			
 			var verified_results = '';
 			var options = {
 				host : 'ec2-54-251-193-188.ap-southeast-1.compute.amazonaws.com',
-				path : '/' + lang + '?jsonrequest=' + new Buffer(JSON.stringify(data)).toString('base64'),
-				method : 'GET'
+				//path : '/' + lang + '?jsonrequest=' + btoa(JSON.stringify(data)),
+				path : '/' + lang,
+				method : 'POST',
+				headers: {
+        			'Content-Type': 'application/x-www-form-urlencoded',
+        			'Content-Length': json_data.length
+    			}
 			};
-			res.set('Content-Type', 'application/json');
-			http.get(options, function(response) {
-				console.log("Got response: " + response.statusCode);
-
-				response.on("data", function(chunk) {
-					verified_results += chunk.toString();
-				});
-
-				response.on("end", function() {
+			
+			var request = http.request(options, function(response) {
+    			response.on('data', function (chunk) {
+        			verified_results += chunk.toString();
+    			});
+    			response.on("end", function() {
 					res.jsonp(JSON.parse(verified_results));
-					//res.jsonp(selected_question.js_tests);
+					console.log(options);
 				});
 			}).on('error', function(e) {
 				console.log("Got error: " + e.message);
 			});
+			request.write(querystring.stringify({jsonrequest:JSON.stringify(data)}));
+			request.end();
 		} else {
 			res.jsonp("not found");
 		}

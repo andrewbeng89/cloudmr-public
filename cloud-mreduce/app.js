@@ -7,6 +7,7 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
+  , https = require('https')
   , path = require('path')
   , url = require('url')
   , btoa = require('btoa')
@@ -42,7 +43,7 @@ app.configure('development', function(){
 
 // Require Mongoose module to handle mongo connection with DB
 // Require schema for question model
-var mongoose = require('mongoose'), question = require('./models/question');
+var mongoose = require('mongoose'), question = require('./models/question'), user = require('./models/user');
 
 // Establish connection with mongolab DB
 mongoose.connect('mongodb://cloud-mreduce:cloudmr123@ds053317.mongolab.com:53317/cloud-mreduce');
@@ -70,6 +71,55 @@ app.get('/questions', function(req, res) {
 		} else {
 			res.jsonp("not found");
 		}
+	});
+});
+
+// API to hanlde Facebook login
+app.get('/fb_login', function(req, res) {
+	var _get = url.parse(req.url, true).query;
+	var access_token = _get['access_token'];
+	var options = {
+		host : 'graph.facebook.com',
+		path : '/me?fields=name,username,email,birthday&access_token=' + access_token,
+		method : 'GET'
+	};
+	res.set('Content-Type', 'application/json');
+	var fb_data = '';
+	https.get(options, function(response) {
+		console.log("Got response: " + response.statusCode);
+
+		response.on("data", function(chunk) {
+			fb_data += chunk.toString();
+		});
+
+		// Process response from graph api
+		response.on("end", function() {
+			var json = JSON.parse(fb_data);
+			console.log(json);
+			user.findOne({
+				username:json.username
+			}, function(err, current_user) {
+				if (err) {
+					res.jsonp('error');
+				}
+				if (current_user !== null) {
+					current_user.returning = true;
+					res.jsonp(['returning user',current_user]);
+				} else {
+					var new_user = new user();
+					new_user.id = json.id;
+					new_user.name = json.name;
+					new_user.username = json.username;
+					new_user.email = json.email;
+					new_user.birthday = json.birthday;
+					new_user.save();
+					new_user.returning = false;
+					res.jsonp(['new user',new_user]);
+				}
+			});			
+		});
+	}).on('error', function(e) {
+		console.log("Got error: " + e.message);
 	});
 });
 

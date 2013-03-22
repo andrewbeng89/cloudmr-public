@@ -15,6 +15,7 @@ var express = require('express')
   , server = require('http').createServer(app)
   , io = require('socket.io').listen(server);
   
+// Switch socket on, emit news data
 io.sockets.on('connection', function (socket) {
   socket.emit('news', { hello: 'world' });
   socket.on('my other event', function (data) {
@@ -39,14 +40,19 @@ app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
+// Require Mongoose module to handle mongo connection with DB
+// Require schema for question model
 var mongoose = require('mongoose'), question = require('./models/question');
+
+// Establish connection with mongolab DB
 mongoose.connect('mongodb://cloud-mreduce:cloudmr123@ds053317.mongolab.com:53317/cloud-mreduce');
 
+// Redirect to /public/web from root domain
 app.get('/', function(req, res) {
 	res.redirect('/web');
 });
-app.get('/users', user.list);
 
+// API to get the question model object from the DB based on specified question ID
 app.get('/questions', function(req, res) {
 	var _get = url.parse(req.url, true).query;
 	var question_id = _get['id'];
@@ -67,15 +73,25 @@ app.get('/questions', function(req, res) {
 	});
 });
 
+// Code verification API using GET method
 app.get('/verify', function(req, res) {
+	// parse the URL query
 	var _get = url.parse(req.url, true).query;
+	
+	// Question ID param
 	var question_id = _get['q_id'];
+	
+	// Language param, either 'py' or 'js'
 	var lang = _get['lang'];
 	if (lang === 'py') {
 		lang = 'python';
 	}
+	
+	// Solution param, urlEncoded
 	var solution = _get['solution'];
 	console.log(solution);
+	
+	// Find the question model object based on question ID
 	question.findOne({
 		question_id : question_id
 	}, function(err, selected_question) {
@@ -85,7 +101,7 @@ app.get('/verify', function(req, res) {
 		
 		// Requested question found
 		if (selected_question !== null) {
-			// Returns question
+			// Prepare jsonrequest data
 			var data = {
 				solution:solution,
 				tests: (lang === 'js') ? selected_question.js_tests : selected_question.py_tests
@@ -94,6 +110,7 @@ app.get('/verify', function(req, res) {
 			console.log(json_data);
 			
 			var verified_results = '';
+			// HTTP request options
 			var options = {
 				host : 'ec2-54-251-193-188.ap-southeast-1.compute.amazonaws.com',
 				//path : '/' + lang + '?jsonrequest=' + btoa(JSON.stringify(data)),
@@ -105,10 +122,13 @@ app.get('/verify', function(req, res) {
     			}
 			};
 			
+			// Call the HTTP request
 			var request = http.request(options, function(response) {
+    			// Handle data received
     			response.on('data', function (chunk) {
         			verified_results += chunk.toString();
     			});
+    			// Send the json response
     			response.on("end", function() {
 					res.jsonp(JSON.parse(verified_results));
 					console.log(options);
@@ -116,6 +136,8 @@ app.get('/verify', function(req, res) {
 			}).on('error', function(e) {
 				console.log("Got error: " + e.message);
 			});
+			
+			// Write jsonrequest data to the HTTP request
 			request.write(querystring.stringify({jsonrequest:JSON.stringify(data)}));
 			request.end();
 		} else {
@@ -124,6 +146,7 @@ app.get('/verify', function(req, res) {
 	});
 });
 
+// API to retrieve total number of questions in the DB
 app.get('/total_questions', function(req, res) {
 	question.find(
         {},
@@ -135,65 +158,6 @@ app.get('/total_questions', function(req, res) {
 			}
 		}
     );
-});
-
-var data = [ 'jan piet klaas', 'piet klaas', 'japie' ];
-
-function map(item, emit) {
-    // the map function takes an item from the data-set
-    // and can map this to a set of new items
-    var splitted = item.split(/\s/g);
-    for(var word in splitted) {
-        // the 'emit' function is used to yield the new items
-        // syntax: emit (key, value);
-		emit(splitted[word], 1);
-	}
-}
-
-function reduce(key, values, emit) {
-    // the reduce function retrieves the emitted items
-    // by key. The values that were emitted are grouped by key, and are in the 'values' array.
-                                
-    // the emit function is used to return the results
-    // syntax: emit (value)
-	emit({ key: key, count: values.length });
-}
-
-var mapreduce = function (data, map, reduce) {
-	var mapResult = [], reduceResult = [];
-    var mapIx, reduceKey;
-       
-    var mapEmit = function(key, value) {
-    	if(!mapResult[key]) {
-    	    mapResult[key] = [];
-        }
-        mapResult[key].push(value);
-    }
-        
-    var reduceEmit = function(obj) {
-    	reduceResult.push(obj);
-    }
-        
-    for(mapIx = 0; mapIx < data.length; mapIx++) {
-    	map(data[mapIx], mapEmit);
-    }
-        
-    for(reduceKey in mapResult) {
-    	reduce(reduceKey, mapResult[reduceKey], reduceEmit);
-    }
-    
-	return reduceResult;
-}
-
-app.get('/mapreduce', function(req, res) {
-	var result = mapreduce(data, map, reduce);
-	for(var ix = 0; ix < result.length; ix++) {
-        // we have created objects in the form { key, count }
-       	// and we can write this to the screen
-    	console.log(result[ix].key + ': ' + result[ix].count);
-    }
-    console.log(result);
-    res.jsonp(result);
 });
 
 http.createServer(app).listen(app.get('port'), function(){

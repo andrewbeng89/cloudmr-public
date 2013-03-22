@@ -10,9 +10,17 @@ var express = require('express')
   , path = require('path')
   , url = require('url')
   , btoa = require('btoa')
-  , querystring = require('querystring');
-
-var app = express();
+  , querystring = require('querystring')
+  , app = express()
+  , server = require('http').createServer(app)
+  , io = require('socket.io').listen(server);
+  
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -35,7 +43,7 @@ var mongoose = require('mongoose'), question = require('./models/question');
 mongoose.connect('mongodb://cloud-mreduce:cloudmr123@ds053317.mongolab.com:53317/cloud-mreduce');
 
 app.get('/', function(req, res) {
-	res.jsonp({hello:'world'});
+	res.redirect('/web');
 });
 app.get('/users', user.list);
 
@@ -127,6 +135,65 @@ app.get('/total_questions', function(req, res) {
 			}
 		}
     );
+});
+
+var data = [ 'jan piet klaas', 'piet klaas', 'japie' ];
+
+function map(item, emit) {
+    // the map function takes an item from the data-set
+    // and can map this to a set of new items
+    var splitted = item.split(/\s/g);
+    for(var word in splitted) {
+        // the 'emit' function is used to yield the new items
+        // syntax: emit (key, value);
+		emit(splitted[word], 1);
+	}
+}
+
+function reduce(key, values, emit) {
+    // the reduce function retrieves the emitted items
+    // by key. The values that were emitted are grouped by key, and are in the 'values' array.
+                                
+    // the emit function is used to return the results
+    // syntax: emit (value)
+	emit({ key: key, count: values.length });
+}
+
+var mapreduce = function (data, map, reduce) {
+	var mapResult = [], reduceResult = [];
+    var mapIx, reduceKey;
+       
+    var mapEmit = function(key, value) {
+    	if(!mapResult[key]) {
+    	    mapResult[key] = [];
+        }
+        mapResult[key].push(value);
+    }
+        
+    var reduceEmit = function(obj) {
+    	reduceResult.push(obj);
+    }
+        
+    for(mapIx = 0; mapIx < data.length; mapIx++) {
+    	map(data[mapIx], mapEmit);
+    }
+        
+    for(reduceKey in mapResult) {
+    	reduce(reduceKey, mapResult[reduceKey], reduceEmit);
+    }
+    
+	return reduceResult;
+}
+
+app.get('/mapreduce', function(req, res) {
+	var result = mapreduce(data, map, reduce);
+	for(var ix = 0; ix < result.length; ix++) {
+        // we have created objects in the form { key, count }
+       	// and we can write this to the screen
+    	console.log(result[ix].key + ': ' + result[ix].count);
+    }
+    console.log(result);
+    res.jsonp(result);
 });
 
 http.createServer(app).listen(app.get('port'), function(){

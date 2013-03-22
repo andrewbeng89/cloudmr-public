@@ -21,12 +21,12 @@
 #background-basic {
   padding: 10px;
   color: inherit;
-  margin:5px;
+  margin-top:30px;
   background-color: #eeeeee;
   -webkit-border-radius: 6px;
      -moz-border-radius: 6px;
           border-radius: 6px;
-		  min-height: 200px;
+		  min-height: 300px;
 }
 
 #background-basic-2{
@@ -62,4 +62,12 @@
 .btn-padding {
   padding-right: 20px;
   padding-bottom:10px;
+}
+
+#createrm{
+  float: right;
+}
+
+#lobby th,tr,td { 
+  text-align: center;
 }

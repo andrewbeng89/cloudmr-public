@@ -31,9 +31,7 @@ $(document).ready(function() {
     // ----------------------------- Click Listeners -----------------------------
 
     $("#run").click(function() {
-        console.log('run');
         run();
-
     });
     $("#reset").click(function() {
         var c = "";
@@ -43,6 +41,7 @@ $(document).ready(function() {
             c = js_code;
         }
         editor.setValue(c);
+        $('#console').text("");  
     });
 
     // Toggle the tabs

@@ -6,7 +6,8 @@ var mongoose = require('mongoose')
     name : String,
     username : String,
     email : String,
-    birthday : String
+    birthday : String,
+    online : Boolean
 });
 
 

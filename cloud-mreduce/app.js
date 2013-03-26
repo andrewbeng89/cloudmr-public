@@ -12,17 +12,7 @@ var express = require('express')
   , url = require('url')
   , btoa = require('btoa')
   , querystring = require('querystring')
-  , app = express()
-  , server = require('http').createServer(app)
-  , io = require('socket.io').listen(server);
-  
-// Switch socket on, emit news data
-io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-  socket.on('my other event', function (data) {
-    console.log(data);
-  });
-});
+  , app = express();
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
@@ -104,17 +94,27 @@ app.get('/fb_login', function(req, res) {
 				}
 				if (current_user !== null) {
 					current_user.returning = true;
-					res.jsonp(['returning user',current_user]);
+					if (!current_user.online) {
+						current_user.online = true;
+					}
+					current_user.save(function() {
+						res.jsonp({type:'returning user',data:current_user});
+					});
 				} else {
-					var new_user = new user();
-					new_user.id = json.id;
-					new_user.name = json.name;
-					new_user.username = json.username;
-					new_user.email = json.email;
-					new_user.birthday = json.birthday;
-					new_user.save();
-					new_user.returning = false;
-					res.jsonp(['new user',new_user]);
+					if (json.error === undefined) {
+						var new_user = new user();
+						new_user.id = json.id;
+						new_user.name = json.name;
+						new_user.username = json.username;
+						new_user.email = json.email;
+						new_user.birthday = json.birthday;
+						new_user.online = true;
+						new_user.save();
+						new_user.returning = false;
+						res.jsonp({type:'new user',data:new_user});
+					} else {
+						res.jsonp(json);
+					}
 				}
 			});			
 		});
@@ -210,6 +210,31 @@ app.get('/total_questions', function(req, res) {
     );
 });
 
-http.createServer(app).listen(app.get('port'), function(){
+var server = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
+});
+
+var io = require('socket.io').listen(server);
+  
+// Switch socket on, emit news data
+io.sockets.on('connection', function (socket) {
+	socket.emit('news', { hello: 'world' });
+	socket.on('my other event', function (data) {
+		console.log(data);
+	});
+	user.find({},
+		function(err, docs) {
+			if (!err) {
+				var online_users = [];
+				for (user in docs) {
+					if (user.online) {
+						online_users.push(user);
+					}
+				}
+				socket.emit('online users',online_users);
+				console.log(online_users);
+			} else {
+				console.log('error');
+			}
+		});
 });

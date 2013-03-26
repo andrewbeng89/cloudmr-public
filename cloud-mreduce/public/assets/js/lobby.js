@@ -18,6 +18,13 @@ $(document).ready(function() {
 
     });
 
+    $('#join').click(function(){
+        // var roomId = $(this).attr('value');
+        // console.log(roomId);
+        // server.emit('removeRoom', roomId);
+        // alert('join');
+    });
+
     // ----------------------------- Methods -----------------------------
 
 
@@ -30,10 +37,18 @@ $(document).ready(function() {
         });
     }
 
+
     function loadRoom() {
 
         server.on('loadRoom', function(room) {
+            //currently this is only loading of the NEW room and not all rooms.
+
+            // for loop to loop through the object to add it to ALL rooms
             addRoom(room);
+        });
+
+        server.on('removeRoom', function(roomId){
+            removeRoom(roomId);
         });
     }
 
@@ -49,15 +64,7 @@ $(document).ready(function() {
         room.id = SHA1(username);
 
         server.emit('addRoom', room);
-
-        //Insert ajax request here
-        //On success create an entry in the table
-        if (pos == "mapper") {
-            $('#lobby tr:last').after("<tr><td>" + username + "</td><td></td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "'><button class='btn btn-success'>Join</button></a></td></tr>");
-
-        } else if (pos == "reducer") {
-            $('#lobby tr:last').after("<tr><td></td><td>" + username + "</td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "'><button class='btn btn-success'>Join</button></a></td></tr>");
-        }
+        window.location.href = "collaborate.html?room=" + SHA1(username);
 
     }
 
@@ -67,11 +74,20 @@ $(document).ready(function() {
         var pos = room.pos;
         var lang = room.lang;
         if (pos == "mapper") {
-            $('#lobby tr:last').after("<tr><td>" + username + "</td><td></td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "'><button class='btn btn-success'>Join</button></a></td></tr>");
+            $('#lobby tr:last').after("<tr><td>" + username + "</td><td></td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) +"'  value='"+SHA1(username)+"'><button class='btn btn-success' id='join'>Join</button></a></td></tr>");
 
         } else if (pos == "reducer") {
-            $('#lobby tr:last').after("<tr><td></td><td>" + username + "</td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "'><button class='btn btn-success'>Join</button></a></td></tr>");
+            $('#lobby tr:last').after("<tr><td></td><td>" + username + "</td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) +"' id='join' value='"+SHA1(username)+"'><button class='btn btn-success' >Join</button></a></td></tr>");
         }
+    }
+
+    function removeRoom(roomId){
+        //i think have to transfer this to the point it the second user enters the other room.
+        $('#join').each(function(i,e){
+            if($(this).attr('value') == roomId){
+                $(this).remove();
+            }
+        });
     }
 
     function connect() {

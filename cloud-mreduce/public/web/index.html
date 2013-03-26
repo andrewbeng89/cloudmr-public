@@ -149,7 +149,7 @@
 		<script src="../assets/js/google-analytic.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
-			var socket = io.connect('http://localhost:3000');
+			var socket = io.connect('/');
 			socket.on('news', function(data) {
 				console.log(data);
 				socket.emit('my other event', {

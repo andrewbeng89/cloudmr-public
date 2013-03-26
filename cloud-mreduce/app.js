@@ -43,6 +43,21 @@ io.sockets.on('connection', function(socket) {
         });
     });
 
+    socket.on('addRoom', function(room){
+        console.log(room.lang);
+        console.log(room.pos);
+        console.log(room.leader);
+        console.log(room.id);
+
+        //store this info as a room in the db
+
+
+        io.sockets.emit('loadRoom', room);
+    });
+
+    socket.on('removeRoom', function(room){
+        io.sockets.emit('loadRoom', room);
+    });
     // socket.emit('news', {
     //     hello: 'world'
     // });

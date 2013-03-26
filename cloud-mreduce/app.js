@@ -226,9 +226,10 @@ io.sockets.on('connection', function (socket) {
 		function(err, docs) {
 			if (!err) {
 				var online_users = [];
-				for (user in docs) {
-					if (user.online) {
-						online_users.push(user);
+				for (var i = 0; i < docs.length; i++) {
+					var doc = docs[i];
+					if (doc.online) {
+						online_users.push(doc);
 					}
 				}
 				socket.emit('online users',online_users);

@@ -12,6 +12,7 @@
     // Additional init code here
     FB.getLoginStatus(function(response) {
       if (response.status === 'connected') {
+        console.log("You are signed into FB");
     // connected
   } else if (response.status === 'not_authorized') {
     // not_authorized

@@ -9,6 +9,7 @@ $(document).ready(function() {
     loadUser();
     removeUser();
     loadRoom();
+    checkRoomStatus();
 
     // ----------------------------- Click Listeners -----------------------------
 
@@ -27,7 +28,9 @@ $(document).ready(function() {
 
     // ----------------------------- Methods -----------------------------
 
-
+    function checkRoomStatus(){
+        
+    }
 
     function loadUser() {
         server.on('connect', function(userList) {
@@ -69,14 +72,7 @@ $(document).ready(function() {
             for (var i = 0; i < roomList.length; i++) {
                 var room = roomList[i];
                 addRoom(room);
-
-
-                // console.log(JSON.stringify(room));
             }
-        });
-
-        server.on('removeRoom', function(roomId) {
-            removeRoom(roomId);
         });
     }
 
@@ -89,7 +85,7 @@ $(document).ready(function() {
         room.lang = lang;
         room.pos = pos;
         room.leader = username;
-        room.id = SHA1(username);
+        room.roomId = SHA1(username);
 
         server.emit('addRoom', room);
         window.location.href = "collaborate.html?room=" + SHA1(username);
@@ -104,20 +100,16 @@ $(document).ready(function() {
         var pos = room.pos;
         var lang = room.lang;
         if (pos == "mapper") {
-            $('#lobby tr:last').after("<tr><td>" + username + "</td><td></td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "'  value='" + SHA1(username) + "'><button class='btn btn-success' id='join'>Join</button></a></td></tr>");
+            $('#lobby tr:last').after("<tr id='"+SHA1(username)+"'><td>" + username + "</td><td></td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "'><button class='btn btn-success' id='join'>Join</button></a></td></tr>");
 
         } else if (pos == "reducer") {
-            $('#lobby tr:last').after("<tr><td></td><td>" + username + "</td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "' id='join' value='" + SHA1(username) + "'><button class='btn btn-success' >Join</button></a></td></tr>");
+            $('#lobby tr:last').after("<tr id='"+SHA1(username)+"'><td></td><td>" + username + "</td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "'><button class='btn btn-success' >Join</button></a></td></tr>");
         }
     }
 
     function removeRoom(roomId) {
         //i think have to transfer this to the point it the second user enters the other room.
-        $('#join').each(function(i, e) {
-            if ($(this).attr('value') == roomId) {
-                $(this).remove();
-            }
-        });
+        $('#tr' + roomId).remove(); 
     }
 
     function connect() {

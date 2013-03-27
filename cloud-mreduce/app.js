@@ -2,38 +2,43 @@
  * Module dependencies.
  */
 
-
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , https = require('https')
-  , path = require('path')
-  , url = require('url')
-  , btoa = require('btoa')
-  , querystring = require('querystring')
-  , app = express();
-
-var express = require('express'),
-    routes = require('./routes'),
-    user = require('./routes/user'),
-    http = require('http'),
-    https = require('https'),
-    path = require('path'),
-    url = require('url'),
-    btoa = require('btoa'),
-    querystring = require('querystring'),
-    app = express(),
-    server = require('http').createServer(app),
-    io = require('socket.io').listen(server);
+ var express = require('express'),
+ routes = require('./routes'),
+ user = require('./routes/user'),
+ http = require('http'),
+ https = require('https'),
+ path = require('path'),
+ url = require('url'),
+ btoa = require('btoa'),
+ querystring = require('querystring'),
+ app = express(),
+ server = require('http').createServer(app),
+ io = require('socket.io').listen(server);
 
 // Switch socket on, emit news data
-    
-    var roomList = new Array();
-    var userList = new Array();
+
+var roomList = new Array();
+var userList = new Array();
+
+io.enable('browser client minification');  // send minified client
+io.enable('browser client etag');          // apply etag caching logic based on version number
+io.enable('browser client gzip');          // gzip the file
+io.set('log level', 1);                    // reduce logging
+
+// enable all transports (optional if you want flashsocket support, please note that some hosting
+// providers do not allow you to create servers that listen on a port different than 80 or their
+// default port)
+io.set('transports', [
+    'websocket'
+    , 'flashsocket'
+    , 'htmlfile'
+    , 'xhr-polling'
+    , 'jsonp-polling'
+    ]);
 
 io.sockets.on('connection', function(socket) {
     console.log("Client Connected");
+    // console.log(JSON.stringify(socket));
 
     socket.on('connect', function(username) {
         socket.set('username', username);
@@ -51,24 +56,36 @@ io.sockets.on('connection', function(socket) {
     });
 
     socket.on('addRoom', function(room){
-        //store this info as a room in the db
-
-        //retrieve all rooms from db and emit to all sources
         var roomL = roomList.length;
         roomList[roomL] = room;
+        
         io.sockets.emit('loadRoom', roomList);
     });
 
-    socket.on('removeRoom', function(roomId){
-        log.console('remove: '+roomId);
-        io.sockets.emit('removeRoom', room);
+    socket.on('closeRoom', function(room){
+        console.log("\n\nRoom Length: "+roomList.length+"\n\n");
+        var roomId = room.roomId;
+        console.log('\n\nRemove Room: '+roomId+"\n\n");
+        var remove = 0;
+        for(var i = 0; i < roomList.length; i++){
+            var room = roomList[i];
+            if(room.roomId==roomId){
+                remove = i;
+                break;
+            }
+        }
+        roomList.splice(remove,1);
+        // console.log("\n\nRoom Length: "+roomList.length+"\n\n");
+        io.sockets.emit('loadRoom', roomList);
     });
-    // socket.emit('news', {
-    //     hello: 'world'
-    // });
 
-    socket.on('my other event', function(data) {
-        console.log(data);
+    socket.on('connectRoom', function(room) {
+        // console.log(JSON.stringify(room));
+        console.log('\n\nConnect Room\n\n');
+        // console.log('\n\n'+JSON.stringify(roomPlayingList)+'\n\n');
+        var roomId = room.roomId;
+        io.sockets.emit('enterRoom'+roomId, room);
+        
     });
 
 });
@@ -92,8 +109,8 @@ app.configure('development', function() {
 // Require Mongoose module to handle mongo connection with DB
 // Require schema for question model
 var mongoose = require('mongoose'),
-    question = require('./models/question'),
-    user = require('./models/user');
+question = require('./models/question'),
+user = require('./models/user');
 
 // Establish connection with mongolab DB
 mongoose.connect('mongodb://cloud-mreduce:cloudmr123@ds053317.mongolab.com:53317/cloud-mreduce');
@@ -323,3 +340,4 @@ app.get('/total_questions', function(req, res) {
 server.listen(app.get('port'), function() {
     console.log("Express server listening on port " + app.get('port'));
 });
+

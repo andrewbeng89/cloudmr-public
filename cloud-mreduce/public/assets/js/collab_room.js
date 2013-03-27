@@ -1,10 +1,41 @@
 $(document).ready(function() {
 
     // ----------------------------- Variables -----------------------------
-
-
+    var editor = ace.edit("editor");
+    // var editorReducer = ace.edit("editorReducer");
+    var roomCount = 0;
+    var lobbyendpoint = "http://localhost:3000/";
+    var server = io.connect(lobbyendpoint);
+    var roomId = GetURLParameter('room');
+    var room = {};
+    room.roomId = roomId;
+    var username = $.now();
     // ----------------------------- Setup files -----------------------------
-    
+    setupEditor();
+    checkRoomFull();
+    enterRoom();
+
+
+    function setupEditor() {
+        // editor.setValue("function test(){ console.log('hello world!')}");
+        editor.setTheme("ace/theme/eclipse");
+        editor.getSession().setMode("ace/mode/javascript");
+        editor.setShowPrintMargin(false);
+        editor.setHighlightActiveLine(true);
+        editor.resize();
+        editor.setBehavioursEnabled(true);
+        editor.getSession().setUseWrapMode(true);
+        document.getElementById('editor').style.fontSize = '14px';
+        
+        // editorReducer.setTheme("ace/theme/eclipse");
+        // editorReducer.getSession().setMode("ace/mode/javascript");
+        // editorReducer.setShowPrintMargin(false);
+        // editorReducer.setHighlightActiveLine(true);
+        // editorReducer.resize();
+        // editorReducer.setBehavioursEnabled(true);
+        // editorReducer.getSession().setUseWrapMode(true);
+        // document.getElementById('editorReducer').style.fontSize = '14px';
+    }
 
 
     // ----------------------------- Click Listeners -----------------------------
@@ -13,7 +44,33 @@ $(document).ready(function() {
 
     // ----------------------------- Methods -----------------------------
 
+    function checkRoomFull(){
+        server.on('enterRoom'+roomId, function(room){
+            roomCount++;
+            // roomCount = room.roomCount;
+            // roomCount++;
+            // room.roomCount = roomCount;
+            // server.emit('connectRoom', room);
+            if(roomCount == 2){
+                room.roomCount = roomCount;
+                server.emit('closeRoom', room);
+            }
+            console.log(roomCount);
+        });
 
+    }
+    function enterRoom(){
+        console.log('Enter Room');
+        if(roomCount==0){
+            room.leader = username;
+            // room.roomCount = roomCount;
+        } else if(roomCount==1){
+            room.member = username;
+            // room.roomCount = roomCount;
+        }
+        server.emit('connectRoom', room);
+
+    }
 
     // ----------------------------- Utility -----------------------------
 

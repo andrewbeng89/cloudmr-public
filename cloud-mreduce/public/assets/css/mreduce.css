@@ -30,9 +30,9 @@
 }
 
 #background-basic-2{
-  padding: 10px;
+  padding: 15px;
   color: inherit;
-  margin:5px;
+  /*margin:5px;*/
   margin-top:10px;
   background-color: #eeeeee;
   -webkit-border-radius: 6px;
@@ -70,4 +70,12 @@
 
 #lobby th,tr,td { 
   text-align: center;
+}
+
+#consoleMapper, #consoleReducer{
+  width: 100%;
+}
+
+.actionbutton, #nextClass {
+    float: right;
 }

@@ -28,13 +28,20 @@ var express = require('express'),
     io = require('socket.io').listen(server);
 
 // Switch socket on, emit news data
+    
+    var roomList = new Array();
+    var userList = new Array();
+
 io.sockets.on('connection', function(socket) {
     console.log("Client Connected");
 
     socket.on('connect', function(username) {
         socket.set('username', username);
         console.log(username);
-        io.sockets.emit('connect', username);
+        var userL = userList.length;
+        userList[userL] = username;
+        io.sockets.emit('connect', userList);
+        io.sockets.emit('loadRoom', roomList);
     });
 
     socket.on('disconnect', function(username) {
@@ -47,7 +54,9 @@ io.sockets.on('connection', function(socket) {
         //store this info as a room in the db
 
         //retrieve all rooms from db and emit to all sources
-        io.sockets.emit('loadRoom', room);
+        var roomL = roomList.length;
+        roomList[roomL] = room;
+        io.sockets.emit('loadRoom', roomList);
     });
 
     socket.on('removeRoom', function(roomId){

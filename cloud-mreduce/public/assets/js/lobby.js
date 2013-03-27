@@ -18,7 +18,7 @@ $(document).ready(function() {
 
     });
 
-    $('#join').click(function(){
+    $('#join').click(function() {
         // var roomId = $(this).attr('value');
         // console.log(roomId);
         // server.emit('removeRoom', roomId);
@@ -30,9 +30,24 @@ $(document).ready(function() {
 
 
     function loadUser() {
-        server.on('connect', function(data) {
-            if (data != null) {
-                $('#onlineUsers tr:last').after('<tr id=' + data + '><td>' + data + '</td></tr>');
+        server.on('connect', function(userList) {
+
+            // repopulate the whole userlist
+            console.log(JSON.stringify(userList));
+
+            $('#onlineUsers tr').not(function() {
+                if ($(this).has('th').length) {
+                    return true
+                }
+            }).remove();
+            if (userList != null) {
+                for (var i = 0; i < userList.length; i++) {
+                    // if (user != null) {
+                    var user = userList[i];
+                    $('#onlineUsers tr:last').after('<tr id=' + user + '><td>' + user + '</td></tr>');
+                    // }
+
+                }
             }
         });
     }
@@ -40,14 +55,27 @@ $(document).ready(function() {
 
     function loadRoom() {
 
-        server.on('loadRoom', function(room) {
+        server.on('loadRoom', function(roomList) {
             //currently this is only loading of the NEW room and not all rooms.
-
+            console.log(JSON.stringify(roomList));
             // for loop to loop through the object to add it to ALL rooms
-            addRoom(room);
+            $('#lobby tr').not(function() {
+                if ($(this).has('th').length) {
+                    return true
+                }
+            }).remove();
+
+
+            for (var i = 0; i < roomList.length; i++) {
+                var room = roomList[i];
+                addRoom(room);
+
+
+                // console.log(JSON.stringify(room));
+            }
         });
 
-        server.on('removeRoom', function(roomId){
+        server.on('removeRoom', function(roomId) {
             removeRoom(roomId);
         });
     }
@@ -68,23 +96,25 @@ $(document).ready(function() {
 
     }
 
-    function addRoom(room){
+    function addRoom(room) {
+        // console.log('here');
+
 
         var username = room.leader;
         var pos = room.pos;
         var lang = room.lang;
         if (pos == "mapper") {
-            $('#lobby tr:last').after("<tr><td>" + username + "</td><td></td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) +"'  value='"+SHA1(username)+"'><button class='btn btn-success' id='join'>Join</button></a></td></tr>");
+            $('#lobby tr:last').after("<tr><td>" + username + "</td><td></td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "'  value='" + SHA1(username) + "'><button class='btn btn-success' id='join'>Join</button></a></td></tr>");
 
         } else if (pos == "reducer") {
-            $('#lobby tr:last').after("<tr><td></td><td>" + username + "</td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) +"' id='join' value='"+SHA1(username)+"'><button class='btn btn-success' >Join</button></a></td></tr>");
+            $('#lobby tr:last').after("<tr><td></td><td>" + username + "</td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "' id='join' value='" + SHA1(username) + "'><button class='btn btn-success' >Join</button></a></td></tr>");
         }
     }
 
-    function removeRoom(roomId){
+    function removeRoom(roomId) {
         //i think have to transfer this to the point it the second user enters the other room.
-        $('#join').each(function(i,e){
-            if($(this).attr('value') == roomId){
+        $('#join').each(function(i, e) {
+            if ($(this).attr('value') == roomId) {
                 $(this).remove();
             }
         });

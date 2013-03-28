@@ -17,7 +17,7 @@ $(document).ready(function() {
     setupEditor();
     checkRoomFull();
     enterRoom();
-
+    realtime();
 
     function setupEditor() {
 
@@ -61,6 +61,63 @@ $(document).ready(function() {
 
     // ----------------------------- Methods -----------------------------
 
+    //Socket coding realtime
+
+    function realtime() {
+        //Change Listen
+
+        // var range = new Range(1, 1, 10, 10);
+        // var markerMapper = editorMapper.getSession().addMarker(range, "ace_selected_word", "text");
+        // var markerReducer = editorReducer.getSession().addMarker(range, "ace_selected_word", "text");
+
+
+
+        var stateMapper = true;
+        var stateReducer = true;
+        console.log('codeChange' + roomId + position);
+        server.on('codeChange' + roomId + position, function(code) {
+            if (position === 'reducer') {
+                editorMapper.setValue(code);
+                editorMapper.getSession().getSelection().selectionLead.setPosition(1,1);
+                // editorMapper.getSession.removeMarker(markerMapper);
+            } else if (position === 'mapper') {
+                editorReducer.setValue(code);
+                editorReducer.getSession().getSelection().selectionLead.setPosition(1,1);
+                // editorReducer.getSession.removeMarker(markerReducer);
+            }
+        });
+
+        //Code change
+        editorMapper.getSession().on('change', function(e) {
+            if (stateMapper == true) {
+                stateMapper = false;
+            } else {
+                stateMapper = true;
+            }
+
+            if (stateMapper == false) {
+                var code = editorMapper.getValue();
+                // console.log(code);
+                server.emit('codeChangeMapper', room, code);
+            }
+        });
+
+        editorReducer.getSession().on('change', function(e) {
+
+            if (stateReducer == true) {
+                stateReducer = false;
+            } else {
+                stateReducer = true;
+            }
+
+            if (stateReducer == false) {
+                var code = editorReducer.getValue();
+                // console.log(code);
+                server.emit('codeChangeReducer', room, code);
+            }
+        });
+    }
+
     function checkRoomFull() {
         server.on('enterRoom' + roomId, function(room) {
             roomCount++;
@@ -73,6 +130,7 @@ $(document).ready(function() {
                 server.emit('takeSide', room);
                 position = pos;
                 takeSide();
+                realtime();
             }
 
             console.log(roomCount);
@@ -138,7 +196,7 @@ $(document).ready(function() {
 
 
 });
-
+// Prevent accidental backspace press out of the editor text areas
 $(document).keydown(function(e) {
     var element = e.target.nodeName.toLowerCase();
     if ((element != 'editorMapper') || (element != 'editorReducer')) {

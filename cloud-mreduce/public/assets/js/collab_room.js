@@ -97,7 +97,7 @@ $(document).ready(function() {
 
             if (stateMapper == false) {
                 var code = editorMapper.getValue();
-                console.log(code);
+                // console.log(code);
                 server.emit('codeChangeMapper', room, code);
             }
         });
@@ -112,7 +112,7 @@ $(document).ready(function() {
 
             if (stateReducer == false) {
                 var code = editorReducer.getValue();
-                console.log(code);
+                // console.log(code);
                 server.emit('codeChangeReducer', room, code);
             }
         });

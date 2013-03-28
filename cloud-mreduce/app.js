@@ -12,16 +12,15 @@ var express = require('express'),
     btoa = require('btoa'),
     querystring = require('querystring'),
     app = express(),
-    server = require('http').createServer(app);
-    //,
-    //io = require('socket.io').listen(server);
+    server = require('http').createServer(app), 
+    io = require('socket.io').listen(server);
 
 // Switch socket on, emit news data
 
 var roomList = new Array();
 var userList = new Array();
 
-/*
+
 io.enable('browser client minification'); // send minified client
 io.enable('browser client etag'); // apply etag caching logic based on version number
 io.enable('browser client gzip'); // gzip the file
@@ -97,24 +96,17 @@ io.sockets.on('connection', function(socket) {
 
     });
 
-<<<<<<< HEAD
-});*/
-
-=======
-
-    socket.on('codeChangeMapper', function(room,code){
-        console.log('ping! codeChange'+room.roomId+'mapper');
-        socket.broadcast.emit('codeChange'+room.roomId+'reducer', code);
+    socket.on('codeChangeMapper', function(room, code) {
+        console.log('ping! codeChange' + room.roomId + 'mapper');
+        socket.broadcast.emit('codeChange' + room.roomId + 'reducer', code);
     });
-    socket.on('codeChangeReducer', function(room,code){
-        console.log('pong! codeChange'+room.roomId+'reducer');
-        socket.broadcast.emit('codeChange'+room.roomId+'mapper', code);
+    socket.on('codeChangeReducer', function(room, code) {
+        console.log('pong! codeChange' + room.roomId + 'reducer');
+        socket.broadcast.emit('codeChange' + room.roomId + 'mapper', code);
     });
-
-
 
 });
->>>>>>> Socket.io fix
+
 app.configure(function() {
     app.set('port', process.env.PORT || 3000);
     app.set('views', __dirname + '/views');
@@ -372,4 +364,3 @@ app.get('/total_questions', function(req, res) {
 server.listen(app.get('port'), function() {
     console.log("Express server listening on port " + app.get('port'));
 });
-

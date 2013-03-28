@@ -97,8 +97,24 @@ io.sockets.on('connection', function(socket) {
 
     });
 
+<<<<<<< HEAD
 });*/
 
+=======
+
+    socket.on('codeChangeMapper', function(room,code){
+        console.log('ping! codeChange'+room.roomId+'mapper');
+        socket.broadcast.emit('codeChange'+room.roomId+'reducer', code);
+    });
+    socket.on('codeChangeReducer', function(room,code){
+        console.log('pong! codeChange'+room.roomId+'reducer');
+        socket.broadcast.emit('codeChange'+room.roomId+'mapper', code);
+    });
+
+
+
+});
+>>>>>>> Socket.io fix
 app.configure(function() {
     app.set('port', process.env.PORT || 3000);
     app.set('views', __dirname + '/views');

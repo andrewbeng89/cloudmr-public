@@ -3,7 +3,8 @@ $(document).ready(function() {
     // ----------------------------- Variables -----------------------------
     var lobbyendpoint = "/";
     var server = io.connect(lobbyendpoint);
-    var username = $.now();
+    var username = window.fb_username;
+    //var username = $.now();
     // ----------------------------- Setup files -----------------------------
     connect();
     loadUser();

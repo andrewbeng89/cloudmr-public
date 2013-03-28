@@ -6,7 +6,7 @@ $(document).ready(function() {
     //var username = fb_username;
     var username = $.now();
     // ----------------------------- Setup files -----------------------------
-    connect();
+    //connect();
     loadUser();
     removeUser();
     loadRoom();

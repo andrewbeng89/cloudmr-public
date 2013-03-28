@@ -4,6 +4,13 @@
 
 var express = require('express'), routes = require('./routes'), user = require('./routes/user'), http = require('http'), https = require('https'), path = require('path'), url = require('url'), btoa = require('btoa'), querystring = require('querystring'), app = express(), server = require('http').createServer(app), io = require('socket.io').listen(server);
 
+// Require Mongoose module to handle mongo connection with DB
+// Require schema for question model
+var mongoose = require('mongoose'), question = require('./models/question'), user = require('./models/user');
+
+// Establish connection with mongolab DB
+mongoose.connect('mongodb://cloud-mreduce:cloudmr123@ds053317.mongolab.com:53317/cloud-mreduce');
+
 // Switch socket on, emit news data
 
 var roomList = new Array();
@@ -35,6 +42,51 @@ io.sockets.on('connection', function(socket) {
 		}
 		io.sockets.emit('connect', userList);
 		io.sockets.emit('loadRoom', roomList);
+	});
+
+	socket.on('saveuser', function(access_token) {
+		var options = {
+			host : 'graph.facebook.com',
+			path : '/me?fields=name,username,email,birthday&access_token=' + access_token,
+			method : 'GET'
+		};
+		var fb_data = '';
+		https.get(options, function(response) {
+			console.log("Got response: " + response.statusCode);
+
+			response.on("data", function(chunk) {
+				fb_data += chunk.toString();
+			});
+
+			// Process response from graph api
+			response.on("end", function() {
+				var json = JSON.parse(fb_data);
+				console.log(json);
+				user.findOne({
+					username : json.username
+				}, function(err, current_user) {
+					if (err) {
+						console.log('error');
+					}
+					if (current_user !== null) {
+						current_user.returning = true;
+						console.log(['returning user', current_user]);
+					} else {
+						var new_user = new user();
+						new_user.id = json.id;
+						new_user.name = json.name;
+						new_user.username = json.username;
+						new_user.email = json.email;
+						new_user.birthday = json.birthday;
+						new_user.save();
+						new_user.returning = false;
+						console.log(['new user', new_user]);
+					}
+				});
+			});
+		}).on('error', function(e) {
+			console.log("Got error: " + e.message);
+		});
 	});
 
 	socket.on('disconnect', function(username) {
@@ -116,13 +168,6 @@ app.configure(function() {
 app.configure('development', function() {
 	app.use(express.errorHandler());
 });
-
-// Require Mongoose module to handle mongo connection with DB
-// Require schema for question model
-var mongoose = require('mongoose'), question = require('./models/question'), user = require('./models/user');
-
-// Establish connection with mongolab DB
-mongoose.connect('mongodb://cloud-mreduce:cloudmr123@ds053317.mongolab.com:53317/cloud-mreduce');
 
 // Redirect to /public/web from root domain
 app.get('/', function(req, res) {

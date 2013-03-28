@@ -17,6 +17,7 @@ window.fbAsyncInit = function() {
 			FB.api('/me', function(response) {
 				var server = io.connect('/');
 				server.emit('connect', response.name);
+				server.emit('saveuser', access_token);
 				console.log('Good to see you, ' + response.name + '.');
 			});
 			// connected

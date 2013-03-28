@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     // ----------------------------- Variables -----------------------------
-    var lobbyendpoint = "http://localhost:3000/";
+    var lobbyendpoint = "/";
     var server = io.connect(lobbyendpoint);
     var username = $.now();
     // ----------------------------- Setup files -----------------------------

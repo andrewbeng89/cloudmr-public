@@ -4,7 +4,7 @@ $(document).ready(function() {
     var editorMapper = ace.edit("editorMapper");
     var editorReducer = ace.edit("editorReducer");
     var roomCount = 0;
-    var lobbyendpoint = "http://localhost:3000/";
+    var lobbyendpoint = "/";
     var server = io.connect(lobbyendpoint);
     var roomId = GetURLParameter('room');
     var lang = GetURLParameter('lang');

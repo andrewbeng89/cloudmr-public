@@ -1,3 +1,5 @@
+var fb_username = 'hello world';
+
 // https://developers.facebook.com/docs/howtos/login/getting-started/
 window.fbAsyncInit = function() {
 	FB.init({
@@ -15,8 +17,8 @@ window.fbAsyncInit = function() {
 			var access_token = FB.getAuthResponse()['accessToken'];
 			console.log('Access Token = ' + access_token);
 			FB.api('/me', function(response) {
-				top.fb_username = response.name;
-				console.log(top.fb_username);
+				fb_username = response.name;
+				console.log(fb_username);
 				console.log('Good to see you, ' + response.name + '.');
 			});
 			// connected

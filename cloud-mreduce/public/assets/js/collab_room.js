@@ -10,6 +10,7 @@ $(document).ready(function() {
     var lang = GetURLParameter('lang');
     var pos = GetURLParameter('pos');
     var room = {};
+    var position = ''; //this is the current position
     room.roomId = roomId;
     var username = $.now();
     // ----------------------------- Setup files -----------------------------
@@ -19,13 +20,8 @@ $(document).ready(function() {
 
 
     function setupEditor() {
-        // editor.setValue("function test(){ console.log('hello world!')}");
+
         editorMapper.setTheme("ace/theme/eclipse");
-        if (lang === "javascript") {
-            editorMapper.getSession().setMode("ace/mode/javascript");
-        } else if (lang === "python") {
-            editorMapper.getSession().setMode("ace/mode/python");
-        }
         editorMapper.setShowPrintMargin(false);
         editorMapper.setHighlightActiveLine(true);
         editorMapper.resize();
@@ -34,11 +30,6 @@ $(document).ready(function() {
         document.getElementById('editorMapper').style.fontSize = '14px';
 
         editorReducer.setTheme("ace/theme/eclipse");
-        if (lang === "javascript") {
-            editorReducer.getSession().setMode("ace/mode/javascript");
-        } else if (lang === "python") {
-            editorReducer.getSession().setMode("ace/mode/python");
-        }
         editorReducer.setShowPrintMargin(false);
         editorReducer.setHighlightActiveLine(true);
         editorReducer.resize();
@@ -46,9 +37,19 @@ $(document).ready(function() {
         editorReducer.getSession().setUseWrapMode(true);
         document.getElementById('editorReducer').style.fontSize = '14px';
 
-        if(pos==='reducer'){
+        if (lang === "javascript") {
+            editorMapper.getSession().setMode("ace/mode/javascript");
+            editorReducer.getSession().setMode("ace/mode/javascript");
+        } else if (lang === "python") {
+            editorMapper.getSession().setMode("ace/mode/python");
+            editorReducer.getSession().setMode("ace/mode/python");
+        }
+
+        if (pos === 'reducer') {
             editorMapper.setReadOnly(true);
-        }else if(pos==='mapper'){
+            editorReducer.setReadOnly(false);
+        } else if (pos === 'mapper') {
+            editorMapper.setReadOnly(false);
             editorReducer.setReadOnly(true);
         }
     }
@@ -63,30 +64,43 @@ $(document).ready(function() {
     function checkRoomFull() {
         server.on('enterRoom' + roomId, function(room) {
             roomCount++;
-            // roomCount = room.roomCount;
-            // roomCount++;
-            // room.roomCount = roomCount;
-            // server.emit('connectRoom', room);
+            // when both players have entered the room
+            takeSide();
             if (roomCount == 2) {
                 room.roomCount = roomCount;
+                room.pos = pos;
                 server.emit('closeRoom', room);
+                server.emit('takeSide', room);
+                position = pos;
+                takeSide();
             }
+
             console.log(roomCount);
         });
+    }
 
+    function takeSide() {
+        console.log('setSide' + roomId + position);
+        server.on('setSide' + roomId + position, function(room) {
+            if (position === 'reducer') {
+                editorMapper.setReadOnly(true);
+                editorReducer.setReadOnly(false);
+            } else if (position === 'mapper') {
+                editorMapper.setReadOnly(false);
+                editorReducer.setReadOnly(true);
+            }
+        });
     }
 
     function enterRoom() {
         console.log('Enter Room');
-        if (roomCount == 0) {
-            room.leader = username;
-            // room.roomCount = roomCount;
-        } else if (roomCount == 1) {
-            room.member = username;
-            // room.roomCount = roomCount;
-        }
+        room.member = username;
         server.emit('connectRoom', room);
-
+        if (pos === 'reducer') {
+            position = 'mapper';
+        } else if (pos === 'mapper') {
+            position = 'reducer';
+        }
     }
 
     // ----------------------------- Utility -----------------------------
@@ -123,4 +137,13 @@ $(document).ready(function() {
     }
 
 
+});
+
+$(document).keydown(function(e) {
+    var element = e.target.nodeName.toLowerCase();
+    if ((element != 'editorMapper') || (element != 'editorReducer')) {
+        if (e.keyCode === 8) {
+            return false;
+        }
+    }
 });

@@ -2,39 +2,33 @@
  * Module dependencies.
  */
 
- var express = require('express'),
- routes = require('./routes'),
- user = require('./routes/user'),
- http = require('http'),
- https = require('https'),
- path = require('path'),
- url = require('url'),
- btoa = require('btoa'),
- querystring = require('querystring'),
- app = express(),
- server = require('http').createServer(app),
- io = require('socket.io').listen(server);
+var express = require('express'),
+    routes = require('./routes'),
+    user = require('./routes/user'),
+    http = require('http'),
+    https = require('https'),
+    path = require('path'),
+    url = require('url'),
+    btoa = require('btoa'),
+    querystring = require('querystring'),
+    app = express(),
+    server = require('http').createServer(app),
+    io = require('socket.io').listen(server);
 
 // Switch socket on, emit news data
 
 var roomList = new Array();
 var userList = new Array();
 
-io.enable('browser client minification');  // send minified client
-io.enable('browser client etag');          // apply etag caching logic based on version number
-io.enable('browser client gzip');          // gzip the file
-io.set('log level', 1);                    // reduce logging
+io.enable('browser client minification'); // send minified client
+io.enable('browser client etag'); // apply etag caching logic based on version number
+io.enable('browser client gzip'); // gzip the file
+io.set('log level', 1); // reduce logging
 
 // enable all transports (optional if you want flashsocket support, please note that some hosting
 // providers do not allow you to create servers that listen on a port different than 80 or their
 // default port)
-io.set('transports', [
-    'websocket'
-    , 'flashsocket'
-    , 'htmlfile'
-    , 'xhr-polling'
-    , 'jsonp-polling'
-    ]);
+io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 
 io.sockets.on('connection', function(socket) {
     console.log("Client Connected");
@@ -55,28 +49,41 @@ io.sockets.on('connection', function(socket) {
         });
     });
 
-    socket.on('addRoom', function(room){
+    socket.on('addRoom', function(room) {
         var roomL = roomList.length;
         roomList[roomL] = room;
-        
+
         io.sockets.emit('loadRoom', roomList);
     });
 
-    socket.on('closeRoom', function(room){
-        console.log("\n\nRoom Length: "+roomList.length+"\n\n");
+    socket.on('closeRoom', function(room) {
+        console.log("\n\nRoom Length: " + roomList.length + "\n\n");
         var roomId = room.roomId;
-        console.log('\n\nRemove Room: '+roomId+"\n\n");
+        console.log('\n\nRemove Room: ' + roomId + "\n\n");
         var remove = 0;
-        for(var i = 0; i < roomList.length; i++){
+        for (var i = 0; i < roomList.length; i++) {
             var room = roomList[i];
-            if(room.roomId==roomId){
+            if (room.roomId == roomId) {
                 remove = i;
                 break;
             }
         }
-        roomList.splice(remove,1);
+        roomList.splice(remove, 1);
         // console.log("\n\nRoom Length: "+roomList.length+"\n\n");
         io.sockets.emit('loadRoom', roomList);
+    });
+
+    socket.on('takeSide', function(room) {
+        console.log('\ntake side\n');
+        var side = '';
+        if (room.pos == 'mapper') {
+            side = 'reducer';
+        } else if (room.pos == 'reducer') {
+            side = 'mapper';
+        }
+        console.log(side);
+        console.log('setSide' + room.roomId + side, room);
+        io.sockets.emit('setSide' + room.roomId + side, room);
     });
 
     socket.on('connectRoom', function(room) {
@@ -84,8 +91,8 @@ io.sockets.on('connection', function(socket) {
         console.log('\n\nConnect Room\n\n');
         // console.log('\n\n'+JSON.stringify(roomPlayingList)+'\n\n');
         var roomId = room.roomId;
-        io.sockets.emit('enterRoom'+roomId, room);
-        
+        io.sockets.emit('enterRoom' + roomId, room);
+
     });
 
 });
@@ -109,8 +116,8 @@ app.configure('development', function() {
 // Require Mongoose module to handle mongo connection with DB
 // Require schema for question model
 var mongoose = require('mongoose'),
-question = require('./models/question'),
-user = require('./models/user');
+    question = require('./models/question'),
+    user = require('./models/user');
 
 // Establish connection with mongolab DB
 mongoose.connect('mongodb://cloud-mreduce:cloudmr123@ds053317.mongolab.com:53317/cloud-mreduce');
@@ -143,61 +150,67 @@ app.get('/questions', function(req, res) {
 
 // API to hanlde Facebook login
 app.get('/fb_login', function(req, res) {
-	var _get = url.parse(req.url, true).query;
-	var access_token = _get['access_token'];
-	var options = {
-		host : 'graph.facebook.com',
-		path : '/me?fields=name,username,email,birthday&access_token=' + access_token,
-		method : 'GET'
-	};
-	res.set('Content-Type', 'application/json');
-	var fb_data = '';
-	https.get(options, function(response) {
-		console.log("Got response: " + response.statusCode);
+    var _get = url.parse(req.url, true).query;
+    var access_token = _get['access_token'];
+    var options = {
+        host: 'graph.facebook.com',
+        path: '/me?fields=name,username,email,birthday&access_token=' + access_token,
+        method: 'GET'
+    };
+    res.set('Content-Type', 'application/json');
+    var fb_data = '';
+    https.get(options, function(response) {
+        console.log("Got response: " + response.statusCode);
 
-		response.on("data", function(chunk) {
-			fb_data += chunk.toString();
-		});
+        response.on("data", function(chunk) {
+            fb_data += chunk.toString();
+        });
 
-		// Process response from graph api
-		response.on("end", function() {
-			var json = JSON.parse(fb_data);
-			console.log(json);
-			user.findOne({
-				username:json.username
-			}, function(err, current_user) {
-				if (err) {
-					res.jsonp('error');
-				}
-				if (current_user !== null) {
-					current_user.returning = true;
-					if (!current_user.online) {
-						current_user.online = true;
-					}
-					current_user.save(function() {
-						res.jsonp({type:'returning user',data:current_user});
-					});
-				} else {
-					if (json.error === undefined) {
-						var new_user = new user();
-						new_user.id = json.id;
-						new_user.name = json.name;
-						new_user.username = json.username;
-						new_user.email = json.email;
-						new_user.birthday = json.birthday;
-						new_user.online = true;
-						new_user.save();
-						new_user.returning = false;
-						res.jsonp({type:'new user',data:new_user});
-					} else {
-						res.jsonp(json);
-					}
-				}
-			});			
-		});
-	}).on('error', function(e) {
-		console.log("Got error: " + e.message);
-	});
+        // Process response from graph api
+        response.on("end", function() {
+            var json = JSON.parse(fb_data);
+            console.log(json);
+            user.findOne({
+                username: json.username
+            }, function(err, current_user) {
+                if (err) {
+                    res.jsonp('error');
+                }
+                if (current_user !== null) {
+                    current_user.returning = true;
+                    if (!current_user.online) {
+                        current_user.online = true;
+                    }
+                    current_user.save(function() {
+                        res.jsonp({
+                            type: 'returning user',
+                            data: current_user
+                        });
+                    });
+                } else {
+                    if (json.error === undefined) {
+                        var new_user = new user();
+                        new_user.id = json.id;
+                        new_user.name = json.name;
+                        new_user.username = json.username;
+                        new_user.email = json.email;
+                        new_user.birthday = json.birthday;
+                        new_user.online = true;
+                        new_user.save();
+                        new_user.returning = false;
+                        res.jsonp({
+                            type: 'new user',
+                            data: new_user
+                        });
+                    } else {
+                        res.jsonp(json);
+                    }
+                }
+            });
+        });
+    }).on('error', function(e) {
+        console.log("Got error: " + e.message);
+    });
 
     var _get = url.parse(req.url, true).query;
     var access_token = _get['access_token'];

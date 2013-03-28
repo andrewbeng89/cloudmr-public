@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <title>
+            MReduce
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- Le styles -->
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../assets/css/main.css" rel="stylesheet">
+        <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="../assets/css/mreduce.css" rel="stylesheet">
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+                                                                                                                                                
+            </script>
+        <![endif]-->
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+        <link rel="shortcut icon" href="../assets/ico/favicon.png">
+    </head>
+    
+    <body>
+        <!--Facebook <div id="fb-root"></div>
+
+            <script src="http://connect.facebook.net/en_US/all.js"></script>
+
+            <script src="../assets/js/facebook.js"></script>
+
+            End Facebook-->
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+
+                  </a>
+                    <a class="brand" href="index.html"><img id="img-logo" src="../assets/img/logo.png" /></a>
+                    <div class="nav-collapse collapse">
+                        <form class="navbar-form pull-right">
+                            <button class="btn" id='fbsignin'>
+                                Log on
+                            </button>
+                        </form>
+                        <ul class="nav">
+                            <li class="active">
+                                <ul class="nav">
+                                    <li class="active">
+                                        <a href="index.html">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="about.html">About</a>
+                                    </li>
+                                    <li>
+                                        <a href="contact.html">Contact</a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Quick Launch <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="discover_tutorial.html"><i class="icon-zoom-in"></i> Discover</a>
+                                            </li>
+                                            <li>
+                                                <a href="learn_single_player.html"><i class="icon-book"></i> Learn</a>
+                                            </li>
+                                            <li>
+                                                <a href="collaborate_lobby.html"><i class="icon-resize-small"></i> Collaborate</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+        <!--end of navigation bar-->
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12 offset1">
+                    <div class="page-header">
+                        <h1>
+                            Collaborate Lobby
+                            <small>
+                                Learn from others
+                            </small>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <div class="span6 offset1">
+                    <a href="#modalCreateRm" role="button " class="btn btn-primary " id='createrm'
+                    data-toggle="modal">Create Room</a>
+                    <p>
+                        Hi John,
+                    </p>
+                    <div id="background-basic">
+                        <b>
+                            Rooms Available:
+                        </b>
+                        <br/>
+                        <br/>
+                        <table class="table table-bordered table-hover" id="lobby">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Mapper
+                                    </th>
+                                    <th>
+                                        Reducer
+                                    </th>
+                                    <th>
+                                        Language
+                                    </th>
+                                    <th>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <!-- <tr>
+                                <td>
+                                    John
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    Javascript
+                                </td>
+                                <td>
+                                    <a href="collaborate.html"><button class="btn btn-success">Join</button></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    Xiao Li
+                                </td>
+                                <td>
+                                    Javascript
+                                </td>
+                                <td>
+                                    <a href="collaborate.html"><button class="btn btn-success">Join</button></a>
+                                </td> -->
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="span3">
+                    <div id="background-basic">
+                        <table class="table table-bordered table-hover" id="onlineUsers">
+                            <tr>
+                                <th>
+                                    Online Users:
+                                </th>
+                            </tr>
+                            <!-- <tr>
+                                <td>
+                                    Xiao Li
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    John
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    ReduceMaster
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Reducer
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Jack1
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Jack2
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Jack3
+                                </td>
+                            </tr> -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <footer>
+                <p>
+                    &copy; Cloud Computing: Andrew ~ Kenneth ~ Muar ~ Prajoth
+                </p>
+            </footer>
+        </div>
+        <!-- /container -->
+        <!-- Modal -->
+        <div id="modalCreateRm" class="modal hide fade" tabindex="-1" role="dialog"
+        aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h3 id="myModalLabel">
+                    Create Room
+                </h3>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="createroomForm">
+                    <div class="control-group">
+                        <b>
+                            Choose Language:
+                        </b>
+                        <br/>
+                        <label class="radio inline">
+                            <input type="radio" name="languageoptions" value="javascript" checked>
+                            Javascript
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" name="languageoptions" value="python">
+                            Python
+                        </label>
+                    </div>
+                    <div class="control-group">
+                        <b>
+                            Choose Position:
+                        </b>
+                        <br/>
+                        <label class="radio inline">
+                            <input type="radio" name="positionoptions" value="mapper" checked>
+                            Mapper
+                        </label>
+                        <label class="radio inline">
+                            <input type="radio" name="positionoptions" value="reducer">
+                            Reducer
+                        </label>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" data-dismiss="modal" id="create">
+                            Create
+                        </button>
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Le javascript==================================================-
+        ->
+
+
+
+
+
+
+
+    <!-- Placed at the end of the document so the pages load faster -->
+        <script src="../assets/js/jquery.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-transition.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-alert.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-modal.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-dropdown.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-scrollspy.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-tab.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-tooltip.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-popover.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-button.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-collapse.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-carousel.js">
+                        
+        </script>
+        <script src="../assets/js/bootstrap-typeahead.js">
+                        
+        </script>
+        <!--google analytic js-->
+        <script src="../assets/js/google-analytic.js">
+                        
+        </script>
+        <script src="/socket.io/socket.io.js">  
+        </script>
+        <script src="../assets/js/lobby.js">
+                            
+        </script>
+    </body>
+
+</html>

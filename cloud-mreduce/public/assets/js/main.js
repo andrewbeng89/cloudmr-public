@@ -1,9 +1,9 @@
 $(document).ready(function() {
 
     // ----------------------------- Variables -----------------------------
-    var questionsEndpoint = "http://cloud-mreduce.ap01.aws.af.cm/questions";
-    var totalQuestionsEndpoint = "http://cloud-mreduce.ap01.aws.af.cm/total_questions";
-    var verifyEndpoint = "http://cloud-mreduce.ap01.aws.af.cm/verify";
+    var questionsEndpoint = "/questions";
+    var totalQuestionsEndpoint = "/total_questions";
+    var verifyEndpoint = "/verify";
     var question_id = "";
     var currentLang = "js";
     var js_code = "";

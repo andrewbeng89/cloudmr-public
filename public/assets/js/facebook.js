@@ -15,8 +15,8 @@ window.fbAsyncInit = function() {
 			var access_token = FB.getAuthResponse()['accessToken'];
 			console.log('Access Token = ' + access_token);
 			FB.api('/me', function(response) {
-				window.fb_username = response.name;
-				console.log(window.fb_username);
+				top.fb_username = response.name;
+				console.log(top.fb_username);
 				console.log('Good to see you, ' + response.name + '.');
 			});
 			// connected

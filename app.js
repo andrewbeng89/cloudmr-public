@@ -32,9 +32,9 @@ io.sockets.on('connection', function(socket) {
 		console.log(username);
 		if (userList.indexOf(username) === -1) {
 			userList.push(username);
-			io.sockets.emit('connect', userList);
-			io.sockets.emit('loadRoom', roomList);
 		}
+		io.sockets.emit('connect', userList);
+		io.sockets.emit('loadRoom', roomList);
 	});
 
 	socket.on('disconnect', function(username) {

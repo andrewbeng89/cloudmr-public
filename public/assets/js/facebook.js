@@ -13,6 +13,8 @@
     FB.getLoginStatus(function(response) {
       if (response.status === 'connected') {
         console.log("You are signed into FB");
+        var access_token =   FB.getAuthResponse()['accessToken'];
+     	console.log('Access Token = '+ access_token);
     // connected
   } else if (response.status === 'not_authorized') {
     // not_authorized

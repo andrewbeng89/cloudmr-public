@@ -14,6 +14,11 @@ window.fbAsyncInit = function() {
 			console.log("You are signed into FB");
 			var access_token = FB.getAuthResponse()['accessToken'];
 			console.log('Access Token = ' + access_token);
+			FB.api('/me', function(response) {
+				window.fb_username = response.name;
+				console.log(window.fb_username);
+				console.log('Good to see you, ' + response.name + '.');
+			});
 			// connected
 		} else if (response.status === 'not_authorized') {
 			// not_authorized

@@ -3,6 +3,8 @@ $(document).ready(function() {
     // ----------------------------- Variables -----------------------------
     var lobbyendpoint = "/";
     var server = io.connect(lobbyendpoint);
+    var access_token =   FB.getAuthResponse()['accessToken'];
+    console.log('Access Token = '+ access_token);
     var username = $.now();
     // ----------------------------- Setup files -----------------------------
     connect();

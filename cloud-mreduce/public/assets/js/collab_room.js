@@ -1,12 +1,14 @@
 $(document).ready(function() {
 
     // ----------------------------- Variables -----------------------------
-    var editor = ace.edit("editor");
-    // var editorReducer = ace.edit("editorReducer");
+    var editorMapper = ace.edit("editorMapper");
+    var editorReducer = ace.edit("editorReducer");
     var roomCount = 0;
     var lobbyendpoint = "http://localhost:3000/";
     var server = io.connect(lobbyendpoint);
     var roomId = GetURLParameter('room');
+    var lang = GetURLParameter('lang');
+    var pos = GetURLParameter('pos');
     var room = {};
     room.roomId = roomId;
     var username = $.now();
@@ -18,40 +20,54 @@ $(document).ready(function() {
 
     function setupEditor() {
         // editor.setValue("function test(){ console.log('hello world!')}");
-        editor.setTheme("ace/theme/eclipse");
-        editor.getSession().setMode("ace/mode/javascript");
-        editor.setShowPrintMargin(false);
-        editor.setHighlightActiveLine(true);
-        editor.resize();
-        editor.setBehavioursEnabled(true);
-        editor.getSession().setUseWrapMode(true);
-        document.getElementById('editor').style.fontSize = '14px';
-        
-        // editorReducer.setTheme("ace/theme/eclipse");
-        // editorReducer.getSession().setMode("ace/mode/javascript");
-        // editorReducer.setShowPrintMargin(false);
-        // editorReducer.setHighlightActiveLine(true);
-        // editorReducer.resize();
-        // editorReducer.setBehavioursEnabled(true);
-        // editorReducer.getSession().setUseWrapMode(true);
-        // document.getElementById('editorReducer').style.fontSize = '14px';
+        editorMapper.setTheme("ace/theme/eclipse");
+        if (lang === "javascript") {
+            editorMapper.getSession().setMode("ace/mode/javascript");
+        } else if (lang === "python") {
+            editorMapper.getSession().setMode("ace/mode/python");
+        }
+        editorMapper.setShowPrintMargin(false);
+        editorMapper.setHighlightActiveLine(true);
+        editorMapper.resize();
+        editorMapper.setBehavioursEnabled(true);
+        editorMapper.getSession().setUseWrapMode(true);
+        document.getElementById('editorMapper').style.fontSize = '14px';
+
+        editorReducer.setTheme("ace/theme/eclipse");
+        if (lang === "javascript") {
+            editorReducer.getSession().setMode("ace/mode/javascript");
+        } else if (lang === "python") {
+            editorReducer.getSession().setMode("ace/mode/python");
+        }
+        editorReducer.setShowPrintMargin(false);
+        editorReducer.setHighlightActiveLine(true);
+        editorReducer.resize();
+        editorReducer.setBehavioursEnabled(true);
+        editorReducer.getSession().setUseWrapMode(true);
+        document.getElementById('editorReducer').style.fontSize = '14px';
+
+        if(pos==='reducer'){
+            editorMapper.setReadOnly(true);
+        }else if(pos==='mapper'){
+            editorReducer.setReadOnly(true);
+        }
     }
 
 
     // ----------------------------- Click Listeners -----------------------------
 
-    
+
 
     // ----------------------------- Methods -----------------------------
 
-    function checkRoomFull(){
-        server.on('enterRoom'+roomId, function(room){
+    function checkRoomFull() {
+        server.on('enterRoom' + roomId, function(room) {
             roomCount++;
             // roomCount = room.roomCount;
             // roomCount++;
             // room.roomCount = roomCount;
             // server.emit('connectRoom', room);
-            if(roomCount == 2){
+            if (roomCount == 2) {
                 room.roomCount = roomCount;
                 server.emit('closeRoom', room);
             }
@@ -59,12 +75,13 @@ $(document).ready(function() {
         });
 
     }
-    function enterRoom(){
+
+    function enterRoom() {
         console.log('Enter Room');
-        if(roomCount==0){
+        if (roomCount == 0) {
             room.leader = username;
             // room.roomCount = roomCount;
-        } else if(roomCount==1){
+        } else if (roomCount == 1) {
             room.member = username;
             // room.roomCount = roomCount;
         }

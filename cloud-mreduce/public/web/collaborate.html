@@ -1,202 +1,228 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-	<meta charset="utf-8">
-	<title>
-		MReduce
-	</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="">
-	<meta name="author" content="">
-	<!-- Le styles -->
-	<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-	<link href="../assets/css/main.css" rel="stylesheet">
-	<link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
-	<link href="../assets/css/mreduce.css" rel="stylesheet">
-	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    
+    <head>
+        <meta charset="utf-8">
+        <title>
+            MReduce
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- Le styles -->
+        <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="../assets/css/main.css" rel="stylesheet">
+        <link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="../assets/css/mreduce.css" rel="stylesheet">
+        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
         <!--[if lt IE 9]>
             <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
-                                                                                                            
+                                                                                                                        
             </script>
-            <![endif]-->
-            <!-- Fav and touch icons -->
-            <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-            <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-            <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-            <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-            <link rel="shortcut icon" href="../assets/ico/favicon.png">
-        </head>
+        <![endif]-->
+        <!-- Fav and touch icons -->
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
+        <link rel="shortcut icon" href="../assets/ico/favicon.png">
+    </head>
+    
+    <body>
+        <!--Facebook <div id="fb-root"></div>
 
-        <body>
-            <!--Facebook
-            <div id="fb-root"></div>
             <script src="http://connect.facebook.net/en_US/all.js"></script>
+
             <script src="../assets/js/facebook.js"></script>
+
             End Facebook-->
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container-fluid">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
 
-            <div class="navbar navbar-fixed-top">
-            	<div class="navbar-inner">
-            		<div class="container-fluid">
-            			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            				<span class="icon-bar"></span>
-            				<span class="icon-bar"></span>
-            				<span class="icon-bar"></span>
-            			</a>
-            			<a class="brand" href="index.html"><img id="img-logo" src="../assets/img/logo.png" /></a>
-            			<div class="nav-collapse collapse">
-            				<form class="navbar-form pull-right">
-            					<button class="btn" id='fbsignin'>Log on</button>
-            				</form>
-            				<ul class="nav">
-            					<li class="active">
-            						<ul class="nav">
-            							<li class="active"><a href="index.html">Home</a></li>
-            							<li><a href="about.html">About</a></li>
-            							<li><a href="contact.html">Contact</a></li>
-            							<li class="dropdown">
-            								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Quick Launch <b class="caret"></b></a>
-            								<ul class="dropdown-menu">
-            									<li><a href="discover_tutorial.html"><i class="icon-zoom-in"></i> Discover</a></li>
-            									<li><a href="learn_single_player.html"><i class="icon-book"></i> Learn</a></li>
-            									<li><a href="collaborate_lobby.html"><i class="icon-resize-small"></i> Collaborate</a></li>
-            								</ul>
-            							</li>
-            						</ul>
-            					</div>
+                            <span class="icon-bar"></span>
 
-            					<!--/.nav-collapse -->
-            				</div>
-            			</div>
-            		</div>
-            		<!--end of navigation bar-->
-            		<div class="container-fluid">
-            			<div class="row-fluid">
-            				<div class="span11 offset1">
-            					<div class="page-header">
-            						<h1>
-            							Map Reduce
-            							<small>
-            								Divide and Conquer!
-            							</small>
-            						</h1>
-            					</div>
-            					<p>Hi John,</p>
-            				</div>
-            			</div>
-            			
+                            <span class="icon-bar"></span>
 
-            			<div class="row-fluid">
-            				<div class="span3 offset3">
-            					<h2>Mapper</h2>
-            				</div>
-            				<div class="span3 offset2">
-            					<h2>Reducer</h2>
-            				</div>
-            			</div>
+                            <span class="icon-bar"></span>
 
-            			<div class="row-fluid">
+                        </a>
+                    <a class="brand" href="index.html"><img id="img-logo" src="../assets/img/logo.png" /></a>
+                    <div class="nav-collapse collapse">
+                        <form class="navbar-form pull-right">
+                            <button class="btn" id='fbsignin'>
+                                Log on
+                            </button>
+                        </form>
+                        <ul class="nav">
+                            <li class="active">
+                                <ul class="nav">
+                                    <li class="active">
+                                        <a href="index.html">Home</a>
+                                    </li>
+                                    <li>
+                                        <a href="about.html">About</a>
+                                    </li>
+                                    <li>
+                                        <a href="contact.html">Contact</a>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Quick Launch <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="discover_tutorial.html"><i class="icon-zoom-in"></i> Discover</a>
+                                            </li>
+                                            <li>
+                                                <a href="learn_single_player.html"><i class="icon-book"></i> Learn</a>
+                                            </li>
+                                            <li>
+                                                <a href="collaborate_lobby.html"><i class="icon-resize-small"></i> Collaborate</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                    </div>
+                    <!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+        <!--end of navigation bar-->
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span11 offset1">
+                    <div class="page-header">
+                        <h1>
+                            Map Reduce
+                            <small>
+                                Divide and Conquer!
+                            </small>
+                        </h1>
+                    </div>
+                    <p>
+                        Hi John,
+                    </p>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <!-- Mapper column -->
+                <div class="span5 offset1">
+                    <h2 style='text-align:center;'>
+                        Mapper
+                    </h2>
+                    <div id="background-basic">
+                        <!-- code editor here mapper -->
+                        <!-- <div id="editorMapper"></div> -->
+                        <div class="row-fluid">
+                            <div id="editorMapper">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <br/>
+                        <div class="actionbutton">
+                            <button class="btn btn-success" id="run">
+                                <i class="icon-play">
+                                </i>
+                                Run
+                            </button>
+                            <button class="btn btn-danger" id="reset">
+                                <i class="icon-repeat">
+                                </i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div id="background-basic-2">
+                            <textarea rows="7" id="consoleMapper" disabled>
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+                <!-- Reducer column -->
+                <div class="span5">
+                    <h2 style='text-align:center;'>
+                        Reducer
+                    </h2>
+                    <div id="background-basic">
+                        <!-- code editor here REDUCER -->
+                        <div class="row-fluid">
+                            <div id="editorReducer">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <br/>
+                        <div class="actionbutton">
+                            <button class="btn btn-success" id="run" disabled>
+                                <i class="icon-play">
+                                </i>
+                                Run
+                            </button>
+                            <button class="btn btn-danger" id="reset" disabled>
+                                <i class="icon-repeat">
+                                </i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row-fluid">
+                        <div id="background-basic-2">
+                            <textarea rows="7" id="consoleReducer" disabled>
+                            </textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <footer>
+                <p>
+                    &copy; Cloud Computing: Andrew ~ Kenneth ~ Muar ~ Prajoth
+                </p>
+            </footer>
+        </div>
+        <!-- /container -->
+        <!-- Le javascript==================================================-
+        ->
 
-
-            				<!-- Mapper column -->
-            				<div class="span5 offset1">
-            					<div id="background-basic">
-            						<!-- code editor here mapper -->
-            						<!-- <div id="editorMapper"></div> -->
-            						<div class="row-fluid">
-            							<div id="editor">
-            							</div>
-            						</div>
-            					</div>
-            					<div class="row-fluid">
-            						<br/>
-            						<div class="actionbutton">
-            							<button class="btn btn-success" id="run">
-            								<i class="icon-play">
-            								</i>
-            								Run
-            							</button>
-            							<button class="btn btn-danger" id="reset">
-            								<i class="icon-repeat">
-            								</i>
-            								Reset
-            							</button>
-            						</div>
-            					</div>
-
-            					<div class="row-fluid">	
-            						<div id="background-basic-2">
-            							<textarea rows="7" id="consoleMapper" disabled></textarea>
-            						</div>
-            						
-            					</div>
-            				</div>
-            				<!-- Reducer column -->
-            				<div class="span5">
-            					<div id="background-basic">
-            						<!-- code editor here REDUCER -->
-            						<div class="row-fluid">
-            							<div id="editorReducer">
-            							</div>
-            						</div>
-            					</div>
-            					<div class="row-fluid">
-            						<br/>
-            						<div class="actionbutton">
-            							<button class="btn btn-success" id="run" disabled>
-            								<i class="icon-play">
-            								</i>
-            								Run
-            							</button>
-            							<button class="btn btn-danger" id="reset" disabled>
-            								<i class="icon-repeat">
-            								</i>
-            								Reset
-            							</button>
-            						</div>
-            					</div>
-            					<div class="row-fluid">
-
-            						<div id="background-basic-2">
-            							<textarea rows="7" id="consoleReducer" disabled></textarea>
-            						</div>
-
-            					</div>
-            				</div>
-
-            			</div>
-
-            			<hr>
-            			<footer>
-            				<p>
-            					&copy; Cloud Computing: Andrew ~ Kenneth ~ Muar ~ Prajoth
-            				</p>
-            			</footer>
-
-            		</div> <!-- /container -->
-
-    <!-- Le javascript
-    ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="../assets/js/jquery.js"></script>
-    <script src="../assets/js/bootstrap-transition.js"></script>
-    <script src="../assets/js/bootstrap-alert.js"></script>
-    <script src="../assets/js/bootstrap-modal.js"></script>
-    <script src="../assets/js/bootstrap-dropdown.js"></script>
-    <script src="../assets/js/bootstrap-scrollspy.js"></script>
-    <script src="../assets/js/bootstrap-tab.js"></script>
-    <script src="../assets/js/bootstrap-tooltip.js"></script>
-    <script src="../assets/js/bootstrap-popover.js"></script>
-    <script src="../assets/js/bootstrap-button.js"></script>
-    <script src="../assets/js/bootstrap-collapse.js"></script>
-    <script src="../assets/js/bootstrap-carousel.js"></script>
-    <script src="../assets/js/bootstrap-typeahead.js"></script>
-    <!--google analytic js-->
-    <script src="../assets/js/google-analytic.js"></script>
-    <script src="../assets/js/collab_room.js"></script>
-    <script src="../assets/js/src/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/socket.io/socket.io.js">  
-    </script>
+        <script src="../assets/js/jquery.js">
+        </script>
+        <script src="../assets/js/bootstrap-transition.js">
+        </script>
+        <script src="../assets/js/bootstrap-alert.js">
+        </script>
+        <script src="../assets/js/bootstrap-modal.js">
+        </script>
+        <script src="../assets/js/bootstrap-dropdown.js">
+        </script>
+        <script src="../assets/js/bootstrap-scrollspy.js">
+        </script>
+        <script src="../assets/js/bootstrap-tab.js">
+        </script>
+        <script src="../assets/js/bootstrap-tooltip.js">
+        </script>
+        <script src="../assets/js/bootstrap-popover.js">
+        </script>
+        <script src="../assets/js/bootstrap-button.js">
+        </script>
+        <script src="../assets/js/bootstrap-collapse.js">
+        </script>
+        <script src="../assets/js/bootstrap-carousel.js">
+        </script>
+        <script src="../assets/js/bootstrap-typeahead.js">
+        </script>
+        <!--google analytic js-->
+        <script src="../assets/js/google-analytic.js">
+        </script>
+        <script src="../assets/js/collab_room.js">
+        </script>
+        <script src="../assets/js/src/ace.js" type="text/javascript" charset="utf-8">
+        </script>
+        <script src="/socket.io/socket.io.js">
+          
+        </script>
+    </body>
 
-</body>
 </html>

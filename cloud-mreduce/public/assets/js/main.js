@@ -14,7 +14,6 @@ $(document).ready(function() {
     setupEditor();
     loadQuestions();
 
-
     function setupEditor() {
         // editor.setValue("function test(){ console.log('hello world!')}");
         editor.setTheme("ace/theme/eclipse");
@@ -41,7 +40,7 @@ $(document).ready(function() {
             c = js_code;
         }
         editor.setValue(c);
-        $('#console').text("");  
+        $('#console').text("");
     });
 
     // Toggle the tabs
@@ -51,6 +50,7 @@ $(document).ready(function() {
         editor.setValue(js_code);
         setupEditor();
         currentLang = "js";
+        editor.getSession().setMode("ace/mode/javascript");
     });
     $("#langPY").click(function() {
         $(this).toggleClass("active");
@@ -58,6 +58,7 @@ $(document).ready(function() {
         editor.setValue(py_code);
         setupEditor();
         currentLang = "py";
+        editor.getSession().setMode("ace/mode/python");
     });
 
     // ----------------------------- Methods -----------------------------
@@ -69,7 +70,7 @@ $(document).ready(function() {
         var url = questionsEndpoint; //this is the url to call
         var param = "callback=?" + "&id=" + questionId; //add the related parameters
 
-        $.getJSON(url, param, function(data) {
+        $.getJSON(url, param).done(function(data) {
             console.log(JSON.stringify(data));
             question_id = data.question_id;
             var question = data.question;
@@ -84,6 +85,9 @@ $(document).ready(function() {
             var nextq = question_id + 1;
             // $('#nextClass').removeAttr('id');
             $('#nextClass').attr("href", top.location.href.substring(0, top.location.href.indexOf('?')) + "?id=" + nextq);
+        }).fail(function(jqxhr, textStatus, error) {
+            var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
         });
         totalQuestions();
     }
@@ -97,12 +101,16 @@ $(document).ready(function() {
             if (question_id >= data.number) {
                 $('#nextClass').attr("disabled", "disabled");
             }
+
+            for (var i = 0; i < data.number; i++) {
+                addEpisodes(i);
+            }
         });
     }
 
     function run() {
         var url = verifyEndpoint; //this is the url to call
-        var code = editor.getValue();   
+        var code = editor.getValue();
         code = encodeURIComponent(code);
         var param = "callback=?&lang=" + currentLang + "&q_id=" + question_id + "&solution=" + code; //lang, q_id, solution
         $.getJSON(url, param, function(data) {
@@ -121,6 +129,10 @@ $(document).ready(function() {
             }
 
         });
+    }
+
+    function addEpisodes(num) {
+        $('.episodes').after('<a href="solo.html?id=' + num + '"><h4>Episode ' + num + '<i class="icon-forward"></i></h4></a>');
     }
 
     // ----------------------------- Utility -----------------------------

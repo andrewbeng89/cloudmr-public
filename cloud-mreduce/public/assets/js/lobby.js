@@ -88,7 +88,7 @@ $(document).ready(function() {
         room.roomId = SHA1(username);
 
         server.emit('addRoom', room);
-        window.location.href = "collaborate.html?room=" + SHA1(username);
+        window.location.href = "collaborate.html?room=" + SHA1(username)+"&lang="+lang+"&pos="+pos;
 
     }
 
@@ -100,10 +100,10 @@ $(document).ready(function() {
         var pos = room.pos;
         var lang = room.lang;
         if (pos == "mapper") {
-            $('#lobby tr:last').after("<tr id='"+SHA1(username)+"'><td>" + username + "</td><td></td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "'><button class='btn btn-success' id='join'>Join</button></a></td></tr>");
+            $('#lobby tr:last').after("<tr id='"+SHA1(username)+"'><td>" + username + "</td><td></td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "&lang="+lang+"'><button class='btn btn-success' id='join'>Join</button></a></td></tr>");
 
         } else if (pos == "reducer") {
-            $('#lobby tr:last').after("<tr id='"+SHA1(username)+"'><td></td><td>" + username + "</td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "'><button class='btn btn-success' >Join</button></a></td></tr>");
+            $('#lobby tr:last').after("<tr id='"+SHA1(username)+"'><td></td><td>" + username + "</td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "&lang="+lang+"'><button class='btn btn-success' >Join</button></a></td></tr>");
         }
     }
 

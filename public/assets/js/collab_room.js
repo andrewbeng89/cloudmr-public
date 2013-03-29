@@ -1,18 +1,24 @@
 $(document).ready(function() {
 
     // ----------------------------- Variables -----------------------------
+    var lobbyendpoint = "/";
+    var verifyEndpoint = "/verify";
+    var questionsEndpoint = "/questions";
+
     var editorMapper = ace.edit("editorMapper");
     var editorReducer = ace.edit("editorReducer");
-    var roomCount = 0;
-    var lobbyendpoint = "/";
     var server = io.connect(lobbyendpoint);
-    var roomId = GetURLParameter('room');
-    var lang = GetURLParameter('lang');
-    var pos = GetURLParameter('pos');
+
+    var roomCount = 0;
+    var question_id = "";
     var room = {};
     var position = ''; //this is the current position
     room.roomId = roomId;
     var username = $.now();
+    
+    var roomId = GetURLParameter('room');
+    var lang = GetURLParameter('lang');
+    var pos = GetURLParameter('pos');
     // ----------------------------- Setup files -----------------------------
     setupEditor();
     checkRoomFull();
@@ -69,8 +75,6 @@ $(document).ready(function() {
         // var range = new Range(1, 1, 10, 10);
         // var markerMapper = editorMapper.getSession().addMarker(range, "ace_selected_word", "text");
         // var markerReducer = editorReducer.getSession().addMarker(range, "ace_selected_word", "text");
-
-
 
         var stateMapper = true;
         var stateReducer = true;
@@ -159,6 +163,89 @@ $(document).ready(function() {
         } else if (pos === 'mapper') {
             position = 'reducer';
         }
+    }
+
+    // Not working yet
+    function loadQuestions() {
+        var questionId = GetURLParameter('id');
+        var url = questionsEndpoint; //this is the url to call
+        var param = "callback=?" + "&id=" + questionId; //add the related parameters
+
+        $.getJSON(url, param).done(function(data) {
+            console.log(JSON.stringify(data));
+            question_id = data.question_id;
+            var question = data.question;
+            var hint = data.hint;
+            var title = data.title;
+            js_code = data.js_code;
+            py_code = data.py_code;
+            //add question
+            $('#question').empty().append("<h4><b>" + title + "</b></h4>" + question);
+            $('#hint').append(hint);
+            //setcode type
+            editor.setValue(js_code);
+            setupEditor();
+            var nextq = question_id + 1;
+            //update the link for the new challenge
+            $('#nextClass').attr("href", top.location.href.substring(0, top.location.href.indexOf('?')) + "?id=" + nextq);
+        }).fail(function(jqxhr, textStatus, error) {
+            var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+        });
+        totalQuestions();
+    }
+
+
+    //Not working yet.
+    function runMapper() {
+        var url = verifyEndpoint; //this is the url to call
+        var code = editorMapper.getValue();
+        var currentLang = lang;
+
+        code = encodeURIComponent(code);
+        var param = "callback=?&lang=" + currentLang + "&q_id=" + question_id + "&solution=" + code; //lang, q_id, solution
+        $.getJSON(url, param, function(data) {
+            console.log(JSON.stringify(data));
+            var error = data.errors;
+            if (error == null) {
+                var call = data.results[0].call; //array
+                var correct = data.results[0].correct; //array
+                var solved = data.solved; //boolean
+                $('#console').append("Call: " + call + "\nCorrect: " + correct + "\nSolved: " + solved + "\n....\n");
+                $('#console').scrollTop($('#console')[0].scrollHeight);
+            } else {
+                if (error != null) {
+                    alert(error);
+                }
+            }
+
+        });
+    }
+
+    //Not working yet.
+    function runReducer() {
+        var url = verifyEndpoint; //this is the url to call
+        var code = editorReducer.getValue();
+        var currentLang = lang;
+        
+        code = encodeURIComponent(code);
+        var param = "callback=?&lang=" + currentLang + "&q_id=" + question_id + "&solution=" + code; //lang, q_id, solution
+        $.getJSON(url, param, function(data) {
+            console.log(JSON.stringify(data));
+            var error = data.errors;
+            if (error == null) {
+                var call = data.results[0].call; //array
+                var correct = data.results[0].correct; //array
+                var solved = data.solved; //boolean
+                $('#console').append("Call: " + call + "\nCorrect: " + correct + "\nSolved: " + solved + "\n....\n");
+                $('#console').scrollTop($('#console')[0].scrollHeight);
+            } else {
+                if (error != null) {
+                    alert(error);
+                }
+            }
+
+        });
     }
 
     // ----------------------------- Utility -----------------------------

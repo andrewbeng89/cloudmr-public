@@ -9,6 +9,7 @@ $(document).ready(function() {
     var js_code = "";
     var py_code = "";
     var editor = ace.edit("editor");
+    var spinnerVisible = false;
 
     // ----------------------------- Setup files -----------------------------
     setupEditor();
@@ -81,6 +82,7 @@ $(document).ready(function() {
             $('#question').empty().append("<h4><b>" + title + "</b></h4>" + question);
             $('#hint').append(hint);
             editor.setValue(js_code);
+            reloadCode();
             setupEditor();
             var nextq = question_id + 1;
             // $('#nextClass').removeAttr('id');
@@ -96,15 +98,19 @@ $(document).ready(function() {
 
         var url = totalQuestionsEndpoint; //this is the url to call
         var param = "callback=?";
+
+        showProgress();
         $.getJSON(url, param, function(data) {
             console.log(JSON.stringify(data));
             if (question_id >= data.number) {
                 $('#nextClass').attr("disabled", "disabled");
             }
 
-            for (var i = 0; i < data.number; i++) {
+            for (var i = 1; i <= data.number; i++) {
                 addEpisodes(i);
             }
+            hideProgress();
+
         });
     }
 
@@ -113,6 +119,7 @@ $(document).ready(function() {
         var code = editor.getValue();
         code = encodeURIComponent(code);
         var param = "callback=?&lang=" + currentLang + "&q_id=" + question_id + "&solution=" + code; //lang, q_id, solution
+        showProgress();
         $.getJSON(url, param, function(data) {
             console.log(JSON.stringify(data));
             var error = data.errors;
@@ -127,13 +134,52 @@ $(document).ready(function() {
                     alert(error);
                 }
             }
-
+            hideProgress();
         });
     }
 
     function addEpisodes(num) {
-        $('.episodes').after('<a href="solo.html?id=' + num + '"><h4>Episode ' + num + '<i class="icon-forward"></i></h4></a>');
+        $('#episodes:last').append('<a href="solo.html?id=' + num + '"><h4>Episode ' + num + '<i class="icon-forward"></i></h4></a>');
     }
+
+    function reloadCode() {
+        console.log('Code reloaded');
+        var code = editor.getSession().getValue();
+        editor.getSession().setValue(code);
+    }
+
+    $('body').keyup(function(event) {
+        //space bar
+        if (event.ctrlKey || event.metaKey) {
+            switch (String.fromCharCode(event.which).toLowerCase()) {
+            case 'q':
+                event.preventDefault();
+                // alert('ctrl-q');
+                reloadCode();
+                break;
+            }
+        }
+    });
+
+    
+
+    function showProgress() {
+        console.log(spinnerVisible);
+        if (!spinnerVisible) {
+            $("div#spinner").fadeIn("fast");
+            spinnerVisible = true;
+        }
+    }
+
+    function hideProgress() {
+        if (spinnerVisible) {
+            var spinner = $("div#spinner");
+            spinner.stop();
+            spinner.fadeOut("fast");
+            spinnerVisible = false;
+        }
+    }
+
 
     // ----------------------------- Utility -----------------------------
 

@@ -42,6 +42,8 @@ io.sockets.on('connection', function(socket) {
 		}
 		io.sockets.emit('connect', userList);
 		io.sockets.emit('loadRoom', roomList);
+		var current_user = username;
+		io.sockets.emit('currentUser', current_user);
 	});
 
 	socket.on('saveuser', function(access_token) {

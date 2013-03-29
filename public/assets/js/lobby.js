@@ -4,7 +4,7 @@ $(document).ready(function() {
     var lobbyendpoint = "/";
     var server = io.connect(lobbyendpoint);
     //var username = fb_username;
-    var username = $.now();
+    var username;
     // ----------------------------- Setup files -----------------------------
     //connect();
     loadUser();
@@ -53,6 +53,11 @@ $(document).ready(function() {
 
                 }
             }
+        });
+        
+        server.on('currentUser', function(current_user) {
+        	// Get the current user that is logged in
+        	username = current_user; 
         });
     }
 

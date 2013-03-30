@@ -126,6 +126,8 @@ $(document).ready(function() {
 	function removeUser() {
 		server.on('removeUser', function(name) {
 			$('#' + name).remove();
+			userList.splice(userList.indexOf(name), 1);
+			loadUser();
 		});
 	}
 

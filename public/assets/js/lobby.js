@@ -6,6 +6,7 @@ $(document).ready(function() {
 	var username;
 	// ----------------------------- Setup files -----------------------------
 	connect();
+	getCurrentUser();
 	loadUser();
 	removeUser();
 	loadRoom();

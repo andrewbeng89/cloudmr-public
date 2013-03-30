@@ -94,6 +94,8 @@ io.sockets.on('connection', function(socket) {
 	socket.on('disconnect', function(username) {
 		socket.get('username', function(err, username) {
 			io.sockets.emit("removeUser", username);
+			userList.splice(userList.indexOf(username), 1);
+			io.sockets.emit('connect', userList);
 		});
 	});
 

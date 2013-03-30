@@ -4,7 +4,7 @@ $(document).ready(function() {
 		FB.login(function(response) {
 			if (response.authResponse) {
 				var token = response.authResponse.accessToken;
-				FB.api('/me?access_token=' + token + '', function(response) {
+				FB.api('/me', function(response) {
 					cb(response.name);
 				});
 			}

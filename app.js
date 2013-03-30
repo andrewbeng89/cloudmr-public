@@ -91,9 +91,9 @@ io.sockets.on('connection', function(socket) {
 		});
 	});
 
-	socket.on('disconnect', function() {
-		//userList.splice(userList.indexOf(username), 1);
-		//io.sockets.emit('connect', userList);
+	socket.on('disconnect', function(username) {
+		userList.splice(userList.indexOf(username), 1);
+		io.sockets.emit('connect', userList);
 		console.log('user disconnected');
 	});
 	

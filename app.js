@@ -42,8 +42,8 @@ io.sockets.on('connection', function(socket) {
 		}
 		io.sockets.emit('connect', userList);
 		io.sockets.emit('loadRoom', roomList);
-		var current_user = username;
-		io.sockets.emit('currentUser', current_user);
+		//var current_user = username;
+		//io.sockets.emit('currentUser', current_user);
 	});
 
 	socket.on('saveuser', function(access_token) {
@@ -91,9 +91,10 @@ io.sockets.on('connection', function(socket) {
 		});
 	});
 
-	socket.on('disconnect', function(username) {
-		userList.splice(userList.indexOf(username), 1);
-		io.sockets.emit('connect', userList);
+	socket.on('disconnect', function() {
+		//userList.splice(userList.indexOf(username), 1);
+		//io.sockets.emit('connect', userList);
+		console.log('user disconnected');
 	});
 
 	socket.on('addRoom', function(room) {

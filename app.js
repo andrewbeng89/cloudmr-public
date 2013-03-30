@@ -96,6 +96,11 @@ io.sockets.on('connection', function(socket) {
 		//io.sockets.emit('connect', userList);
 		console.log('user disconnected');
 	});
+	
+	socket.on('remove_user', function(user_list) {
+		userList = user_listl
+		io.sockets.emit("connect", userList);
+	});
 
 	socket.on('addRoom', function(room) {
 		var roomL = roomList.length;

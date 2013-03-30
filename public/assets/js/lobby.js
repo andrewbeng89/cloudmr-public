@@ -138,9 +138,10 @@ $(document).ready(function() {
 		}
 
 		function removeUser() {
-			server.on('removeUser', function(name) {
+			server.on('disconnect', function() {
 				$('#' + name).remove();
-				//userList.splice(userList.indexOf(name), 1);
+				userList.splice(userList.indexOf(username), 1);
+				server.emit('remove_user', userList);
 				//loadUser();
 			});
 		}

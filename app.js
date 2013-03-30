@@ -91,15 +91,12 @@ io.sockets.on('connection', function(socket) {
 		});
 	});
 
-	socket.on('disconnect', function(username) {
-		userList.splice(userList.indexOf(username), 1);
-		io.sockets.emit('connect', userList);
+	socket.on('disconnect', function() {
 		console.log('user disconnected');
-	});
-	
-	socket.on('remove_user', function(username) {
-		userList.splice(userList.indexOf(username), 1);
-		io.sockets.emit('connect', userList);
+		socket.on('remove_user', function(username) {
+			userList.splice(userList.indexOf(username), 1);
+			io.sockets.emit('connect', userList);
+		});
 	});
 
 	socket.on('addRoom', function(room) {

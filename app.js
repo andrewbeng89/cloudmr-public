@@ -97,9 +97,9 @@ io.sockets.on('connection', function(socket) {
 		console.log('user disconnected');
 	});
 	
-	socket.on('remove_user', function(user_list) {
-		userList = user_list;
-		io.sockets.emit("connect", userList);
+	socket.on('remove_user', function(username) {
+		userList.splice(userList.indexOf(username), 1);
+		io.sockets.emit('connect', userList);
 	});
 
 	socket.on('addRoom', function(room) {

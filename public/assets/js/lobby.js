@@ -141,7 +141,7 @@ $(document).ready(function() {
 			server.on('disconnect', function() {
 				$('#' + name).remove();
 				userList.splice(userList.indexOf(username), 1);
-				server.emit('remove_user', userList);
+				server.emit('remove_user', username);
 				//loadUser();
 			});
 		}

@@ -140,7 +140,8 @@ $(document).ready(function() {
 		function removeUser() {
 			server.on('disconnect', function() {
 				$('#' + name).remove();
-				server.emit('disconnect', username);
+				console.log('disconnecting ' + username);
+				server.emit('disconnect_user', username);
 			});
 		}
 

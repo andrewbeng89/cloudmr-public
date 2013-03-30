@@ -98,7 +98,7 @@ io.sockets.on('connection', function(socket) {
 	});
 	
 	socket.on('remove_user', function(user_list) {
-		userList = user_listl
+		userList = user_list;
 		io.sockets.emit("connect", userList);
 	});
 

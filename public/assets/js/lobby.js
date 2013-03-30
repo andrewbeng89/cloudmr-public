@@ -1,14 +1,6 @@
 $(document).ready(function() {
 
 	function get_username(cb) {
-		FB.init({
-			appId : '281966821935203', // App ID
-			channelUrl : '//http://cloud-mreduce.ap01.aws.af.cm/channel.html', // Channel File
-			status : true, // check login status
-			cookie : true, // enable cookies to allow the server to access the session
-			xfbml : true // parse XFBML
-		});
-
 		FB.login(function(response) {
 			if (response.authResponse) {
 				var token = response.authResponse.accessToken;

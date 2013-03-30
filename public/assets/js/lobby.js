@@ -19,7 +19,7 @@ $(document).ready(function() {
 		console.log(user_name);
 		
 		// ----------------------------- Setup files -----------------------------
-		//connect();
+		connect();
 		getCurrentUser();
 		loadUser();
 		removeUser();

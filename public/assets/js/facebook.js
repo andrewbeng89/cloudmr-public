@@ -19,7 +19,7 @@ window.fbAsyncInit = function() {
 			var username;
 			FB.api('/me', function(response) {
 				username = response.name;
-				server.emit('connect', username);
+				//server.emit('connect', username);
 				server.emit('saveuser', access_token);
 			});
 			// connected

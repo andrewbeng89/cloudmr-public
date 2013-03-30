@@ -5,7 +5,7 @@ $(document).ready(function() {
 	var server = io.connect(lobbyendpoint);
 	var username;
 	// ----------------------------- Setup files -----------------------------
-	connect();
+	//connect();
 	getCurrentUser();
 	loadUser();
 	removeUser();

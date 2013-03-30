@@ -1,5 +1,20 @@
 $(document).ready(function() {
 
+	function get_username(cb) {
+		FB.login(function(response) {
+			if (response.authResponse) {
+				var token = response.authResponse.accessToken;
+				FB.api('/me?access_token=' + token + '', function(response) {
+					cb(response.name);
+				});
+			}
+		});
+	}
+
+	get_username(function(user_name) {
+		console.log(user_name);
+	});
+
 	// ----------------------------- Variables -----------------------------
 	var lobbyendpoint = "/";
 	var server = io.connect(lobbyendpoint);

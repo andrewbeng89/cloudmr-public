@@ -91,9 +91,10 @@ io.sockets.on('connection', function(socket) {
 		});
 	});
 
-	socket.on('disconnect_user', function(username) {
-		userList.splice(userList.indexOf(username), 1);
-		io.sockets.emit('connect', userList);
+	socket.on('disconnect', function(username) {
+		//userList.splice(userList.indexOf(username), 1);
+		//io.sockets.emit('connect', userList);
+		console.log('Client disconnected: ' + username);
 	});
 
 	socket.on('addRoom', function(room) {

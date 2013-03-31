@@ -141,7 +141,7 @@ $(document).ready(function() {
 			server.on('disconnect', function() {
 				$('#' + name).remove();
 				console.log('disconnecting ' + username);
-				server.emit('disconnect_user', username);
+				server.emit('disconnect', username);
 			});
 		}
 

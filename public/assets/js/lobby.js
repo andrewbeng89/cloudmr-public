@@ -17,7 +17,7 @@ $(document).ready(function() {
 		var server = io.connect(lobbyendpoint);
 		var username = user_name;
 		console.log(user_name);
-		
+
 		// ----------------------------- Setup files -----------------------------
 		connect();
 		getCurrentUser();
@@ -133,6 +133,9 @@ $(document).ready(function() {
 
 		function connect() {
 
+			socket.on('session', function(session) {
+				console.log(JSON.stringify(session));
+			});
 			server.emit('connect', username);
 
 		}

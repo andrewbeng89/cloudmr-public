@@ -2,7 +2,19 @@
  * Module dependencies.
  */
 
-var express = require('express'), routes = require('./routes'), user = require('./routes/user'), http = require('http'), https = require('https'), path = require('path'), url = require('url'), btoa = require('btoa'), querystring = require('querystring'), app = express(), server = require('http').createServer(app), io = require('socket.io').listen(server);
+var express = require('express')
+	, routes = require('./routes')
+	, user = require('./routes/user')
+	, http = require('http')
+	, https = require('https')
+	, path = require('path')
+	, connect = require('connect')
+	, url = require('url')
+	, btoa = require('btoa')
+	, querystring = require('querystring')
+	, app = express()
+	, server = require('http').createServer(app)
+	, io = require('socket.io').listen(server);
 
 // Require Mongoose module to handle mongo connection with DB
 // Require schema for question model
@@ -30,7 +42,14 @@ io.set('log level', 1);
 // default port)
 io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 
-io.sockets.on('connection', function(socket) {
+var cookieParser = express.cookieParser('cloud-mreduce')
+	, sessionStore = new connect.middleware.session.MemoryStore();
+  
+var SessionSockets = require('session.socket.io')
+	, sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
+
+sessionSockets.on('connection', function(err, socket, session) {
+	socket.emit('session', session);
 	console.log("Client Connected");
 	// console.log(JSON.stringify(socket));
 
@@ -173,6 +192,7 @@ app.configure('development', function() {
 
 // Redirect to /public/web from root domain
 app.get('/', function(req, res) {
+	req.session.username = req.session.username || 'not logged in';
 	res.redirect('/web');
 });
 

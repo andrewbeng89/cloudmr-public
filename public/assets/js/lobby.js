@@ -133,7 +133,7 @@ $(document).ready(function() {
 
 		function connect() {
 
-			socket.on('session', function(session) {
+			server.on('session', function(session) {
 				console.log(JSON.stringify(session));
 			});
 			server.emit('connect', username);

@@ -282,7 +282,6 @@ app.get('/total_questions', function(req, res) {
 	});
 });
 
-/*
 io.enable('browser client minification');
 // send minified client
 io.enable('browser client etag');
@@ -295,9 +294,8 @@ io.set('log level', 1);
 // enable all transports (optional if you want flashsocket support, please note that some hosting
 // providers do not allow you to create servers that listen on a port different than 80 or their
 // default port)
-//io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
-io.set('transports', ['websocket']);*/
-io.set('log level', 1);
+io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+
 
 sessionSockets.on('connection', function(err, socket, session) {
 	console.log('error: ' + err);

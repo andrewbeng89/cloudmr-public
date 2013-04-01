@@ -398,10 +398,12 @@ sessionSockets.on('connection', function(err, socket, session) {
          	if(c.client_id == socket.id){
         		clients.splice(i,1);
         		userList.splice(userList.indexOf(c.client_username), 1);
+        		console.log('Client disconnected: ' + disconnected_user);
+        		console.log(userList);
+        		console.log(clients);
         		break;
         	}
         }
-		console.log('Client disconnected: ' + disconnected_user);
 	});
 
 	socket.on('addRoom', function(room) {

@@ -1,14 +1,14 @@
 $(document).ready(function() {
 
 	function get_username(cb) {
-		// FB.login(function(response) {
-		// 	if (response.authResponse) {
-		// 		var token = response.authResponse.accessToken;
+		FB.login(function(response) {
+			if (response.authResponse) {
+				var token = response.authResponse.accessToken;
 				FB.api('/me', function(response) {
 					cb(response.name, response.id);
 				});
-			// }?\
-		// });
+			}
+		});
 	}
 
 	get_username(function(user_name, user_id) {

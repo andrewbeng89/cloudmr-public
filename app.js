@@ -49,6 +49,8 @@ var SessionSockets = require('session.socket.io')
 	, sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
 
 sessionSockets.on('connection', function(err, socket, session) {
+	console.log(JSON.stringify(err));
+	console.log(JSON.stringify(session));
 	socket.emit('session', session);
 	console.log("Client Connected");
 	// console.log(JSON.stringify(socket));

@@ -12,9 +12,7 @@ var express = require('express')
 	, url = require('url')
 	, btoa = require('btoa')
 	, querystring = require('querystring')
-	, app = express()
-	, server = require('http').createServer(app)
-	, io = require('socket.io').listen(server);
+	, app = express();
 
 // Require Mongoose module to handle mongo connection with DB
 // Require schema for question model
@@ -30,9 +28,6 @@ var userList = new Array();
 
 var cookieParser = express.cookieParser('cloud-mreduce')
 	, sessionStore = new connect.middleware.session.MemoryStore();
-  
-var SessionSockets = require('session.socket.io')
-	, sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
 
 app.configure(function() {
 	app.set('port', process.env.PORT || 3000);
@@ -49,13 +44,19 @@ app.configure(function() {
   	app.use(express.session({ store: sessionStore }));
 });
 
+var server = require('http').createServer(app)
+	, io = require('socket.io').listen(server);
+	
+var SessionSockets = require('session.socket.io')
+	, sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
+
 app.configure('development', function() {
 	app.use(express.errorHandler());
 });
 
 // Redirect to /public/web from root domain
 app.get('/', function(req, res) {
-	req.session.username = req.session.username || 'not logged in';
+	//req.session.username = req.session.username || 'not logged in';
 	res.redirect('/web');
 });
 
@@ -281,6 +282,7 @@ app.get('/total_questions', function(req, res) {
 	});
 });
 
+/*
 io.enable('browser client minification');
 // send minified client
 io.enable('browser client etag');
@@ -294,11 +296,12 @@ io.set('log level', 1);
 // providers do not allow you to create servers that listen on a port different than 80 or their
 // default port)
 //io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
-io.set('transports', ['websocket']);
+io.set('transports', ['websocket']);*/
+io.set('log level', 1);
 
 sessionSockets.on('connection', function(err, socket, session) {
-	console.log('error: ' + JSON.stringify(err));
-	console.log('session: ' + JSON.stringify(session));
+	console.log('error: ' + err);
+	console.log('session: ' + session);
 	socket.emit('session', session);
 	console.log("Client Connected");
 	// console.log(JSON.stringify(socket));

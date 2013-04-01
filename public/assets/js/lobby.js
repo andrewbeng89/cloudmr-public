@@ -5,22 +5,22 @@ $(document).ready(function() {
 			if (response.authResponse) {
 				var token = response.authResponse.accessToken;
 				FB.api('/me', function(response) {
-					cb(response.name);
+					cb(response.name, response.id);
 				});
 			}
 		});
 	}
 
-	get_username(function(user_name) {
+	get_username(function(user_name, user_id) {
 		// ----------------------------- Variables -----------------------------
-		var lobbyendpoint = "/";
-		var server = io.connect(lobbyendpoint);
+		//var lobbyendpoint = "/";
+		var server = io.connect('/web');
 		var username = user_name;
+		var userid = user_id;
 		console.log(user_name);
 
 		// ----------------------------- Setup files -----------------------------
 		connect();
-		getCurrentUser();
 		loadUser();
 		removeUser();
 		loadRoom();
@@ -42,13 +42,6 @@ $(document).ready(function() {
 		});
 
 		// ----------------------------- Methods -----------------------------
-
-		function getCurrentUser() {
-			server.on('currentUser', function(current_user) {
-				username = current_user;
-			});
-		}
-
 		function checkRoomStatus() {
 
 		}

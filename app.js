@@ -293,7 +293,8 @@ io.set('log level', 1);
 // enable all transports (optional if you want flashsocket support, please note that some hosting
 // providers do not allow you to create servers that listen on a port different than 80 or their
 // default port)
-io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+//io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+io.set('transports', ['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 
 sessionSockets.on('connection', function(err, socket, session) {
 	console.log('error: ' + JSON.stringify(err));

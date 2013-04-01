@@ -405,6 +405,7 @@ sessionSockets.on('connection', function(err, socket, session) {
         			console.log('client connected: ' + element.client_id);
         			if (userList.indexOf(element.client_username) === -1) {
         				userList.push(element.client_username);
+        				console.log('users: ' + JSON.stringify(userList));
         			}
         		});
         		io.sockets.emit('connect', userList);

@@ -402,6 +402,7 @@ sessionSockets.on('connection', function(err, socket, session) {
         		console.log(userList);
         		console.log(clients);
         		for (var index = 0; index < clients.length; index++) {
+        			console.log(clients[index].client_username);
         			if (userList.indexOf(clients[index].client_username) === -1) {
         				userList.push(clients[index].client_username);
         			}

@@ -25,6 +25,7 @@ mongoose.connect('mongodb://cloud-mreduce:cloudmr123@ds053317.mongolab.com:53317
 
 var roomList = new Array();
 var userList = new Array();
+var clients = [];
 
 var cookieParser = express.cookieParser('cloud-mreduce')
 	, sessionStore = new connect.middleware.session.MemoryStore();
@@ -331,6 +332,10 @@ sessionSockets.on('connection', function(err, socket, session) {
 		if (userList.indexOf(username) === -1) {
 			userList.push(username);
 		}
+		clients.push({
+			cleint_username : username,
+			client_id : socket.id
+		});
 		io.sockets.emit('connect', userList);
 		io.sockets.emit('loadRoom', roomList);
 		//var current_user = username;
@@ -382,10 +387,20 @@ sessionSockets.on('connection', function(err, socket, session) {
 		});
 	});
 
-	socket.on('disconnect', function(username) {
+	socket.on('disconnect', function(data) {
 		//userList.splice(userList.indexOf(username), 1);
 		//io.sockets.emit('connect', userList);
-		console.log('Client disconnected: ' + username);
+		var disconnected_user;
+		for( var i=0, len=clients.length; i<len; ++i ){
+        	var c = clients[i];
+         	disconnected_user = c.client_username;
+         	if(c.client_id == socket.id){
+        		clients.splice(i,1);
+        		userList.splice(userList.indexOf(c.client_username), 1);
+        		break;
+        	}
+        }
+		console.log('Client disconnected: ' + disconnected_user);
 	});
 
 	socket.on('addRoom', function(room) {

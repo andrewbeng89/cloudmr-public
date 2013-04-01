@@ -399,8 +399,13 @@ sessionSockets.on('connection', function(err, socket, session) {
         		clients.splice(i,1);
         		userList.splice(userList.indexOf(c.client_username), 1);
         		console.log('Client disconnected: ' + disconnected_user);
-        		console.log(userList);
-        		console.log(clients);
+        		console.log('users: ' + userList);
+        		console.log('clients: ' + clients);
+        		clients.forEach(function(element, index, array) {
+        			if (userList.indexOf(element.client_username) === -1) {
+        				userList.push(element.client_username);
+        			}
+        		});
         		io.sockets.emit('connect', userList);
         		break;
         	}

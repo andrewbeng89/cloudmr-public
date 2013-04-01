@@ -13,12 +13,12 @@ $(document).ready(function() {
     var question_id = "";
     var room = {};
     var position = ''; //this is the current position
-    room.roomId = roomId;
     var username = $.now();
-    
+
     var roomId = GetURLParameter('room');
     var lang = GetURLParameter('lang');
     var pos = GetURLParameter('pos');
+    room.roomId = roomId;
     // ----------------------------- Setup files -----------------------------
     setupEditor();
     checkRoomFull();
@@ -79,46 +79,61 @@ $(document).ready(function() {
         var stateMapper = true;
         var stateReducer = true;
         console.log('codeChange' + roomId + position);
-        server.on('codeChange' + roomId + position, function(code) {
+        server.on('codeChange' + roomId + position, function(send) {
+            console.log(position);
+            var code = send.code;
+            var callbackPos = send.callbackPos;
+
             if (position === 'reducer') {
-                editorMapper.setValue(code);
-                editorMapper.getSession().getSelection().selectionLead.setPosition(1,1);
-                // editorMapper.getSession.removeMarker(markerMapper);
-            } else if (position === 'mapper') {
-                editorReducer.setValue(code);
-                editorReducer.getSession().getSelection().selectionLead.setPosition(1,1);
-                // editorReducer.getSession.removeMarker(markerReducer);
+                console.log(callbackPos);
+                if (callbackPos == 'mapper') {
+                    console.log('ken:3');
+                    editorMapper.setValue(code);
+                    editorMapper.getSession().getSelection().selectionLead.setPosition(1, 1);
+                    // editorMapper.getSession.removeMarker(markerMapper);
+                }
+            }
+            if (position === 'mapper') {
+
+                if (callbackPos == 'reducer') {
+                    console.log('ken:4');
+                    editorReducer.setValue(code);
+                    editorReducer.getSession().getSelection().selectionLead.setPosition(1, 1);
+                    // editorReducer.getSession.removeMarker(markerReducer);
+                }
             }
         });
 
         //Code change
         editorMapper.getSession().on('change', function(e) {
-            if (stateMapper == true) {
-                stateMapper = false;
-            } else {
-                stateMapper = true;
-            }
+            // if (stateMapper == true) {
+            //     stateMapper = false;
+            // } else {
+            //     stateMapper = true;
+            // }
 
-            if (stateMapper == false) {
+            // if (stateMapper == false) {
+                console.log('ken:1');
                 var code = editorMapper.getValue();
                 // console.log(code);
                 server.emit('codeChangeMapper', room, code);
-            }
+            // }
         });
 
         editorReducer.getSession().on('change', function(e) {
 
-            if (stateReducer == true) {
-                stateReducer = false;
-            } else {
-                stateReducer = true;
-            }
+            // if (stateReducer == true) {
+            //     stateReducer = false;
+            // } else {
+            //     stateReducer = true;
+            // }
 
-            if (stateReducer == false) {
+            // if (stateReducer == false) {
+                console.log('ken:2');
                 var code = editorReducer.getValue();
                 // console.log(code);
                 server.emit('codeChangeReducer', room, code);
-            }
+            // }
         });
     }
 
@@ -137,7 +152,7 @@ $(document).ready(function() {
                 realtime();
             }
 
-            console.log(roomCount);
+            // console.log(roomCount);
         });
     }
 
@@ -166,6 +181,7 @@ $(document).ready(function() {
     }
 
     // Not working yet
+
     function loadQuestions() {
         var questionId = GetURLParameter('id');
         var url = questionsEndpoint; //this is the url to call
@@ -197,6 +213,7 @@ $(document).ready(function() {
 
 
     //Not working yet.
+
     function runMapper() {
         var url = verifyEndpoint; //this is the url to call
         var code = editorMapper.getValue();
@@ -223,11 +240,12 @@ $(document).ready(function() {
     }
 
     //Not working yet.
+
     function runReducer() {
         var url = verifyEndpoint; //this is the url to call
         var code = editorReducer.getValue();
         var currentLang = lang;
-        
+
         code = encodeURIComponent(code);
         var param = "callback=?&lang=" + currentLang + "&q_id=" + question_id + "&solution=" + code; //lang, q_id, solution
         $.getJSON(url, param, function(data) {

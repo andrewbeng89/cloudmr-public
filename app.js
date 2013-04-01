@@ -414,12 +414,18 @@ sessionSockets.on('connection', function(err, socket, session) {
 	});
 
 	socket.on('codeChangeMapper', function(room, code) {
+		var send = {};
+		send.code = code;
+		send.callbackPos = 'mapper';
 		console.log('ping! codeChange' + room.roomId + 'mapper');
-		socket.broadcast.emit('codeChange' + room.roomId + 'reducer', code);
+		socket.broadcast.emit('codeChange' + room.roomId + 'reducer', send);
 	});
 	socket.on('codeChangeReducer', function(room, code) {
+		var send = {};
+		send.code = code;
+		send.callbackPos = 'reducer';
 		console.log('pong! codeChange' + room.roomId + 'reducer');
-		socket.broadcast.emit('codeChange' + room.roomId + 'mapper', code);
+		socket.broadcast.emit('codeChange' + room.roomId + 'mapper', send);
 	});
 
 });

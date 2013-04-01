@@ -1,24 +1,25 @@
 $(document).ready(function() {
 
-	function get_username(cb) {
-		FB.login(function(response) {
-			if (response.authResponse) {
-				var token = response.authResponse.accessToken;
-				FB.api('/me', function(response) {
-					cb(response.name, response.id);
-				});
-			}
-		});
-	}
+	// function get_username(cb) {
+	// 	FB.login(function(response) {
+	// 		if (response.authResponse) {
+	// 			var token = response.authResponse.accessToken;
+	// 			FB.api('/me', function(response) {
+	// 				cb(response.name, response.id);
+	// 			});
+	// 		}
+	// 	});
+	// }
 
-	get_username(function(user_name, user_id) {
+	// get_username(function(user_name, user_id) {
 		// ----------------------------- Variables -----------------------------
 		var lobbyendpoint = "/";
 		var server = io.connect(lobbyendpoint);
-		var username = user_name;
-		var userid = user_id;
-		console.log(user_name);
-		console.log(user_id);
+		var username = $.now();
+		// var username = user_name;
+		// var userid = user_id;
+		// console.log(user_name);
+		// console.log(user_id);
 
 		// ----------------------------- Setup files -----------------------------
 		connect();
@@ -130,7 +131,7 @@ $(document).ready(function() {
 			server.on('session', function(session) {
 				console.log(JSON.stringify(session));
 			});
-			server.emit('connect', username);
+			// server.emit('connect', username);
 
 		}
 
@@ -331,6 +332,6 @@ $(document).ready(function() {
 
 		}
 
-	});
+	// });
 
 });

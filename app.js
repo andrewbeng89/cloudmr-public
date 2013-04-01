@@ -333,7 +333,7 @@ sessionSockets.on('connection', function(err, socket, session) {
 			userList.push(username);
 		}
 		clients.push({
-			cleint_username : username,
+			client_username : username,
 			client_id : socket.id
 		});
 		console.log(clients);

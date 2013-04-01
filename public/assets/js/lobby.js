@@ -131,7 +131,7 @@ $(document).ready(function() {
 			server.on('session', function(session) {
 				console.log(JSON.stringify(session));
 			});
-			// server.emit('connect', username);
+			server.emit('connect', username);
 
 		}
 

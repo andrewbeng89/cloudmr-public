@@ -271,11 +271,32 @@ app.get('/verify', function(req, res) {
 
 // API to retrieve total number of questions in the DB
 app.get('/total_questions', function(req, res) {
+	// parse the URL query
+	var _get = url.parse(req.url, true).query;
+	// Question ID param
+	var type = _get['type'];
+	
 	question.find({}, function(err, docs) {
 		if (!err) {
-			res.jsonp({
-				number : docs.length
-			});
+			var collab_questions = [];
+			var solo_questions = [];
+			for (var i = 0; i < docs.length; i++) {
+				var q = docs[i];
+				if (q.question_id % 1 === 0) {
+					solo_questions.push(q);
+				} else {
+					collab_questions.push(q);
+				}
+			}
+			if (type !== undefined) {
+				res.jsonp({
+					number : (type === 'solo') ? solo_questions.length : collab_questions.length
+				});
+			} else {
+				res.jsonp({
+					number : docs.length
+				});
+			}
 		} else {
 			throw err;
 		}

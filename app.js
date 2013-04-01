@@ -28,6 +28,12 @@ mongoose.connect('mongodb://cloud-mreduce:cloudmr123@ds053317.mongolab.com:53317
 var roomList = new Array();
 var userList = new Array();
 
+var cookieParser = express.cookieParser('cloud-mreduce')
+	, sessionStore = new connect.middleware.session.MemoryStore();
+  
+var SessionSockets = require('session.socket.io')
+	, sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
+
 app.configure(function() {
 	app.set('port', process.env.PORT || 3000);
 	app.set('views', __dirname + '/views');
@@ -288,12 +294,6 @@ io.set('log level', 1);
 // providers do not allow you to create servers that listen on a port different than 80 or their
 // default port)
 io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
-
-var cookieParser = express.cookieParser('cloud-mreduce')
-	, sessionStore = new connect.middleware.session.MemoryStore();
-  
-var SessionSockets = require('session.socket.io')
-	, sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
 
 sessionSockets.on('connection', function(err, socket, session) {
 	console.log('error: ' + JSON.stringify(err));

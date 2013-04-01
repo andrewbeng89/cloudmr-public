@@ -401,6 +401,7 @@ sessionSockets.on('connection', function(err, socket, session) {
         		console.log('Client disconnected: ' + disconnected_user);
         		console.log(userList);
         		console.log(clients);
+        		io.sockets.emit('connect', userList);
         		break;
         	}
         }

@@ -13,7 +13,7 @@ $(document).ready(function() {
 
 	get_username(function(user_name) {
 		// ----------------------------- Variables -----------------------------
-		var lobbyendpoint = "/web/";
+		var lobbyendpoint = "/";
 		var server = io.connect(lobbyendpoint);
 		var username = user_name;
 		console.log(user_name);

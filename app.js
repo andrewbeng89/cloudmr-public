@@ -336,6 +336,7 @@ sessionSockets.on('connection', function(err, socket, session) {
 			cleint_username : username,
 			client_id : socket.id
 		});
+		console.log(clients);
 		io.sockets.emit('connect', userList);
 		io.sockets.emit('loadRoom', roomList);
 		//var current_user = username;

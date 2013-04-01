@@ -401,6 +401,11 @@ sessionSockets.on('connection', function(err, socket, session) {
         		console.log('Client disconnected: ' + disconnected_user);
         		console.log(userList);
         		console.log(clients);
+        		for (var index = 0; index < clients.length; index++) {
+        			if (userList.indexOf(clients[index].client_username) === -1) {
+        				userList.push(clients[index].client_username);
+        			}
+        		}
         		io.sockets.emit('connect', userList);
         		break;
         	}

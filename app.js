@@ -403,7 +403,7 @@ sessionSockets.on('connection', function(err, socket, session) {
         		console.log('clients: ' + JSON.stringify(clients));
         		clients.forEach(function(element, index, array) {
         			console.log('client connected: ' + JSON.stringify(element));
-        			if (userList.indexOf(element.client_username) === -1) {
+        			if (userList.indexOf(element.client_username) == -1) {
         				userList.push(element.client_username);
         				console.log('users: ' + JSON.stringify(userList));
         			}

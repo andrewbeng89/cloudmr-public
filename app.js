@@ -294,7 +294,7 @@ io.set('log level', 1);
 // providers do not allow you to create servers that listen on a port different than 80 or their
 // default port)
 //io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
-io.set('transports', ['websocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
+io.set('transports', ['websocket']);
 
 sessionSockets.on('connection', function(err, socket, session) {
 	console.log('error: ' + JSON.stringify(err));

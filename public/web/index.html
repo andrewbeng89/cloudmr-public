@@ -73,46 +73,79 @@
 			</div>
 		</div>
 		<!-- Top Bar -->
-		<div class="row-fluid">
-			<div class="span12 offset1">
-				<div class="page-header">
-					<h1>Map Reduce <small>Learning Map Reduce has never been easier! </small></h1>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span10 offset1">
+					<div class="page-header">
+						<h1>Map Reduce <small>Learning Map Reduce has never been easier! </small></h1>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<div class="container">
 
-			<!-- Example row of columns -->
-			<div class="background-settings">
-				<div class="row">
-					<B>Welcome to heaven of MapReduce! Our site provide you tutorial of MapReduce, and platform to practice for various questions, as well as source code download after game. After you become one of the MapReuce "Guru" then you could also teach newbies in our real-time collaborate area too.</B>
+			<div class="row-fluid">
+				<!-- Example row of columns -->
+				<div class="span10 offset1">
+					<div class="background-settings">
+						<B>Welcome to heaven of MapReduce! Our site provide you tutorial of MapReduce, and platform to practice for various questions, as well as source code download after game. After you become one of the MapReuce "Guru" then you could also teach newbies in our real-time collaborate area too.</B>
+					</div>
 				</div>
 			</div>
-			<div class="background-settings">
-				<div class="row">
-					<div class="span3a">
-						<a href="discover_tutorial.html"> <h2>Discover</h2> <img id="img-discover" src="../assets/img/mapreduce.png" alt="Discover"/> </a>
-						<p>
-							Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-						</p>
-						<!--p><a class="btn" href="#">View details &raquo;</a></p-->
+			
+			<div class="row-fluid">
+				<div class="span10 offset1">
+					
+					<div class="span4">
+						<div class="background-settings">
+							<a href="discover.html"> 
+								<h2>Discover</h2> 
+								<div class="row-fluid">
+									<div class='insertImage'>
+										<img id="img-discover" src="../assets/img/mapreduce.png" alt="Discover"/> 
+
+									</div>
+								</div>
+							</a>
+							<p>
+								Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+							</p>
+							<!--p><a class="btn" href="#">View details &raquo;</a></p-->
+						</div>
 					</div>
-					<div class="span3a">
-						<a href="learn_single_player.html"> <h2>Learn</h2> <img id="img-singleplayer"  src="../assets/img/Single Player.png" alt="Single Player"/> </a>
-						<p>
-							Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
-						</p>
-						<!--p><a class="btn" href="#">View details &raquo;</a></p-->
+					<div class="span4">
+						<div class="background-settings">
+							<a href="learn.html"> 
+								<h2>Learn</h2> 
+								<div class="row-fluid">
+									<div class='insertImage'>
+										<img id="img-learn"  src="../assets/img/Single Player.png" alt="Single Player"/> 
+									</div>
+								</div>
+							</a>
+							<p>
+								Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui.
+							</p>
+							<!--p><a class="btn" href="#">View details &raquo;</a></p-->
+						</div>
 					</div>
-					<div class="span3a">
-						<a href="collaborate_lobby.html"> <h2>Collaborate</h2> <img id="img-collaborate" src="../assets/img/Collaborate.png" alt="collaborate_lobby"/> </a>
-						<p>
-							Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
-						</p>
-						<!--p><a class="btn" href="#">View details &raquo;</a></p-->
+					<div class="span4">
+						<div class="background-settings">
+							<a href="collaborate_lobby.html">
+								<h2>Collaborate</h2> 
+								<div class="row-fluid">
+									<div class='insertImage'>
+										<img id="img-collaborate" src="../assets/img/Collaborate.png" alt="collaborate_lobby"/> 
+									</div>
+								</div>
+							</a>
+							<p>
+								Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+							</p>
+							<!--p><a class="btn" href="#">View details &raquo;</a></p-->
+						</div>
 					</div>
 				</div>
+
 			</div>
 
 			<hr>
@@ -146,20 +179,20 @@
 		<script src="../assets/js/google-analytic.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
-		var socket = io.connect('/');
-		socket.on('news', function(data) {
-			console.log(data);
-			socket.emit('my other event', {
-				my : 'data'
-			});
-		});
-		socket.on('online users', function(data) {
-			console.log(data);
-			socket.emit('my other event', {
-				hello : 'users received'
-			});
-		});
-		</script>
+		// var socket = io.connect('/');
+		// socket.on('news', function(data) {
+		// 	console.log(data);
+		// 	socket.emit('my other event', {
+		// 		my : 'data'
+		// 	});
+		// });
+		// socket.on('online users', function(data) {
+		// 	console.log(data);
+		// 	socket.emit('my other event', {
+		// 		hello : 'users received'
+		// 	});
+		// });
+</script>
 
-	</body>
-	</html>
+</body>
+</html>

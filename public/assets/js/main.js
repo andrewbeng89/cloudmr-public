@@ -74,7 +74,7 @@ $(document).ready(function() {
 
         $.getJSON(url, param).done(function(data) {
             console.log(JSON.stringify(data));
-            question_id = data.question_id;
+            questionId = data.question_id;
             var question = data.question;
             var hint = data.hint;
             var title = data.title;
@@ -85,7 +85,7 @@ $(document).ready(function() {
             editor.setValue(js_code);
             reloadCode();
             setupEditor();
-            var nextq = question_id + 1;
+            var nextq = questionId + 1;
             // $('#nextClass').removeAttr('id');
             $('#nextClass').attr("href", top.location.href.substring(0, top.location.href.indexOf('?')) + "?id=" + nextq);
         }).fail(function(jqxhr, textStatus, error) {
@@ -98,12 +98,12 @@ $(document).ready(function() {
     function totalQuestions() {
 
         var url = totalQuestionsEndpoint; //this is the url to call
-        var param = "callback=?";
+        var param = "type=solo&callback=?";
 
         showProgress();
         $.getJSON(url, param, function(data) {
             console.log(JSON.stringify(data));
-            if (question_id >= data.number) {
+            if (questionId >= data.number) {
                 $('#nextClass').attr("disabled", "disabled");
             }
 
@@ -119,7 +119,7 @@ $(document).ready(function() {
         var url = verifyEndpoint; //this is the url to call
         var code = editor.getValue();
         code = encodeURIComponent(code);
-        var param = "callback=?&lang=" + currentLang + "&q_id=" + question_id + "&solution=" + code; //lang, q_id, solution
+        var param = "callback=?&lang=" + currentLang + "&q_id=" + questionId + "&solution=" + code; //lang, q_id, solution
         showProgress();
         $.getJSON(url, param, function(data) {
             console.log(JSON.stringify(data));
@@ -140,7 +140,7 @@ $(document).ready(function() {
     }
 
     function addEpisodes(num) {
-        $('#episodes:last').append('<a href="solo.html?id=' + num + '"><h4>Episode ' + num + '<i class="icon-forward"></i></h4></a>');
+        $('#episodes:last').append('<a href="learn.html?id=' + num + '"><h4>Episode ' + num + '<i class="icon-forward"></i></h4></a>');
     }
 
     function reloadCode() {
@@ -162,10 +162,7 @@ $(document).ready(function() {
         }
     });
 
-    
-
     function showProgress() {
-        console.log(spinnerVisible);
         if (!spinnerVisible) {
             $("div#spinner").fadeIn("fast");
             spinnerVisible = true;

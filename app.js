@@ -10,7 +10,6 @@ var express = require('express')
 	, path = require('path')
 	, connect = require('connect')
 	, url = require('url')
-	, btoa = require('btoa')
 	, querystring = require('querystring')
 	, app = express();
 
@@ -21,10 +20,9 @@ var mongoose = require('mongoose'), question = require('./models/question'), use
 // Establish connection with mongolab DB
 mongoose.connect('mongodb://cloud-mreduce:cloudmr123@ds053317.mongolab.com:53317/cloud-mreduce');
 
-// Switch socket on, emit news data
-
-var roomList = new Array();
-var userList = new Array();
+// Arrays to store rooms (collaborative games), online users and connected socket clients
+var roomList = [];
+var userList = [];
 var clients = [];
 
 var cookieParser = express.cookieParser('cloud-mreduce')
@@ -42,12 +40,14 @@ app.configure(function() {
 	app.use(app.router);
 	app.use(express.static(path.join(__dirname, 'public')));
 	app.use(cookieParser);
-  	app.use(express.session({ store: sessionStore }));
+	app.use(express.session({
+		store : sessionStore
+	}));
 });
 
 var server = require('http').createServer(app)
 	, io = require('socket.io').listen(server);
-	
+
 var SessionSockets = require('session.socket.io')
 	, sessionSockets = new SessionSockets(io, sessionStore, cookieParser);
 
@@ -226,7 +226,7 @@ app.get('/verify', function(req, res) {
 				solution : solution,
 				tests : (lang === 'js') ? selected_question.js_tests : selected_question.py_tests
 			};
-			json_data = querystring.stringify({
+			var json_data = querystring.stringify({
 				jsonrequest : JSON.stringify(data)
 			});
 			console.log(json_data);
@@ -276,7 +276,7 @@ app.get('/total_questions', function(req, res) {
 	var _get = url.parse(req.url, true).query;
 	// Question ID param
 	var type = _get['type'];
-	
+
 	question.find({}, function(err, docs) {
 		if (!err) {
 			var collab_questions = [];
@@ -318,38 +318,39 @@ io.set('log level', 1);
 // default port)
 io.set('transports', ['websocket', 'flashsocket', 'htmlfile', 'xhr-polling', 'jsonp-polling']);
 
-
 sessionSockets.on('connection', function(err, socket, session) {
-	console.log('error: ' + err);
-	console.log('session: ' + session);
-	socket.emit('session', session);
 	console.log("Client Connected");
-	// console.log(JSON.stringify(socket));
 
+	// Listent to connect event from client
 	socket.on('connect', function(username) {
 		socket.set('username', username);
 		console.log(username);
+		
+		// If the username is not in the userlist, store it
 		if (userList.indexOf(username) === -1) {
 			userList.push(username);
 		}
+		// Store client data (username, socket.id)
 		clients.push({
 			client_username : username,
 			client_id : socket.id
 		});
 		console.log(clients);
+		// Emit userlist and roomlist to connected clients
 		io.sockets.emit('connect', userList);
 		io.sockets.emit('loadRoom', roomList);
-		//var current_user = username;
-		//io.sockets.emit('currentUser', current_user);
 	});
-
+	
+	// Listen to saveuser event from client
 	socket.on('saveuser', function(access_token) {
+		// HTTP method options
 		var options = {
 			host : 'graph.facebook.com',
 			path : '/me?fields=name,username,email,birthday&access_token=' + access_token,
 			method : 'GET'
 		};
 		var fb_data = '';
+		// Call https get from graph api
 		https.get(options, function(response) {
 			console.log("Got response: " + response.statusCode);
 
@@ -387,40 +388,44 @@ sessionSockets.on('connection', function(err, socket, session) {
 			console.log("Got error: " + e.message);
 		});
 	});
-
+	
+	// Listen to disconnect event from client
 	socket.on('disconnect', function(data) {
-		//userList.splice(userList.indexOf(username), 1);
-		//io.sockets.emit('connect', userList);
 		var disconnected_user;
-		for( var i=0, len=clients.length; i<len; ++i ){
-        	var c = clients[i];
-         	disconnected_user = c.client_username;
-         	if(c.client_id == socket.id){
-        		clients.splice(i,1);
-        		userList.splice(userList.indexOf(c.client_username), 1);
-        		console.log('Client disconnected: ' + disconnected_user);
-        		console.log('users: ' + JSON.stringify(userList));
-        		console.log('clients: ' + JSON.stringify(clients));
-        		clients.forEach(function(element, index, array) {
-        			console.log('client connected: ' + JSON.stringify(element));
-        			if (userList.indexOf(element.client_username) == -1) {
-        				userList.push(element.client_username);
-        				console.log('users: ' + JSON.stringify(userList));
-        			}
-        		});
-        		io.sockets.emit('connect', userList);
-        		break;
-        	}
-        }
+		// Traverse client data by client_id to determine which client is disconnected
+		for (var i = 0, len = clients.length; i < len; ++i) {
+			var c = clients[i];
+			disconnected_user = c.client_username;
+			// If the client_id matches the socket_id, remove it
+			if (c.client_id == socket.id) {
+				clients.splice(i, 1);
+				// Remove username from userlist
+				userList.splice(userList.indexOf(c.client_username), 1);
+				console.log('Client disconnected: ' + disconnected_user);
+				console.log('users: ' + JSON.stringify(userList));
+				console.log('clients: ' + JSON.stringify(clients));
+				// If there are other clients with the same username, restore the username
+				clients.forEach(function(element, index, array) {
+					console.log('client connected: ' + JSON.stringify(element));
+					if (userList.indexOf(element.client_username) == -1) {
+						userList.push(element.client_username);
+						console.log('users: ' + JSON.stringify(userList));
+					}
+				});
+				// Emit userlist to connected clients
+				io.sockets.emit('connect', userList);
+				break;
+			}
+		}
 	});
-
+	
+	// Listen to addroom event from client
 	socket.on('addRoom', function(room) {
-		var roomL = roomList.length;
-		roomList[roomL] = room;
-
+		roomList.push(room);
 		io.sockets.emit('loadRoom', roomList);
 	});
-
+	
+	// Listen to closeroom event from client
 	socket.on('closeRoom', function(room) {
 		console.log("\n\nRoom Length: " + roomList.length + "\n\n");
 		var roomId = room.roomId;
@@ -434,10 +439,10 @@ sessionSockets.on('connection', function(err, socket, session) {
 			}
 		}
 		roomList.splice(remove, 1);
-		// console.log("\n\nRoom Length: "+roomList.length+"\n\n");
 		io.sockets.emit('loadRoom', roomList);
 	});
 
+	// Listen to takeside event from client to determine whether a user is the mapper or reducer
 	socket.on('takeSide', function(room) {
 		console.log('\ntake side\n');
 		var side = '';
@@ -450,16 +455,15 @@ sessionSockets.on('connection', function(err, socket, session) {
 		console.log('setSide' + room.roomId + side, room);
 		io.sockets.emit('setSide' + room.roomId + side, room);
 	});
-
+	
+	// Listen to connectroom event from client
 	socket.on('connectRoom', function(room) {
-		// console.log(JSON.stringify(room));
 		console.log('\n\nConnect Room\n\n');
-		// console.log('\n\n'+JSON.stringify(roomPlayingList)+'\n\n');
 		var roomId = room.roomId;
 		io.sockets.emit('enterRoom' + roomId, room);
-
 	});
-
+	
+	// Listen to code changemapper event from client
 	socket.on('codeChangeMapper', function(room, code) {
 		var send = {};
 		send.code = code;
@@ -467,6 +471,8 @@ sessionSockets.on('connection', function(err, socket, session) {
 		console.log('ping! codeChange' + room.roomId + 'mapper');
 		socket.broadcast.emit('codeChange' + room.roomId + 'reducer', send);
 	});
+	
+	// Listen to codechangereducer event from client
 	socket.on('codeChangeReducer', function(room, code) {
 		var send = {};
 		send.code = code;

@@ -1,25 +1,27 @@
 $(document).ready(function() {
 
+	// Get the Facebook name and id of a user and pass to a callback function
 	function get_username(cb) {
 		FB.login(function(response) {
 			if (response.authResponse) {
 				var token = response.authResponse.accessToken;
 				FB.api('/me', function(response) {
+					// Invoke the callback function with the name and id params
 					cb(response.name, response.id);
 				});
 			}
 		});
 	}
-
+	
+	// Contains all other functions on callback invoked (facebook name and id returned)
 	get_username(function(user_name, user_id) {
 		// ----------------------------- Variables -----------------------------
 		var lobbyendpoint = "/";
 		var server = io.connect(lobbyendpoint);
-		// var username = $.now();
 		var username = user_name;
 		var userid = user_id;
-		console.log(user_name);
-		console.log(user_id);
+		console.log('username: ' + user_name);
+		console.log('user_id: ' + user_id);
 
 		// ----------------------------- Setup files -----------------------------
 		connect();
@@ -31,16 +33,11 @@ $(document).ready(function() {
 		// ----------------------------- Click Listeners -----------------------------
 
 		$("#create").click(function() {
-
 			createRoom();
-
 		});
 
 		$('#join').click(function() {
-			// var roomId = $(this).attr('value');
-			// console.log(roomId);
-			// server.emit('removeRoom', roomId);
-			// alert('join');
+			
 		});
 
 		// ----------------------------- Methods -----------------------------
@@ -52,7 +49,7 @@ $(document).ready(function() {
 			server.on('connect', function(userList) {
 
 				// repopulate the whole userlist
-				console.log(JSON.stringify(userList));
+				console.log('userlist: ' + JSON.stringify(userList));
 
 				$('#onlineUsers tr').not(function() {
 					if ($(this).has('th').length) {
@@ -127,12 +124,8 @@ $(document).ready(function() {
 		}
 
 		function connect() {
-
-			server.on('session', function(session) {
-				console.log(JSON.stringify(session));
-			});
+			// Emit username to server
 			server.emit('connect', username);
-
 		}
 
 		function removeUser() {

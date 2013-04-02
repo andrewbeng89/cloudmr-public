@@ -4,7 +4,7 @@ $(document).ready(function() {
     var questionsEndpoint = "/questions";
     var totalQuestionsEndpoint = "/total_questions";
     var verifyEndpoint = "/verify";
-    var question_id = "";
+    var questionId = GetURLParameter('id');
     var currentLang = "js";
     var js_code = "";
     var py_code = "";
@@ -14,6 +14,7 @@ $(document).ready(function() {
     // ----------------------------- Setup files -----------------------------
     setupEditor();
     loadQuestions();
+    noQuestionCheck();
 
     function setupEditor() {
         // editor.setValue("function test(){ console.log('hello world!')}");
@@ -67,7 +68,7 @@ $(document).ready(function() {
     // Load the question, the preloaded code, and the appropriate hint
 
     function loadQuestions() {
-        var questionId = GetURLParameter('id');
+        
         var url = questionsEndpoint; //this is the url to call
         var param = "callback=?" + "&id=" + questionId; //add the related parameters
 
@@ -177,6 +178,13 @@ $(document).ready(function() {
             spinner.stop();
             spinner.fadeOut("fast");
             spinnerVisible = false;
+        }
+    }
+
+    function noQuestionCheck(){
+        questionId = GetURLParameter('id');
+        if (typeof(questionId) == 'undefined') {
+            window.location.href = "learn.html?id=1";
         }
     }
 

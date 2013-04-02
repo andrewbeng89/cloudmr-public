@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
-		<title> MReduce </title>
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<!-- Le styles -->
-		<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
-		<link href="../assets/css/main.css" rel="stylesheet">
-		<link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
-		<link href="../assets/css/mreduce.css" rel="stylesheet">
-		<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<head>
+	<meta charset="utf-8">
+	<title> MReduce </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<!-- Le styles -->
+	<link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+	<link href="../assets/css/main.css" rel="stylesheet">
+	<link href="../assets/css/bootstrap-responsive.css" rel="stylesheet">
+	<link href="../assets/css/mreduce.css" rel="stylesheet">
+	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 		<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
 
@@ -32,7 +32,7 @@
 		<script src="http://connect.facebook.net/en_US/all.js"></script>
 		<script src="../assets/js/facebook.js"></script>
 		<!-- End Facebook -->
-
+		<!-- Top Bar -->
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
 				<div class="container-fluid">
@@ -41,42 +41,38 @@
 					<div class="nav-collapse collapse">
 						<form class="navbar-form pull-right">
 							<button class="btn" id='fbsignin'>
-								Log on
+								Login
 							</button>
 						</form>
 						<ul class="nav">
 							<li class="active">
 								<ul class="nav">
 									<li class="active">
-										<a href="index.html">Home</a>
+										<a href="index.html"><i class="icon-home icon-white"></i> Home</a>
 									</li>
 									<li>
-										<a href="about.html">About</a>
+										<a href="about.html"><i class="icon-question-sign icon-white"></i> About</a>
 									</li>
 									<li>
-										<a href="contact.html">Contact</a>
+										<a href="contact.html"> <i class="icon-envelope icon-white"></i> Contact</a>
 									</li>
-									<li class="dropdown">
-										<a href="#" class="dropdown-toggle" data-toggle="dropdown">Quick Launch <b class="caret"></b></a>
-										<ul class="dropdown-menu">
-											<li>
-												<a href="discover_tutorial.html"><i class="icon-zoom-in"></i> Discover</a>
-											</li>
-											<li>
-												<a href="learn_single_player.html"><i class="icon-book"></i> Learn</a>
-											</li>
-											<li>
-												<a href="collaborate_lobby.html"><i class="icon-resize-small"></i> Collaborate</a>
-											</li>
-										</ul>
+									<li>
+										<a href="discover.html"><i class="icon-zoom-in icon-white"></i> Discover</a>
+									</li>
+									<li>
+										<a href="learn.html"><i class="icon-book icon-white"></i> Learn</a>
+									</li>
+									<li>
+										<a href="collaborate_lobby.html"><i class="icon-resize-small icon-white"></i> Collaborate</a>
 									</li>
 								</ul>
+							</li>
+						</ul>
 					</div>
-
-					<!--/.nav-collapse -->
 				</div>
 			</div>
 		</div>
+		<!-- Top Bar -->
 		<div class="row-fluid">
 			<div class="span12 offset1">
 				<div class="page-header">
@@ -119,9 +115,10 @@
 				</div>
 			</div>
 
+			<hr>
 			<footer>
 				<p>
-					&copy; MReduce 2013
+					&copy; Cloud Computing: Andrew ~ Kenneth ~ Muar ~ Prajoth
 				</p>
 			</footer>
 
@@ -149,20 +146,20 @@
 		<script src="../assets/js/google-analytic.js"></script>
 		<script src="/socket.io/socket.io.js"></script>
 		<script>
-			var socket = io.connect('/');
-			socket.on('news', function(data) {
-				console.log(data);
-				socket.emit('my other event', {
-					my : 'data'
-				});
+		var socket = io.connect('/');
+		socket.on('news', function(data) {
+			console.log(data);
+			socket.emit('my other event', {
+				my : 'data'
 			});
-			socket.on('online users', function(data) {
-				console.log(data);
-				socket.emit('my other event', {
-					hello : 'users received'
-				});
+		});
+		socket.on('online users', function(data) {
+			console.log(data);
+			socket.emit('my other event', {
+				hello : 'users received'
 			});
+		});
 		</script>
 
 	</body>
-</html>
+	</html>

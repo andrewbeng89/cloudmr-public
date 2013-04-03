@@ -17,7 +17,7 @@ $(document).ready(function() {
 	jQuery.ajax({
 		async : false,
 		type : 'GET',
-		url : 'assets/js/facebook.js',
+		url : '../assets/js/facebook.js',
 		data : null,
 		success : function(data, textStatus, jqxhr) {
 			console.log(data);

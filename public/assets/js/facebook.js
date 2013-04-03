@@ -1,4 +1,5 @@
 var username;
+var userid;
 
 // https://developers.facebook.com/docs/howtos/login/getting-started/
 window.fbAsyncInit = function() {
@@ -20,7 +21,9 @@ window.fbAsyncInit = function() {
 			console.log('Access Token = ' + access_token);
 			FB.api('/me', function(response) {
 				username = response.name;
+				userid = response.id;
 				console.log('username: ' + username);
+				console.log('username: ' + userid);
 				//server.emit('connect', username);
 				server.emit('saveuser', access_token);
 			});

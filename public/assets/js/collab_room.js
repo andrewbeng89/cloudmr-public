@@ -4,16 +4,19 @@ $(document).ready(function() {
     var lobbyendpoint = "/";
     var verifyEndpoint = "/verify";
     var questionsEndpoint = "/questions";
+    var totalQuestionsEndpoint = "/total_questions";
 
     var editorMapper = ace.edit("editorMapper");
     var editorReducer = ace.edit("editorReducer");
     var server = io.connect(lobbyendpoint);
 
+    var spinnerVisible = false;
     var roomCount = 0;
     var question_id = "";
     var room = {};
     var position = ''; //this is the current position
     var username = $.now();
+    var questionId = 1.1;
 
     var roomId = GetURLParameter('room');
     var lang = GetURLParameter('lang');
@@ -24,6 +27,7 @@ $(document).ready(function() {
     checkRoomFull();
     enterRoom();
     realtime();
+    loadQuestions();
 
     function setupEditor() {
 
@@ -64,17 +68,12 @@ $(document).ready(function() {
     // ----------------------------- Click Listeners -----------------------------
 
 
-
     // ----------------------------- Methods -----------------------------
 
     //Socket coding realtime
 
     function realtime() {
         //Change Listen
-
-        // var range = new Range(1, 1, 10, 10);
-        // var markerMapper = editorMapper.getSession().addMarker(range, "ace_selected_word", "text");
-        // var markerReducer = editorReducer.getSession().addMarker(range, "ace_selected_word", "text");
 
         var stateMapper = true;
         var stateReducer = true;
@@ -113,10 +112,10 @@ $(document).ready(function() {
             // }
 
             // if (stateMapper == false) {
-                console.log('ken:1');
-                var code = editorMapper.getValue();
-                // console.log(code);
-                server.emit('codeChangeMapper', room, code);
+            console.log('ken:1');
+            var code = editorMapper.getValue();
+            // console.log(code);
+            server.emit('codeChangeMapper', room, code);
             // }
         });
 
@@ -129,10 +128,10 @@ $(document).ready(function() {
             // }
 
             // if (stateReducer == false) {
-                console.log('ken:2');
-                var code = editorReducer.getValue();
-                // console.log(code);
-                server.emit('codeChangeReducer', room, code);
+            console.log('ken:2');
+            var code = editorReducer.getValue();
+            // console.log(code);
+            server.emit('codeChangeReducer', room, code);
             // }
         });
     }
@@ -179,38 +178,6 @@ $(document).ready(function() {
             position = 'reducer';
         }
     }
-
-    // Not working yet
-
-    function loadQuestions() {
-        var questionId = GetURLParameter('id');
-        var url = questionsEndpoint; //this is the url to call
-        var param = "callback=?" + "&id=" + questionId; //add the related parameters
-
-        $.getJSON(url, param).done(function(data) {
-            console.log(JSON.stringify(data));
-            question_id = data.question_id;
-            var question = data.question;
-            var hint = data.hint;
-            var title = data.title;
-            js_code = data.js_code;
-            py_code = data.py_code;
-            //add question
-            $('#question').empty().append("<h4><b>" + title + "</b></h4>" + question);
-            $('#hint').append(hint);
-            //setcode type
-            editor.setValue(js_code);
-            setupEditor();
-            var nextq = question_id + 1;
-            //update the link for the new challenge
-            $('#nextClass').attr("href", top.location.href.substring(0, top.location.href.indexOf('?')) + "?id=" + nextq);
-        }).fail(function(jqxhr, textStatus, error) {
-            var err = textStatus + ', ' + error;
-            console.log("Request Failed: " + err);
-        });
-        totalQuestions();
-    }
-
 
     //Not working yet.
 
@@ -264,6 +231,76 @@ $(document).ready(function() {
             }
 
         });
+    }
+
+    function loadQuestions() {
+
+        var url = questionsEndpoint; //this is the url to call
+        var param = "callback=?" + "&id=" + questionId; //add the related parameters
+        showProgress();
+        $.getJSON(url, param).done(function(data) {
+            console.log(JSON.stringify(data));
+            questionId = data.question_id;
+            var q = questionId.toString().split(".");
+            var modQ = q[0];
+            var question = data.question;
+            var hint = data.hint;
+            var title = data.title;
+            js_code = data.js_code;
+            py_code = data.py_code;
+            $('#questionHeader').empty().append("<h4><b>Challenge " + modQ + ": " + title + "</b></h4>");
+            $('#question').empty().append(question);
+
+            // $('#hint').append(hint);
+            // editor.setValue(js_code);
+            // reloadCode();
+            // setupEditor();
+            // var nextq = questionId + 1;
+            // $('#nextClass').removeAttr('id');
+            // $('#nextClass').attr("href", top.location.href.substring(0, top.location.href.indexOf('?')) + "?id=" + nextq);
+            hideProgress();
+        }).fail(function(jqxhr, textStatus, error) {
+            var err = textStatus + ', ' + error;
+            console.log("Request Failed: " + err);
+        });
+        // totalQuestions();
+    }
+
+    function totalQuestions() {
+
+        var url = totalQuestionsEndpoint; //this is the url to call
+        var param = "type=solo&callback=?";
+
+        showProgress();
+        $.getJSON(url, param, function(data) {
+            console.log(JSON.stringify(data));
+            if (questionId >= data.number) {
+                $('#nextClass').attr("disabled", "disabled");
+            }
+
+            for (var i = 1; i <= data.number; i++) {
+                addEpisodes(i);
+            }
+            hideProgress();
+
+        });
+    }
+
+
+    function showProgress() {
+        if (!spinnerVisible) {
+            $("div#spinner").fadeIn("fast");
+            spinnerVisible = true;
+        }
+    }
+
+    function hideProgress() {
+        if (spinnerVisible) {
+            var spinner = $("div#spinner");
+            spinner.stop();
+            spinner.fadeOut("fast");
+            spinnerVisible = false;
+        }
     }
 
     // ----------------------------- Utility -----------------------------

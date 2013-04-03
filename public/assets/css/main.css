@@ -63,3 +63,7 @@ body {
     z-index: 2;
     overflow: auto;
 }
+
+#questionAccordian{
+    margin-top: -30px;
+}

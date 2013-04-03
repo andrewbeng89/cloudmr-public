@@ -37,6 +37,7 @@ window.fbAsyncInit = function() {
 		}
 
 	});
+	$(document).trigger('fbInit');
 };
 
 // Load the SDK Asynchronously

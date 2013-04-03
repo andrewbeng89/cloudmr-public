@@ -16,7 +16,7 @@ $(document).ready(function() {
     var room = {};
     var position = ''; //this is the current position
     var username = $.now();
-    var questionId = 1.1;
+    var questionId = GetURLParameter("id");
 
     var roomId = GetURLParameter('room');
     var lang = GetURLParameter('lang');

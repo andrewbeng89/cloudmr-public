@@ -12,7 +12,28 @@ $(document).ready(function() {
 			}
 		});
 	}
-	
+
+
+	jQuery.ajax({
+		async : false,
+		type : 'GET',
+		url : 'facebook.js',
+		data : null,
+		success : function(data, textStatus, jqxhr) {
+			console.log(data);
+			//data returned
+			console.log(textStatus);
+			//success
+			console.log(jqxhr.status);
+			//200
+			console.log('Load was performed.');
+		},
+		dataType : 'script',
+		error : function(xhr, textStatus, errorThrown) {
+			// Look at the `textStatus` and/or `errorThrown` properties.
+		}
+	});
+
 	// Contains all other functions on callback invoked (facebook name and id returned)
 	get_username(function(user_name, user_id) {
 		// ----------------------------- Variables -----------------------------
@@ -37,7 +58,7 @@ $(document).ready(function() {
 		});
 
 		$('#join').click(function() {
-			
+
 		});
 
 		// ----------------------------- Methods -----------------------------
@@ -100,7 +121,7 @@ $(document).ready(function() {
 			room.roomId = SHA1(username);
 
 			server.emit('addRoom', room);
-			window.location.href = "collaborate.html?room=" + SHA1(username) + "&lang=" + lang + "&pos=" + pos+"&id=1.1";
+			window.location.href = "collaborate.html?room=" + SHA1(username) + "&lang=" + lang + "&pos=" + pos + "&id=1.1";
 
 		}
 

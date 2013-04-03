@@ -2,23 +2,21 @@ $(document).ready(function() {
 
 	// Get the Facebook name and id of a user and pass to a callback function
 	function get_username(cb) {
-		FB.login(function(response) {
-			if (response.authResponse) {
-				var token = response.authResponse.accessToken;
-				FB.api('/me', function(response) {
-					// Invoke the callback function with the name and id params
-					cb(response.name, response.id);
-				});
-			}
+		FB.api('/me', function(response) {
+			// Invoke the callback function with the name and id params
+			cb(response.name, response.id);
 		});
 	}
-	
+
 	// Contains all other functions on callback invoked (facebook name and id returned)
 	get_username(function(user_name, user_id) {
 		// ----------------------------- Variables -----------------------------
 		var lobbyendpoint = "/";
 		var server = io.connect(lobbyendpoint);
-		var username = user_name;
+		if (username !== null || username !== undefined) {
+			username = user_name;
+		}
+		//var username = user_name;
 		var userid = user_id;
 		console.log('username: ' + user_name);
 		console.log('user_id: ' + user_id);
@@ -37,7 +35,7 @@ $(document).ready(function() {
 		});
 
 		$('#join').click(function() {
-			
+
 		});
 
 		// ----------------------------- Methods -----------------------------
@@ -100,7 +98,7 @@ $(document).ready(function() {
 			room.roomId = SHA1(username);
 
 			server.emit('addRoom', room);
-			window.location.href = "collaborate.html?room=" + SHA1(username) + "&lang=" + lang + "&pos=" + pos+"&id=1.1";
+			window.location.href = "collaborate.html?room=" + SHA1(username) + "&lang=" + lang + "&pos=" + pos + "&id=1.1";
 
 		}
 
@@ -327,4 +325,4 @@ $(document).ready(function() {
 
 	});
 
-});
+}); 

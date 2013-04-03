@@ -13,9 +13,7 @@ $(document).ready(function() {
 		// ----------------------------- Variables -----------------------------
 		var lobbyendpoint = "/";
 		var server = io.connect(lobbyendpoint);
-		if (username !== null || username !== undefined) {
-			username = user_name;
-		}
+		username = user_name;
 		//var username = user_name;
 		var userid = user_id;
 		console.log('username: ' + user_name);

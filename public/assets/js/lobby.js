@@ -14,11 +14,8 @@ $(document).ready(function() {
 	// ----------------------------- Variables -----------------------------
 	var lobbyendpoint = "/";
 	var server = io.connect(lobbyendpoint);
-	username = user_name;
-	//var username = user_name;
-	var userid = user_id;
 	console.log('username: ' + username);
-	console.log('user_id: ' + userid);
+	console.log('userid: ' + userid);
 
 	// ----------------------------- Setup files -----------------------------
 	connect();

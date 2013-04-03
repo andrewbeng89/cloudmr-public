@@ -23,7 +23,7 @@ window.fbAsyncInit = function() {
 				username = response.name;
 				userid = response.id;
 				console.log('username: ' + username);
-				console.log('username: ' + userid);
+				console.log('userid: ' + userid);
 				//server.emit('connect', username);
 				server.emit('saveuser', access_token);
 			});

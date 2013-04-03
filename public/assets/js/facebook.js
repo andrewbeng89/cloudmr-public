@@ -20,6 +20,7 @@ window.fbAsyncInit = function() {
 			console.log('Access Token = ' + access_token);
 			FB.api('/me', function(response) {
 				username = response.name;
+				console.log('username: ' + username);
 				//server.emit('connect', username);
 				server.emit('saveuser', access_token);
 			});

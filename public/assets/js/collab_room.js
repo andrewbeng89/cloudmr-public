@@ -20,6 +20,11 @@ $(document).ready(function() {
 
     var roomId = GetURLParameter('room');
     var lang = GetURLParameter('lang');
+    if (lang == 'javascript') {
+        lang = 'js';
+    } else if (lang == 'python') {
+        lang = 'py';
+    }
     var pos = GetURLParameter('pos');
     room.roomId = roomId;
     // ----------------------------- Setup files -----------------------------
@@ -28,6 +33,7 @@ $(document).ready(function() {
     enterRoom();
     realtime();
     loadQuestions();
+    whichRun();
 
     function setupEditor() {
 
@@ -67,7 +73,9 @@ $(document).ready(function() {
 
     // ----------------------------- Click Listeners -----------------------------
 
-
+    $("#runMapper").click(function() {
+        run();
+    });
     // ----------------------------- Methods -----------------------------
 
     //Socket coding realtime
@@ -166,6 +174,7 @@ $(document).ready(function() {
                 editorReducer.setReadOnly(true);
             }
         });
+        whichRun();
     }
 
     function enterRoom() {
@@ -177,60 +186,6 @@ $(document).ready(function() {
         } else if (pos === 'mapper') {
             position = 'reducer';
         }
-    }
-
-    //Not working yet.
-
-    function runMapper() {
-        var url = verifyEndpoint; //this is the url to call
-        var code = editorMapper.getValue();
-        var currentLang = lang;
-
-        code = encodeURIComponent(code);
-        var param = "callback=?&lang=" + currentLang + "&q_id=" + question_id + "&solution=" + code; //lang, q_id, solution
-        $.getJSON(url, param, function(data) {
-            console.log(JSON.stringify(data));
-            var error = data.errors;
-            if (error == null) {
-                var call = data.results[0].call; //array
-                var correct = data.results[0].correct; //array
-                var solved = data.solved; //boolean
-                $('#console').append("Call: " + call + "\nCorrect: " + correct + "\nSolved: " + solved + "\n....\n");
-                $('#console').scrollTop($('#console')[0].scrollHeight);
-            } else {
-                if (error != null) {
-                    alert(error);
-                }
-            }
-
-        });
-    }
-
-    //Not working yet.
-
-    function runReducer() {
-        var url = verifyEndpoint; //this is the url to call
-        var code = editorReducer.getValue();
-        var currentLang = lang;
-
-        code = encodeURIComponent(code);
-        var param = "callback=?&lang=" + currentLang + "&q_id=" + question_id + "&solution=" + code; //lang, q_id, solution
-        $.getJSON(url, param, function(data) {
-            console.log(JSON.stringify(data));
-            var error = data.errors;
-            if (error == null) {
-                var call = data.results[0].call; //array
-                var correct = data.results[0].correct; //array
-                var solved = data.solved; //boolean
-                $('#console').append("Call: " + call + "\nCorrect: " + correct + "\nSolved: " + solved + "\n....\n");
-                $('#console').scrollTop($('#console')[0].scrollHeight);
-            } else {
-                if (error != null) {
-                    alert(error);
-                }
-            }
-
-        });
     }
 
     function loadQuestions() {
@@ -282,6 +237,55 @@ $(document).ready(function() {
                 addEpisodes(i);
             }
             hideProgress();
+
+        });
+    }
+
+    function whichRun() {
+        if (position == "reducer") {
+            $('#runReducer').attr('disabled', 'disabled');
+            $('#resetReducer').attr('disabled', 'disabled');
+        } else {
+            $('#runMapper').attr('disabled', 'disabled');
+            $('#resetMapper').attr('disabled', 'disabled');
+
+        }
+
+    }
+
+    function run() {
+        var url = verifyEndpoint; //this is the url to call
+
+        var code = "";
+        if (position == "reducer") {
+            code = editorMapper.getValue();
+        } else {
+            code = editorReducer.getValue();
+        }
+        code = encodeURIComponent(code);
+        var param = "callback=?&lang=" + lang + "&q_id=" + questionId + "&solution=" + code; //lang, q_id, solution
+        showProgress();
+        console.log(param);
+        $.getJSON(url, param, function(data) {
+            console.log(JSON.stringify(data));
+            var error = data.errors;
+            if (error == null) {
+                var call = data.results[0].call; //array
+                var correct = data.results[0].correct; //array
+                var solved = data.solved; //boolean
+                if (position == 'reducer') {
+                    $('#consoleMapper').append("Call: " + call + "\nCorrect: " + correct + "\nSolved: " + solved + "\n....\n");
+                    $('#consoleMapper').scrollTop($('#consoleMapper')[0].scrollHeight);
+                } else if (position = 'mapper') {
+                    $('#consoleReducer').append("Call: " + call + "\nCorrect: " + correct + "\nSolved: " + solved + "\n....\n");
+                    $('#consoleReducer').scrollTop($('#consoleReducer')[0].scrollHeight);
+                }
+                hideProgress();
+            } else {
+                if (error != null) {
+                    alert(error);
+                }
+            }
 
         });
     }

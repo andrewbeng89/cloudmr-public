@@ -100,7 +100,7 @@ $(document).ready(function() {
 			room.roomId = SHA1(username);
 
 			server.emit('addRoom', room);
-			window.location.href = "collaborate.html?room=" + SHA1(username) + "&lang=" + lang + "&pos=" + pos;
+			window.location.href = "collaborate.html?room=" + SHA1(username) + "&lang=" + lang + "&pos=" + pos+"&id=1.1";
 
 		}
 

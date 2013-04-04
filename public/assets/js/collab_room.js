@@ -283,15 +283,17 @@ $(document).ready(function() {
 
     function run() {
         var url = verifyEndpoint; //this is the url to call
-
+        var role = "";
         var code = "";
         if (position == "mapper") {
             code = editorMapper.getValue();
+            role = "mapper";
         } else {
             code = editorReducer.getValue();
+            role = "reducer";
         }
         code = encodeURIComponent(code);
-        var param = "callback=?&lang=" + lang + "&q_id=" + questionId + "&solution=" + code; //lang, q_id, solution
+        var param = "callback=?&lang=" + lang + "&q_id=" + questionId + "&solution=" + code+"&role="+role; //lang, q_id, solution
         showProgress();
         console.log(param);
         $.getJSON(url, param, function(data) {

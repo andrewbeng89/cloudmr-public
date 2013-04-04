@@ -20,13 +20,15 @@ $(document).ready(function() {
 		url : '../assets/js/facebook.js',
 		data : null,
 		success : function(data, textStatus, jqxhr) {
-			console.log(data);
+			//console.log(data);
 			//data returned
 			console.log(textStatus);
 			//success
 			console.log(jqxhr.status);
 			//200
 			console.log('Load was performed.');
+			// Contains all other functions on callback invoked (facebook name and id returned)
+			get_username(lobby_callback);
 		},
 		dataType : 'script',
 		error : function(xhr, textStatus, errorThrown) {
@@ -34,8 +36,7 @@ $(document).ready(function() {
 		}
 	});
 
-	// Contains all other functions on callback invoked (facebook name and id returned)
-	get_username(function(user_name, user_id) {
+	function lobby_callback(user_name, user_id) {
 		// ----------------------------- Variables -----------------------------
 		var lobbyendpoint = "/";
 		var server = io.connect(lobbyendpoint);
@@ -346,6 +347,6 @@ $(document).ready(function() {
 
 		}
 
-	});
+	}
 
 });

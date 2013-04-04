@@ -226,7 +226,7 @@ app.get('/verify', function(req, res) {
 			if (role === 'mapper') {
 				solution += (selected_question.mapper_code + selected_question.combine_code);
 			} else {
-				solution += (selected_question.reducer_code + selected_question.combine_code);
+				solution = selected_question.reducer_code + solution + selected_question.combine_code;
 			}
 		}
 		

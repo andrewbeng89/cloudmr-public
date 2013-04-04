@@ -33,6 +33,7 @@ $(document).ready(function() {
 
     $("#run").click(function() {
         run();
+        if (_gaq) _gaq.push(['_trackEvent', 'learn', 'run', questionId, 'run']);
     });
     $("#reset").click(function() {
         var c = "";
@@ -43,6 +44,10 @@ $(document).ready(function() {
         }
         editor.setValue(c);
         $('#console').text("");
+    });
+
+    $('#nextClass').click(function(){
+        if (_gaq) _gaq.push(['_trackEvent', 'learn', 'next', questionId, 'run']);
     });
 
     // Toggle the tabs

@@ -11,7 +11,7 @@ var mongoose = require('mongoose')
     js_tests : String,
     py_tests : String,
     mapper_code : String,
-    reduce_code : String,
+    reducer_code : String,
     combine_code : String
 });
 

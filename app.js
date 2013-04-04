@@ -223,17 +223,17 @@ app.get('/verify', function(req, res) {
 		}
 
 		if (role !== undefined) {
-			// if (role === 'mapper') {
-				// solution += (selected_question.mapper_code + selected_question.combine_code);
-				// console.log(solution);
-			// } else if (role === 'reducer') {
-				// solution = selected_question.reducer_code + solution + selected_question.combine_code;
-				// console.log(solution);
-			// } else if (role === 'combined') {
-				// solution = solution + selected_question.combine_code;
-			// }
+			if (role === 'mapper') {
+				solution += (selected_question.mapper_code + selected_question.combine_code);
+				console.log(solution);
+			} else if (role === 'reducer') {
+				solution = selected_question.reducer_code + solution + selected_question.combine_code;
+				console.log(solution);
+			} else if (role === 'combined') {
+				solution = solution + selected_question.combine_code;
+			}
 			
-			solution = selected_question.mapper_code + selected_question.reducer_code + selected_question.combine_code;
+			// solution = selected_question.mapper_code + selected_question.reducer_code + selected_question.combine_code;
 		}
 		
 		// Requested question found

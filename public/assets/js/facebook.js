@@ -26,6 +26,7 @@ window.fbAsyncInit = function() {
 				console.log('userid: ' + userid);
 				//server.emit('connect', username);
 				server.emit('saveuser', access_token);
+				$(document).trigger('fbInit');
 			});
 			// connected
 		} else if (response.status === 'not_authorized') {
@@ -37,7 +38,6 @@ window.fbAsyncInit = function() {
 		}
 
 	});
-	$(document).trigger('fbInit');
 };
 
 // Load the SDK Asynchronously

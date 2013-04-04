@@ -9,7 +9,10 @@ var mongoose = require('mongoose')
     js_code : String,
     py_code : String,
     js_tests : String,
-    py_tests : String
+    py_tests : String,
+    mapper_code : String,
+    reduce_code : String,
+    combine_code : String
 });
 
 

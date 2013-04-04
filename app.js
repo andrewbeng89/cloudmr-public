@@ -206,6 +206,9 @@ app.get('/verify', function(req, res) {
 	if (lang === 'py') {
 		lang = 'python';
 	}
+	
+	// Role param, either 'mapper' or 'reducer'
+	var role = _get['role'];
 
 	// Solution param, urlEncoded
 	var solution = _get['solution'];
@@ -219,6 +222,14 @@ app.get('/verify', function(req, res) {
 			res.jsonp("error");
 		}
 
+		if (role !== undefined) {
+			if (role === 'mapper') {
+				solution += (selected_question.mapper_code + selected_question.combine_code);
+			} else {
+				solution += (selected_question.reducer_code + selected_question.combine_code);
+			}
+		}
+		
 		// Requested question found
 		if (selected_question !== null) {
 			// Prepare jsonrequest data

@@ -82,7 +82,7 @@ $(document).ready(function() {
     });
 
     $("#mapReduce").click(function() {
-        runMapeReduce();
+        runMapReduce();
     });
 
     // Clear possible whitespace
@@ -322,17 +322,17 @@ $(document).ready(function() {
     }
 
 
-    function runMapeReduce() {
+    function runMapReduce() {
 
         var url = verifyEndpoint; //this is the url to call
         var code = "";
         var mapperCode = editorMapper.getValue();
         var reducerCode = editorReducer.getValue();
-
+        var role = "combined";
         code = mapperCode + "\n\n" + reducerCode;
         console.log(code);
         code = encodeURIComponent(code);
-        var param = "callback=?&lang=" + lang + "&q_id=" + questionId + "&solution=" + code; //lang, q_id, solution
+        var param = "callback=?&lang=" + lang + "&q_id=" + questionId + "&solution=" + code+"&role="+role; //lang, q_id, solution
         showProgress();
         console.log(param);
         $.getJSON(url, param, function(data) {

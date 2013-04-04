@@ -43,6 +43,8 @@ $(document).ready(function() {
 		loadRoom();
 		checkRoomStatus();
 
+		$('#username').text("Hi "+ username+",");
+
 		// ----------------------------- Click Listeners -----------------------------
 
 		$("#create").click(function() {

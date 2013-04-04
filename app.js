@@ -481,6 +481,28 @@ sessionSockets.on('connection', function(err, socket, session) {
 		socket.broadcast.emit('codeChange' + room.roomId + 'mapper', send);
 	});
 
+
+	socket.on('consoleChangeMapper', function(room, consoleText) {
+		var send = {};
+		send.consoleText = consoleText;
+		send.callbackPos = 'mapper';
+		console.log('console ping! consoleChange' + room.roomId + 'mapper');
+		socket.broadcast.emit('consoleChange' + room.roomId + 'reducer', send);
+	});
+
+	socket.on('consoleChangeReducer', function(room, consoleText) {
+		var send = {};
+		send.consoleText = consoleText;
+		send.callbackPos = 'reducer';
+		console.log('console pong! consoleChange' + room.roomId + 'reducer');
+		socket.broadcast.emit('consoleChange' + room.roomId + 'mapper', send);
+	});
+
+	socket.on('challengeComplete', function(room) {
+		console.log('\nChallenge Completed! '+JSON.stringify(room))	;
+		io.sockets.emit('challengeComplete' + room.roomId, room);
+	});
+
 });
 
 server.listen(app.get('port'), function() {

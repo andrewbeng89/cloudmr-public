@@ -53,10 +53,10 @@ $(document).ready(function() {
         editorReducer.getSession().setUseWrapMode(true);
         document.getElementById('editorReducer').style.fontSize = '14px';
 
-        if (lang === "javascript") {
+        if (lang === "js") {
             editorMapper.getSession().setMode("ace/mode/javascript");
             editorReducer.getSession().setMode("ace/mode/javascript");
-        } else if (lang === "python") {
+        } else if (lang === "py") {
             editorMapper.getSession().setMode("ace/mode/python");
             editorReducer.getSession().setMode("ace/mode/python");
         }
@@ -76,6 +76,20 @@ $(document).ready(function() {
     $("#runMapper").click(function() {
         run();
     });
+
+    $("#runReducer").click(function() {
+        run();
+    });
+
+    $("#mapReduce").click(function() {
+        runMapeReduce();
+    });
+
+    // Clear possible whitespace
+    $('#consoleMapper').text('');
+    $('#consoleReducer').text('');
+    $('#nextQuestion').hide('');
+
     // ----------------------------- Methods -----------------------------
 
     //Socket coding realtime
@@ -86,6 +100,8 @@ $(document).ready(function() {
         var stateMapper = true;
         var stateReducer = true;
         console.log('codeChange' + roomId + position);
+
+        //listen change code
         server.on('codeChange' + roomId + position, function(send) {
             console.log(position);
             var code = send.code;
@@ -94,7 +110,6 @@ $(document).ready(function() {
             if (position === 'reducer') {
                 console.log(callbackPos);
                 if (callbackPos == 'mapper') {
-                    console.log('ken:3');
                     editorMapper.setValue(code);
                     editorMapper.getSession().getSelection().selectionLead.setPosition(1, 1);
                     // editorMapper.getSession.removeMarker(markerMapper);
@@ -103,7 +118,6 @@ $(document).ready(function() {
             if (position === 'mapper') {
 
                 if (callbackPos == 'reducer') {
-                    console.log('ken:4');
                     editorReducer.setValue(code);
                     editorReducer.getSession().getSelection().selectionLead.setPosition(1, 1);
                     // editorReducer.getSession.removeMarker(markerReducer);
@@ -111,37 +125,54 @@ $(document).ready(function() {
             }
         });
 
-        //Code change
+        //broadcast code change
         editorMapper.getSession().on('change', function(e) {
-            // if (stateMapper == true) {
-            //     stateMapper = false;
-            // } else {
-            //     stateMapper = true;
-            // }
 
-            // if (stateMapper == false) {
-            console.log('ken:1');
             var code = editorMapper.getValue();
-            // console.log(code);
             server.emit('codeChangeMapper', room, code);
-            // }
+
         });
 
         editorReducer.getSession().on('change', function(e) {
 
-            // if (stateReducer == true) {
-            //     stateReducer = false;
-            // } else {
-            //     stateReducer = true;
-            // }
-
-            // if (stateReducer == false) {
-            console.log('ken:2');
             var code = editorReducer.getValue();
-            // console.log(code);
             server.emit('codeChangeReducer', room, code);
-            // }
+
         });
+
+        //listen console change
+        server.on('consoleChange' + roomId + position, function(send) {
+
+            var consoleText = send.consoleText;
+            var callbackPos = send.callbackPos;
+
+            if (position === 'reducer') {
+                if (callbackPos == 'mapper') {
+                    $('#consoleMapper').val(consoleText);
+                }
+            }
+            if (position === 'mapper') {
+                if (callbackPos == 'reducer') {
+                    $('#consoleReducer').val(consoleText);
+                }
+            }
+
+        });
+
+        //challenge complete listener
+        server.on('challengeComplete' + roomId, function(room) {
+            var nextq = questionId+1;
+            var fullLang = "";
+            if (lang == 'js') {
+                fullLang = 'javascript';
+            } else if (lang == 'py') {
+                fullLang = 'python';
+            }
+            console.log(top.location.href.substring(0, top.location.href.indexOf('?')) + "?room="+roomId+"&lang="+fullLang+"&pos="+pos+"&id=" + nextq);
+            $('#nextQuestion').attr("href", top.location.href.substring(0, top.location.href.indexOf('?')) + "?room="+roomId+"&lang="+fullLang+"&pos="+pos+"&id=" + nextq);
+            $('#nextQuestion').show('');
+        });
+
     }
 
     function checkRoomFull() {
@@ -149,6 +180,7 @@ $(document).ready(function() {
             roomCount++;
             // when both players have entered the room
             takeSide();
+
             if (roomCount == 2) {
                 room.roomCount = roomCount;
                 room.pos = pos;
@@ -157,9 +189,8 @@ $(document).ready(function() {
                 position = pos;
                 takeSide();
                 realtime();
+                whichRun();
             }
-
-            // console.log(roomCount);
         });
     }
 
@@ -174,7 +205,6 @@ $(document).ready(function() {
                 editorReducer.setReadOnly(true);
             }
         });
-        whichRun();
     }
 
     function enterRoom() {
@@ -203,16 +233,10 @@ $(document).ready(function() {
             var title = data.title;
             js_code = data.js_code;
             py_code = data.py_code;
+
             $('#questionHeader').empty().append("<h4><b>Challenge " + modQ + ": " + title + "</b></h4>");
             $('#question').empty().append(question);
 
-            // $('#hint').append(hint);
-            // editor.setValue(js_code);
-            // reloadCode();
-            // setupEditor();
-            // var nextq = questionId + 1;
-            // $('#nextClass').removeAttr('id');
-            // $('#nextClass').attr("href", top.location.href.substring(0, top.location.href.indexOf('?')) + "?id=" + nextq);
             hideProgress();
         }).fail(function(jqxhr, textStatus, error) {
             var err = textStatus + ', ' + error;
@@ -242,12 +266,16 @@ $(document).ready(function() {
     }
 
     function whichRun() {
-        if (position == "reducer") {
+        if (position == "mapper") {
             $('#runReducer').attr('disabled', 'disabled');
             $('#resetReducer').attr('disabled', 'disabled');
+            $('#runMapper').removeAttr('disabled');
+            $('#resetMapper').removeAttr('disabled');
         } else {
             $('#runMapper').attr('disabled', 'disabled');
             $('#resetMapper').attr('disabled', 'disabled');
+            $('#runReducer').removeAttr('disabled');
+            $('#resetReducer').removeAttr('disabled');
 
         }
 
@@ -257,7 +285,7 @@ $(document).ready(function() {
         var url = verifyEndpoint; //this is the url to call
 
         var code = "";
-        if (position == "reducer") {
+        if (position == "mapper") {
             code = editorMapper.getValue();
         } else {
             code = editorReducer.getValue();
@@ -273,13 +301,14 @@ $(document).ready(function() {
                 var call = data.results[0].call; //array
                 var correct = data.results[0].correct; //array
                 var solved = data.solved; //boolean
-                if (position == 'reducer') {
+                if (position == 'mapper') {
                     $('#consoleMapper').append("Call: " + call + "\nCorrect: " + correct + "\nSolved: " + solved + "\n....\n");
                     $('#consoleMapper').scrollTop($('#consoleMapper')[0].scrollHeight);
-                } else if (position = 'mapper') {
+                } else if (position = 'reducer') {
                     $('#consoleReducer').append("Call: " + call + "\nCorrect: " + correct + "\nSolved: " + solved + "\n....\n");
                     $('#consoleReducer').scrollTop($('#consoleReducer')[0].scrollHeight);
                 }
+                consoleChange();
                 hideProgress();
             } else {
                 if (error != null) {
@@ -290,6 +319,66 @@ $(document).ready(function() {
         });
     }
 
+
+    function runMapeReduce() {
+
+        var url = verifyEndpoint; //this is the url to call
+        var code = "";
+        var mapperCode = editorMapper.getValue();
+        var reducerCode = editorReducer.getValue();
+
+        code = mapperCode + "\n\n" + reducerCode;
+        console.log(code);
+        code = encodeURIComponent(code);
+        var param = "callback=?&lang=" + lang + "&q_id=" + questionId + "&solution=" + code; //lang, q_id, solution
+        showProgress();
+        console.log(param);
+        $.getJSON(url, param, function(data) {
+            console.log(JSON.stringify(data));
+            var error = data.errors;
+            if (error == null) {
+                var call = data.results[0].call; //array
+                var correct = data.results[0].correct; //array
+                var solved = data.solved; //boolean
+                if (position == 'mapper') {
+                    $('#consoleMapper').append("MapReduce Initiated!\nCombining....\nCall: " + call + "\nCorrect: " + correct + "\nSolved: " + solved + "\n....\n");
+                    $('#consoleMapper').scrollTop($('#consoleMapper')[0].scrollHeight);
+                } else if (position = 'reducer') {
+                    $('#consoleReducer').append("MapReduce Initiated!\nCombining....\nCall: " + call + "\nCorrect: " + correct + "\nSolved: " + solved + "\n....\n");
+                    $('#consoleReducer').scrollTop($('#consoleReducer')[0].scrollHeight);
+                }
+                consoleChange();
+                checkComplete(correct, solved);
+
+                hideProgress();
+            } else {
+                if (error != null) {
+                    alert(error);
+                }
+            }
+
+        });
+    }
+
+
+    function checkComplete(correct, solved) {
+        // correct = true;
+        // solved = true;
+        room.pos = pos;
+        if (correct == true && solved == true) {
+            server.emit('challengeComplete', room);
+        }
+    }
+
+    function consoleChange() {
+        if (position == 'mapper') {
+            var consoletext = $('#consoleMapper').val();
+            server.emit('consoleChangeMapper', room, consoletext);
+        } else if (position = 'reducer') {
+            var consoletext = $('#consoleReducer').val();
+            server.emit('consoleChangeReducer', room, consoletext);
+        }
+    }
 
     function showProgress() {
         if (!spinnerVisible) {

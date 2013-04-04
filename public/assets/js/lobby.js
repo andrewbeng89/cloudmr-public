@@ -1,19 +1,6 @@
 $(document).ready(function() {
 
-	// Get the Facebook name and id of a user and pass to a callback function
-	function get_username(cb) {
-		FB.login(function(response) {
-			if (response.authResponse) {
-				var token = response.authResponse.accessToken;
-				FB.api('/me', function(response) {
-					// Invoke the callback function with the name and id params
-					cb(response.name, response.id);
-				});
-			}
-		});
-	}
-
-
+	// Only execute the rest of lobby.js when FB api has been initialised
 	jQuery.ajax({
 		async : false,
 		type : 'GET',
@@ -27,7 +14,8 @@ $(document).ready(function() {
 			console.log(jqxhr.status);
 			//200
 			console.log('Load was performed.');
-			// Contains all other functions on callback invoked (facebook name and id returned)
+			// Listen to fbInit:
+			// username and userid have already been returned and declared
 			$(document).on('fbInit', function() {
 				lobby_callback(username, userid);
 			});
@@ -38,6 +26,7 @@ $(document).ready(function() {
 		}
 	});
 
+	// Contains all other functions on callback invoked (facebook name and id returned)
 	function lobby_callback(user_name, user_id) {
 		// ----------------------------- Variables -----------------------------
 		var lobbyendpoint = "/";

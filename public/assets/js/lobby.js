@@ -28,7 +28,7 @@ $(document).ready(function() {
 			//200
 			console.log('Load was performed.');
 			// Contains all other functions on callback invoked (facebook name and id returned)
-			$(document).bind('fbInit', function() {
+			$(document).on('fbInit', function() {
 				get_username(lobby_callback);
 			});
 		},

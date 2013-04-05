@@ -1,0 +1,21 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = git@github.com:kenwjj/MReduce.git
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+[remote "all"]
+	url = git@github.com:kenwjj/MReduce.git
+	url = git@github.com:andrewbeng89/cloudmr-public.git
+	url = ssh://ubuntu@54.251.120.78/home/ubuntu/repo
+[remote "andrew"]
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	url = git@github.com:andrewbeng89/cloudmr-public.git
+[remote "ec2"]
+	url = ssh://ubuntu@54.251.120.78/home/ubuntu/repo
+	fetch = +refs/heads/*:refs/remotes/ec2/*

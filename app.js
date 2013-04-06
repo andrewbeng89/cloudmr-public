@@ -528,7 +528,7 @@ server.listen(app.get('port'), function() {
 });
 
 exports.testExpressApp = function(beforeExit, assert) {
-    assert.response(server, {
+    assert.response(app, {
     	url: '/',
     	method: 'GET',
 		timeout: 500

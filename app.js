@@ -526,3 +526,7 @@ server.listen(app.get('port'), function() {
 	console.log("Express server listening on port " + app.get('port'));
 	console.log("node.js debug log");
 });
+
+exports.test = function(beforeExit, assert) {
+    assert.equal(6, 'foobar'.length);
+};

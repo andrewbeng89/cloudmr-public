@@ -38,7 +38,7 @@ app.configure(function() {
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(app.router);
-	//app.use(express.static(path.join(__dirname, 'public')));
+	app.use(express.static(path.join(__dirname, 'public')));
 	app.use(cookieParser);
 	app.use(express.session({
 		store : sessionStore
@@ -53,7 +53,7 @@ var SessionSockets = require('session.socket.io')
 
 app.configure('development', function() {
 	app.use(express.errorHandler());
-});
+//});
 
 // Redirect to /public/web from root domain
 app.get('/', function(req, res) {

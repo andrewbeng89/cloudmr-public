@@ -528,10 +528,10 @@ server.listen(app.get('port'), function() {
 });
 
 exports.testExpressApp = function(assert) {
-    assert.response(app, {
+    assert.response(server, {
     	url: '/',
     	timeout: 500
 	}, {
-		status: 200
+		status: 302
 	});
 };

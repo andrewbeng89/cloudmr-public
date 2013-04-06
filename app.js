@@ -53,7 +53,7 @@ var SessionSockets = require('session.socket.io')
 
 app.configure('development', function() {
 	app.use(express.errorHandler());
-//});
+});
 
 // Redirect to /public/web from root domain
 app.get('/', function(req, res) {

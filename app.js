@@ -530,7 +530,8 @@ server.listen(app.get('port'), function() {
 exports.testExpressApp = function(assert) {
     assert.response(app, {
     	url: '/',
-        method: 'GET'
+        method: 'GET',
+        timeout: 500
 	}, {
 		status: 200
 	});

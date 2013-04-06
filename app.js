@@ -531,6 +531,8 @@ exports.testExpressServer = function(beforeExit, assert) {
 	assert.response(server, {
     	url: '/', timeout: 500
 	}, {
-    	status: 302
+    	status: 200
+	}, function(res){
+    // All done, do some more tests if needed
 	});
 }

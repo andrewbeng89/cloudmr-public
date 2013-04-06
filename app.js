@@ -533,5 +533,8 @@ exports.testExpressApp = function(beforeExit, assert) {
     	method: 'GET'
 	}, {
     	status: 200
+	},
+	function (res) {
+		assert.ok('passed');
 	});
 }

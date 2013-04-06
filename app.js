@@ -527,12 +527,10 @@ server.listen(app.get('port'), function() {
 	console.log("node.js debug log");
 });
 
-exports.testExpressApp = function(assert) {
+exports.testExpressApp = function(beforeExit, assert) {
     assert.response(app, {
-    	url: '/',
-        method: 'GET',
-        timeout: 500
+    	url: '/'
 	}, {
 		status: 200
 	});
-}
+};

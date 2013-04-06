@@ -12,6 +12,7 @@
 		"btoa": "*",
 		"mongoose": "*",
 		"connect": "*",
-		"session.socket.io": "*"
+		"session.socket.io": "*",
+		"expresso" : "*"
 	}
 }

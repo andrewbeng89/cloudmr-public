@@ -163,4 +163,8 @@ pip-log.txt
 .DS_Store
 
 
+<<<<<<< HEAD
 node_modules/
+=======
+node_modules
+>>>>>>> 8321abe93accd7e7e52e230d5f2878d2186efed1

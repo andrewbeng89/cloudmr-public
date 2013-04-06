@@ -524,5 +524,5 @@ sessionSockets.on('connection', function(err, socket, session) {
 
 server.listen(app.get('port'), function() {
 	console.log("Express server listening on port " + app.get('port'));
-	console.log("node.js debug log");
+	//console.log("node.js debug log");
 });

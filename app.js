@@ -528,8 +528,8 @@ server.listen(app.get('port'), function() {
 });
 
 exports.testExpressApp = function(beforeExit, assert) {
-    assert.response(server, {
-    	url: '/'
+    assert.response(app, {
+    	url: '/web/'
 	}, {
 		status: 200
 	});

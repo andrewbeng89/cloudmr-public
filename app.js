@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 
-//var express = require('express')
+var express = require('express')
 	, routes = require('./routes')
 	, user = require('./routes/user')
 	, http = require('http')
@@ -531,6 +531,6 @@ exports.testExpressApp = function(beforeExit, assert) {
     assert.response(app, {
     	url: '/', timeout: 500
 	}, {
-    	status: 200
+    	status: 400
 	});
 };

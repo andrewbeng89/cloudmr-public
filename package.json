@@ -13,6 +13,6 @@
 		"mongoose": "*",
 		"connect": "*",
 		"session.socket.io": "*",
-		"expresso":"*"
+		"supertest":"*"
 	}
 }

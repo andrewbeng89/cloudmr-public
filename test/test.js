@@ -1,26 +1,13 @@
-/*
- var app = require('../app')
- , http = require('http');
+var app = require('../app'), http = require('http'), request = require('supertest');
 
- describe('User API', function() {
-
- before(function(done) {
- server = http.createServer(app);
- });
-
- it('GET /questions should return 200', function(done) {
- request()
- .get('/questions')
- .end(function(res){
- assert(res.ok);
- done();
- });
- });
-
- }); */
-
-describe('app', function() {
-	describe('GET /questions', function() {
-		it('respond not found message');
+describe('WEB Folder', function() {
+	it('GET /web/index.html', function(done) {
+		request(app)
+			.get('/web/index.html')
+			.expect(200)
+			.end(function(err, res){
+        		if (err) return done(err);
+        		done();
+      		});
 	});
-}); 
+});

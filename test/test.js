@@ -1,4 +1,4 @@
-var app = require('../app'), http = require('http'), request = require('supertest');
+var app = require('../app'), http = require('http'), request = require('supertest'), assert = require('assert');
 
 describe('Test Express App', function() {
 	it('should GET /web/index.html', function(done) {
@@ -87,6 +87,7 @@ describe('Test Express App', function() {
 			.expect(200)
 			.end(function(err, res){
         		if (err) return done(err);
+        		assert.deepEqual(res.body, 'not found');
         		done();
       		});
 	});

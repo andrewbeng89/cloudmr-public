@@ -4,7 +4,7 @@ exports.testsStringLength = function(beforeExit, assert) {
 	assert.response(app, {
 		url : '/'
 	}, {
-		status : 302
+		status : 200
 	}, function(res) {
 		assert.ok(res);
 	});

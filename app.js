@@ -2,7 +2,7 @@
  * Module dependencies.
  */
 
-var express = require('express')
+/*var express = require('express')
 	, routes = require('./routes')
 	, user = require('./routes/user')
 	, http = require('http')
@@ -11,7 +11,7 @@ var express = require('express')
 	, connect = require('connect')
 	, url = require('url')
 	, querystring = require('querystring')
-	, app = express();
+	, app = express();*/
 
 // Require Mongoose module to handle mongo connection with DB
 // Require schema for question model

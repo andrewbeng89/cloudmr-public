@@ -28,6 +28,9 @@ window.fbAsyncInit = function() {
 				server.emit('saveuser', access_token);
 				$(document).trigger('fbInit');
 			});
+			server.on('newuser', function() {
+				_trackEvent('user', 'login', 'new user', '1');
+			});
 			// connected
 		} else if (response.status === 'not_authorized') {
 			// not_authorized

@@ -398,6 +398,7 @@ sessionSockets.on('connection', function(err, socket, session) {
 						new_user.save();
 						new_user.returning = false;
 						console.log(['new user', new_user]);
+						io.socckets.emit('newuser', 'new user created');
 					}
 				});
 			});

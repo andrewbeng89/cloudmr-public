@@ -33,7 +33,7 @@ $(document).ready(function() {
 
     $("#run").click(function() {
         run();
-        if (_gaq) _gaq.push(['_trackEvent', 'learn', 'run', questionId, 'run']);
+        _gaq.push(['_trackEvent', 'run', 'click', 'learn']);
     });
     $("#reset").click(function() {
         var c = "";

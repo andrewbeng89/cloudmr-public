@@ -75,14 +75,17 @@ $(document).ready(function() {
 
     $("#runMapper").click(function() {
         run();
+        _gaq.push(['_trackEvent', 'run', 'click', 'collab mapper']);
     });
 
     $("#runReducer").click(function() {
         run();
+        _gaq.push(['_trackEvent', 'run', 'click', 'collab reducer']);
     });
 
     $("#mapReduce").click(function() {
         runMapReduce();
+        _gaq.push(['_trackEvent', 'run', 'click', 'collab combine']);
     });
 
     // Clear possible whitespace

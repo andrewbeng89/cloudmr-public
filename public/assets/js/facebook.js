@@ -26,7 +26,10 @@ window.fbAsyncInit = function() {
 				console.log('userid: ' + userid);
 				//server.emit('connect', username);
 				server.emit('saveuser', access_token);
-				_gaq.push(['_trackEvent', 'user', 'login', 'index']);
+				server.on('newuser', function(message) {
+					_gaq.push(['_trackEvent', 'user', 'login', 'newuser']);
+					console.log('fire new user event');
+				});
 				$(document).trigger('fbInit');
 			});
 			// connected

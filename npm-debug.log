@@ -1,0 +1,273 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\\\node.exe',
+1 verbose cli   'C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'git',
+1 verbose cli   '-g' ]
+2 info using npm@1.2.2
+3 info using node@v0.8.18
+4 verbose node symlink C:\Program Files\nodejs\\node.exe
+5 verbose read json C:\Users\Kenneth\AppData\Roaming\npm\package.json
+6 verbose read json C:\Users\Kenneth\AppData\Roaming\npm\package.json
+7 verbose cache add [ 'git', null ]
+8 verbose cache add name=undefined spec="git" args=["git",null]
+9 verbose parsed url { pathname: 'git', path: 'git', href: 'git' }
+10 silly lockFile 46f1a0bd-git git
+11 verbose lock git C:\Users\Kenneth\AppData\Roaming\npm-cache\46f1a0bd-git.lock
+12 silly lockFile 46f1a0bd-git git
+13 verbose addNamed [ 'git', '' ]
+14 verbose addNamed [ null, '' ]
+15 silly lockFile c6f8daad-git git@
+16 verbose lock git@ C:\Users\Kenneth\AppData\Roaming\npm-cache\c6f8daad-git.lock
+17 silly addNameRange { name: 'git', range: '', hasData: false }
+18 verbose url raw git
+19 verbose url resolving [ 'https://registry.npmjs.org/', './git' ]
+20 verbose url resolved https://registry.npmjs.org/git
+21 info trying registry request attempt 1 at 12:01:46
+22 http GET https://registry.npmjs.org/git
+23 http 200 https://registry.npmjs.org/git
+24 silly registry.get cb [ 200,
+24 silly registry.get   { vary: 'Accept',
+24 silly registry.get     server: 'CouchDB/1.2.1 (Erlang OTP/R15B03)',
+24 silly registry.get     etag: '"D28XXWTM6QLX5JHVG0O65GWRY"',
+24 silly registry.get     date: 'Mon, 08 Apr 2013 04:01:47 GMT',
+24 silly registry.get     'content-type': 'application/json',
+24 silly registry.get     'content-length': '4951' } ]
+25 silly addNameRange number 2 { name: 'git', range: '', hasData: true }
+26 silly addNameRange versions [ 'git', [ '0.1.0', '0.1.1', '0.1.2', '0.1.3' ] ]
+27 verbose addNamed [ 'git', '0.1.3' ]
+28 verbose addNamed [ '0.1.3', '0.1.3' ]
+29 silly lockFile 6a15d255-git-0-1-3 git@0.1.3
+30 verbose lock git@0.1.3 C:\Users\Kenneth\AppData\Roaming\npm-cache\6a15d255-git-0-1-3.lock
+31 silly lockFile 42c16550-stry-npmjs-org-git-git-0-1-3-tgz https://registry.npmjs.org/git/-/git-0.1.3.tgz
+32 verbose lock https://registry.npmjs.org/git/-/git-0.1.3.tgz C:\Users\Kenneth\AppData\Roaming\npm-cache\42c16550-stry-npmjs-org-git-git-0-1-3-tgz.lock
+33 verbose addRemoteTarball [ 'https://registry.npmjs.org/git/-/git-0.1.3.tgz',
+33 verbose addRemoteTarball   'fc63766b25a5f40a4affa22099e6a4054960ec55' ]
+34 info retry fetch attempt 1 at 12:01:49
+35 verbose fetch to= C:\Users\Kenneth\AppData\Local\Temp\npm-3596\1365393709322-0.0033028332982212305\tmp.tgz
+36 http GET https://registry.npmjs.org/git/-/git-0.1.3.tgz
+37 http 200 https://registry.npmjs.org/git/-/git-0.1.3.tgz
+38 silly shasum updated bytes 40960
+39 silly shasum updated bytes 40960
+40 silly shasum updated bytes 2561
+41 info shasum fc63766b25a5f40a4affa22099e6a4054960ec55
+41 info shasum C:\Users\Kenneth\AppData\Local\Temp\npm-3596\1365393709322-0.0033028332982212305\tmp.tgz
+42 verbose tar unpack C:\Users\Kenneth\AppData\Local\Temp\npm-3596\1365393709322-0.0033028332982212305\tmp.tgz
+43 silly lockFile 0b55e5a5-22-0-0033028332982212305-package C:\Users\Kenneth\AppData\Local\Temp\npm-3596\1365393709322-0.0033028332982212305\package
+44 verbose lock C:\Users\Kenneth\AppData\Local\Temp\npm-3596\1365393709322-0.0033028332982212305\package C:\Users\Kenneth\AppData\Roaming\npm-cache\0b55e5a5-22-0-0033028332982212305-package.lock
+45 silly gunzTarPerm modes [ '755', '644' ]
+46 silly gunzTarPerm extractEntry .gitignore
+47 silly gunzTarPerm extractEntry .npmignore
+48 silly gunzTarPerm extractEntry makefile
+49 silly gunzTarPerm extractEntry package.json
+50 silly gunzTarPerm extractEntry README.rdoc
+51 silly gunzTarPerm extractEntry benchmarks/benchmark.js
+52 silly gunzTarPerm extractEntry lib/diff/block.js
+53 silly gunzTarPerm extractEntry lib/diff/callbacks.js
+54 silly gunzTarPerm extractEntry lib/diff/change.js
+55 silly gunzTarPerm extractEntry lib/diff/diff.js
+56 silly gunzTarPerm extractEntry lib/diff/hunk.js
+57 silly gunzTarPerm extractEntry lib/sprintf/sprintf.js
+58 silly gunzTarPerm extractEntry lib/zlib/zlib.js
+59 silly gunzTarPerm extractEntry lib/git/actor.js
+60 silly gunzTarPerm extractEntry lib/git/binary_parser.js
+61 silly gunzTarPerm extractEntry lib/git/blame.js
+62 silly gunzTarPerm extractEntry lib/git/blame_line.js
+63 silly gunzTarPerm extractEntry lib/git/blob.js
+64 silly gunzTarPerm extractEntry lib/git/commit.js
+65 silly gunzTarPerm extractEntry lib/git/commit_stats.js
+66 silly gunzTarPerm extractEntry lib/git/config.js
+67 silly gunzTarPerm extractEntry lib/git/diff.js
+68 silly gunzTarPerm extractEntry lib/git/file_index.js
+69 silly gunzTarPerm extractEntry lib/git/file_window.js
+70 silly gunzTarPerm extractEntry lib/git/git.js
+71 silly gunzTarPerm extractEntry lib/git/git_file_operations.js
+72 silly gunzTarPerm extractEntry lib/git/git_index.js
+73 silly gunzTarPerm extractEntry lib/git/git_object.js
+74 silly gunzTarPerm extractEntry lib/git/head.js
+75 silly gunzTarPerm extractEntry lib/git/index.js
+76 silly gunzTarPerm extractEntry lib/git/loose_storage.js
+77 silly gunzTarPerm extractEntry lib/git/merge.js
+78 silly gunzTarPerm extractEntry lib/git/pack_storage.js
+79 silly gunzTarPerm extractEntry lib/git/raw_object.js
+80 silly gunzTarPerm extractEntry lib/git/ref.js
+81 silly gunzTarPerm extractEntry lib/git/remote.js
+82 silly gunzTarPerm extractEntry lib/git/repo.js
+83 silly gunzTarPerm extractEntry lib/git/repository.js
+84 silly gunzTarPerm extractEntry lib/git/status.js
+85 silly gunzTarPerm extractEntry lib/git/status_file.js
+86 silly gunzTarPerm extractEntry lib/git/sub_module.js
+87 silly gunzTarPerm extractEntry lib/git/tag.js
+88 silly gunzTarPerm extractEntry lib/git/tree.js
+89 silly gunzTarPerm extractEntry lib/git/user_info.js
+90 silly gunzTarPerm extractEntry lib/git/internal/directory_entry.js
+91 silly gunzTarPerm extractEntry lib/git/internal/git_blob.js
+92 silly gunzTarPerm extractEntry lib/git/internal/git_commit.js
+93 silly gunzTarPerm extractEntry lib/git/internal/git_tag.js
+94 silly gunzTarPerm extractEntry lib/git/internal/git_tree.js
+95 silly gunzTarPerm extractEntry lib/git/mime/mime_types.js
+96 verbose read json C:\Users\Kenneth\AppData\Local\Temp\npm-3596\1365393709322-0.0033028332982212305\package\package.json
+97 silly lockFile 0b55e5a5-22-0-0033028332982212305-package C:\Users\Kenneth\AppData\Local\Temp\npm-3596\1365393709322-0.0033028332982212305\package
+98 verbose from cache C:\Users\Kenneth\AppData\Local\Temp\npm-3596\1365393709322-0.0033028332982212305\package\package.json
+99 verbose tar pack [ 'C:\\Users\\Kenneth\\AppData\\Roaming\\npm-cache\\git\\0.1.3\\package.tgz',
+99 verbose tar pack   'C:\\Users\\Kenneth\\AppData\\Local\\Temp\\npm-3596\\1365393709322-0.0033028332982212305\\package' ]
+100 verbose tarball C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package.tgz
+101 verbose folder C:\Users\Kenneth\AppData\Local\Temp\npm-3596\1365393709322-0.0033028332982212305\package
+102 silly lockFile c45498d5--npm-cache-git-0-1-3-package-tgz C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package.tgz
+103 verbose lock C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package.tgz C:\Users\Kenneth\AppData\Roaming\npm-cache\c45498d5--npm-cache-git-0-1-3-package-tgz.lock
+104 silly lockFile c45498d5--npm-cache-git-0-1-3-package-tgz C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package.tgz
+105 silly lockFile 18af8fdc-ming-npm-cache-git-0-1-3-package C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package
+106 verbose lock C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package C:\Users\Kenneth\AppData\Roaming\npm-cache\18af8fdc-ming-npm-cache-git-0-1-3-package.lock
+107 silly lockFile 18af8fdc-ming-npm-cache-git-0-1-3-package C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package
+108 verbose tar unpack C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package.tgz
+109 silly lockFile 18af8fdc-ming-npm-cache-git-0-1-3-package C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package
+110 verbose lock C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package C:\Users\Kenneth\AppData\Roaming\npm-cache\18af8fdc-ming-npm-cache-git-0-1-3-package.lock
+111 silly gunzTarPerm modes [ '755', '644' ]
+112 silly gunzTarPerm extractEntry package.json
+113 silly gunzTarPerm modified mode [ 'package.json', 438, 420 ]
+114 silly gunzTarPerm extractEntry .npmignore
+115 silly gunzTarPerm modified mode [ '.npmignore', 438, 420 ]
+116 silly gunzTarPerm extractEntry benchmarks/benchmark.js
+117 silly gunzTarPerm modified mode [ 'benchmarks/benchmark.js', 438, 420 ]
+118 silly gunzTarPerm extractEntry lib/diff/block.js
+119 silly gunzTarPerm modified mode [ 'lib/diff/block.js', 438, 420 ]
+120 silly gunzTarPerm extractEntry lib/diff/callbacks.js
+121 silly gunzTarPerm modified mode [ 'lib/diff/callbacks.js', 438, 420 ]
+122 silly gunzTarPerm extractEntry lib/diff/change.js
+123 silly gunzTarPerm modified mode [ 'lib/diff/change.js', 438, 420 ]
+124 silly gunzTarPerm extractEntry lib/diff/diff.js
+125 silly gunzTarPerm modified mode [ 'lib/diff/diff.js', 438, 420 ]
+126 silly gunzTarPerm extractEntry lib/diff/hunk.js
+127 silly gunzTarPerm modified mode [ 'lib/diff/hunk.js', 438, 420 ]
+128 silly gunzTarPerm extractEntry lib/git/actor.js
+129 silly gunzTarPerm modified mode [ 'lib/git/actor.js', 438, 420 ]
+130 silly gunzTarPerm extractEntry lib/git/git_file_operations.js
+131 silly gunzTarPerm modified mode [ 'lib/git/git_file_operations.js', 438, 420 ]
+132 silly gunzTarPerm extractEntry lib/git/git_index.js
+133 silly gunzTarPerm modified mode [ 'lib/git/git_index.js', 438, 420 ]
+134 silly gunzTarPerm extractEntry lib/git/git_object.js
+135 silly gunzTarPerm modified mode [ 'lib/git/git_object.js', 438, 420 ]
+136 silly gunzTarPerm extractEntry lib/git/git.js
+137 silly gunzTarPerm modified mode [ 'lib/git/git.js', 438, 420 ]
+138 silly gunzTarPerm extractEntry lib/git/binary_parser.js
+139 silly gunzTarPerm modified mode [ 'lib/git/binary_parser.js', 438, 420 ]
+140 silly gunzTarPerm extractEntry lib/git/tree.js
+141 silly gunzTarPerm modified mode [ 'lib/git/tree.js', 438, 420 ]
+142 silly gunzTarPerm extractEntry lib/git/loose_storage.js
+143 silly gunzTarPerm modified mode [ 'lib/git/loose_storage.js', 438, 420 ]
+144 silly gunzTarPerm extractEntry lib/git/merge.js
+145 silly gunzTarPerm modified mode [ 'lib/git/merge.js', 438, 420 ]
+146 silly gunzTarPerm extractEntry lib/git/tag.js
+147 silly gunzTarPerm modified mode [ 'lib/git/tag.js', 438, 420 ]
+148 silly gunzTarPerm extractEntry lib/git/file_window.js
+149 silly gunzTarPerm modified mode [ 'lib/git/file_window.js', 438, 420 ]
+150 silly gunzTarPerm extractEntry lib/git/pack_storage.js
+151 silly gunzTarPerm modified mode [ 'lib/git/pack_storage.js', 438, 420 ]
+152 silly gunzTarPerm extractEntry lib/git/file_index.js
+153 silly gunzTarPerm modified mode [ 'lib/git/file_index.js', 438, 420 ]
+154 silly gunzTarPerm extractEntry lib/git/raw_object.js
+155 silly gunzTarPerm modified mode [ 'lib/git/raw_object.js', 438, 420 ]
+156 silly gunzTarPerm extractEntry lib/git/diff.js
+157 silly gunzTarPerm modified mode [ 'lib/git/diff.js', 438, 420 ]
+158 silly gunzTarPerm extractEntry lib/git/ref.js
+159 silly gunzTarPerm modified mode [ 'lib/git/ref.js', 438, 420 ]
+160 silly gunzTarPerm extractEntry lib/git/config.js
+161 silly gunzTarPerm modified mode [ 'lib/git/config.js', 438, 420 ]
+162 silly gunzTarPerm extractEntry lib/git/remote.js
+163 silly gunzTarPerm modified mode [ 'lib/git/remote.js', 438, 420 ]
+164 silly gunzTarPerm extractEntry lib/git/commit_stats.js
+165 silly gunzTarPerm modified mode [ 'lib/git/commit_stats.js', 438, 420 ]
+166 silly gunzTarPerm extractEntry lib/git/repo.js
+167 silly gunzTarPerm modified mode [ 'lib/git/repo.js', 438, 420 ]
+168 silly gunzTarPerm extractEntry lib/git/commit.js
+169 silly gunzTarPerm modified mode [ 'lib/git/commit.js', 438, 420 ]
+170 silly gunzTarPerm extractEntry lib/git/repository.js
+171 silly gunzTarPerm modified mode [ 'lib/git/repository.js', 438, 420 ]
+172 silly gunzTarPerm extractEntry lib/git/blob.js
+173 silly gunzTarPerm modified mode [ 'lib/git/blob.js', 438, 420 ]
+174 silly gunzTarPerm extractEntry lib/git/status.js
+175 silly gunzTarPerm modified mode [ 'lib/git/status.js', 438, 420 ]
+176 silly gunzTarPerm extractEntry lib/git/blame_line.js
+177 silly gunzTarPerm modified mode [ 'lib/git/blame_line.js', 438, 420 ]
+178 silly gunzTarPerm extractEntry lib/git/status_file.js
+179 silly gunzTarPerm modified mode [ 'lib/git/status_file.js', 438, 420 ]
+180 silly gunzTarPerm extractEntry lib/git/blame.js
+181 silly gunzTarPerm modified mode [ 'lib/git/blame.js', 438, 420 ]
+182 silly gunzTarPerm extractEntry lib/git/sub_module.js
+183 silly gunzTarPerm modified mode [ 'lib/git/sub_module.js', 438, 420 ]
+184 silly gunzTarPerm extractEntry lib/git/head.js
+185 silly gunzTarPerm modified mode [ 'lib/git/head.js', 438, 420 ]
+186 silly gunzTarPerm extractEntry lib/git/user_info.js
+187 silly gunzTarPerm modified mode [ 'lib/git/user_info.js', 438, 420 ]
+188 silly gunzTarPerm extractEntry lib/git/index.js
+189 silly gunzTarPerm modified mode [ 'lib/git/index.js', 438, 420 ]
+190 silly gunzTarPerm extractEntry lib/git/mime/mime_types.js
+191 silly gunzTarPerm modified mode [ 'lib/git/mime/mime_types.js', 438, 420 ]
+192 silly gunzTarPerm extractEntry lib/git/internal/directory_entry.js
+193 silly gunzTarPerm modified mode [ 'lib/git/internal/directory_entry.js', 438, 420 ]
+194 silly gunzTarPerm extractEntry lib/git/internal/git_blob.js
+195 silly gunzTarPerm modified mode [ 'lib/git/internal/git_blob.js', 438, 420 ]
+196 silly gunzTarPerm extractEntry lib/git/internal/git_commit.js
+197 silly gunzTarPerm modified mode [ 'lib/git/internal/git_commit.js', 438, 420 ]
+198 silly gunzTarPerm extractEntry lib/git/internal/git_tag.js
+199 silly gunzTarPerm modified mode [ 'lib/git/internal/git_tag.js', 438, 420 ]
+200 silly gunzTarPerm extractEntry lib/git/internal/git_tree.js
+201 silly gunzTarPerm modified mode [ 'lib/git/internal/git_tree.js', 438, 420 ]
+202 silly gunzTarPerm extractEntry lib/sprintf/sprintf.js
+203 silly gunzTarPerm modified mode [ 'lib/sprintf/sprintf.js', 438, 420 ]
+204 silly gunzTarPerm extractEntry lib/zlib/zlib.js
+205 silly gunzTarPerm modified mode [ 'lib/zlib/zlib.js', 438, 420 ]
+206 silly gunzTarPerm extractEntry makefile
+207 silly gunzTarPerm modified mode [ 'makefile', 438, 420 ]
+208 silly gunzTarPerm extractEntry README.rdoc
+209 silly gunzTarPerm modified mode [ 'README.rdoc', 438, 420 ]
+210 verbose read json C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package\package.json
+211 silly lockFile 18af8fdc-ming-npm-cache-git-0-1-3-package C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package
+212 silly shasum updated bytes 40960
+213 silly shasum updated bytes 40960
+214 silly shasum updated bytes 3610
+215 info shasum cbf49c9fe01ecb5964ffaf394fc0bfb72f774728
+215 info shasum C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package.tgz
+216 verbose from cache C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package\package.json
+217 verbose chmod C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package.tgz 644
+218 silly chown skipping for windows C:\Users\Kenneth\AppData\Roaming\npm-cache\git\0.1.3\package.tgz
+219 silly lockFile 42c16550-stry-npmjs-org-git-git-0-1-3-tgz https://registry.npmjs.org/git/-/git-0.1.3.tgz
+220 silly lockFile 6a15d255-git-0-1-3 git@0.1.3
+221 silly lockFile c6f8daad-git git@
+222 silly resolved [ { name: 'git',
+222 silly resolved     description: 'A node.js library for git',
+222 silly resolved     version: '0.1.3',
+222 silly resolved     author: { name: 'Christian Amor Kvalheim', email: 'christkv@gmail.com' },
+222 silly resolved     contributors: [],
+222 silly resolved     repository: { type: 'git', url: 'git@github.com:christkv/node-git.git' },
+222 silly resolved     bugs:
+222 silly resolved      { mail: 'node-git@googlegroups.com',
+222 silly resolved        url: 'http://groups.google.com/group/nodegit' },
+222 silly resolved     os: [ 'linux', 'darwin', 'freebsd' ],
+222 silly resolved     main: './lib/git/index',
+222 silly resolved     directories: { lib: './lib/git' },
+222 silly resolved     engines: { node: '>=0.4.0' },
+222 silly resolved     dependencies: { compress: '>=0.1.6' },
+222 silly resolved     devDependencies: { nodeunit: '>=0.5.1' },
+222 silly resolved     licenses: [ [Object] ],
+222 silly resolved     readme: '= Introduction\n\nThis is a library for Git written in Node.js. It\'s as close a port of grit http://github.com/mojombo/grit.\n\nThe idea is to allow for manipulation of git repositories by the node.js application. Not everything is\nimplemented directly in node-git. Some of the stuff is using the native git command line instead of\ndirect javascript code. Also it\'s fairly synchronous right now but that will hopefully change a little\nby little over time as it gets more stable and I start using it in real life scenarios.\n\n== Github information\n\nThe source code is available at http://github.com/christkv/node-git.\nYou can either clone the repository or download a tarball of the latest release.\n\nOnce you have the source you can test the driver by running\n\n\t$ make test\n\t\n== Examples\n\nFor simple examples of usage look at the tests included in the repository.\n\n== Notes\n\nThe current version is basic git support, don\'t expect everything to work as you expect it\noff the bat.\n\n== License\n\n\tCopyright 2009 - 2010 Christian Amor Kvalheim.\n\n\t  Licensed under the Apache License, Version 2.0 (the "License");\n\t  you may not use this file except in compliance with the License.\n\t  You may obtain a copy of the License at\n\n\t      http://www.apache.org/licenses/LICENSE-2.0\n\n\t  Unless required by applicable law or agreed to in writing, software\n\t  distributed under the License is distributed on an "AS IS" BASIS,\n\t  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n\t  See the License for the specific language governing permissions and\n\t  limitations under the License.',
+222 silly resolved     readmeFilename: 'README.rdoc',
+222 silly resolved     _id: 'git@0.1.3',
+222 silly resolved     dist: { shasum: 'cbf49c9fe01ecb5964ffaf394fc0bfb72f774728' },
+222 silly resolved     _from: 'git@',
+222 silly resolved     _resolved: 'https://registry.npmjs.org/git/-/git-0.1.3.tgz' } ]
+223 info install git@0.1.3 into C:\Users\Kenneth\AppData\Roaming\npm
+224 info installOne git@0.1.3
+225 error notsup Unsupported
+225 error notsup Not compatible with your operating system or architecture: git@0.1.3
+225 error notsup Valid OS:    linux,darwin,freebsd
+225 error notsup Valid Arch:  any
+225 error notsup Actual OS:   win32
+225 error notsup Actual Arch: x64
+226 error System Windows_NT 6.1.7601
+227 error command "C:\\Program Files\\nodejs\\\\node.exe" "C:\\Program Files\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "git" "-g"
+228 error cwd C:\Users\Kenneth\My Documents\GitHub\MReduce
+229 error node -v v0.8.18
+230 error npm -v 1.2.2
+231 error code EBADPLATFORM
+232 verbose exit [ 1, true ]

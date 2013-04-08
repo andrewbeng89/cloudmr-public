@@ -1,13 +1,6 @@
 var username;
 var userid;
 
-// socket.io server
-var server = io.connect('/');
-server.on('newuser', function(message) {
-	_gaq.push(['_trackEvent', 'user', 'login', 'newuser']);
-	console.log('fire new user event');
-});
-
 // https://developers.facebook.com/docs/howtos/login/getting-started/
 window.fbAsyncInit = function() {
 	FB.init({
@@ -21,6 +14,8 @@ window.fbAsyncInit = function() {
 	// Additional init code here
 	FB.getLoginStatus(function(response) {
 		if (response.status === 'connected') {
+			// socket.io server
+			var server = io.connect('/');
 			console.log("You are signed into FB");
 			var access_token = FB.getAuthResponse()['accessToken'];
 			console.log('Access Token = ' + access_token);
@@ -74,4 +69,6 @@ function testAPI() {
 	FB.api('/me', function(response) {
 		console.log('Good to see you, ' + response.name + '.');
 	});
+	_gaq.push(['_trackEvent', 'user', 'login', 'index']);
+	console.log('fire new user event');
 }

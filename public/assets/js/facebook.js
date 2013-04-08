@@ -58,6 +58,19 @@ function login() {
 		if (response.authResponse) {
 			// connected
 			testAPI();
+			var server = io.connect('/');
+			console.log("You are signed into FB");
+			var access_token = FB.getAuthResponse()['accessToken'];
+			console.log('Access Token = ' + access_token);
+			FB.api('/me', function(response) {
+				username = response.name;
+				userid = response.id;
+				console.log('username: ' + username);
+				console.log('userid: ' + userid);
+				//server.emit('connect', username);
+				server.emit('saveuser', access_token);
+				$(document).trigger('fbInit');
+			});
 		} else {
 			// cancelled
 		}

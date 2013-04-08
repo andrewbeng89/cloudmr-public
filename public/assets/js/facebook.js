@@ -69,6 +69,6 @@ function testAPI() {
 	FB.api('/me', function(response) {
 		console.log('Good to see you, ' + response.name + '.');
 	});
-	_gaq.push(['_trackEvent', 'user', 'login', 'new user', 1]);
+	_gaq.push(['_trackEvent', 'user', 'login', 'new user']);
 	console.log('fire new user event');
 }

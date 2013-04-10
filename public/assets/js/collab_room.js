@@ -186,7 +186,7 @@ $(document).ready(function() {
             takeSide();
 
             if (roomCount == 2) {
-                // alert("yo");
+               
                 room.roomCount = roomCount;
                 room.pos = pos;
                 server.emit('closeRoom', room);
@@ -195,7 +195,7 @@ $(document).ready(function() {
                 takeSide();
                 realtime();
                 whichRun();
-                
+                alert("A player has entered");
             }
         });
     }

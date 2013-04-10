@@ -27,7 +27,9 @@ window.fbAsyncInit = function() {
 				//server.emit('connect', username);
 				server.emit('saveuser', access_token);
 				$(document).trigger('fbInit');
+
 			});
+			updateLoginButton(username);
 			// connected
 		} else if (response.status === 'not_authorized') {
 			// not_authorized
@@ -71,6 +73,7 @@ function login() {
 				server.emit('saveuser', access_token);
 				$(document).trigger('fbInit');
 			});
+			updateLoginButton(username);
 		} else {
 			// cancelled
 		}
@@ -84,4 +87,8 @@ function testAPI() {
 	});
 	_gaq.push(['_trackEvent', 'user', 'login', 'new user']);
 	console.log('fire new user event');
+}
+
+function updateLoginButton(name){
+	$('#fbsignin').text(name);
 }

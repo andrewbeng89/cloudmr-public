@@ -2,6 +2,7 @@ body {
     padding-top: 70px;
     padding-bottom: 40px;
     overflow-x: hidden;
+
 }
 
 .sidebar-nav {
@@ -66,4 +67,16 @@ body {
 
 #questionAccordian{
     margin-top: -30px;
+}
+
+.imgThree{
+/*    margin-top: -5px;
+    margin-left: -6px;*/
+    height: 200px;
+    width: 300px;
+}
+
+.background-settings{
+    font-size: 1em;
+
 }

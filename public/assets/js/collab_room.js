@@ -173,9 +173,22 @@ $(document).ready(function() {
                 fullLang = 'python';
             }
             console.log(top.location.href.substring(0, top.location.href.indexOf('?')) + "?room="+roomId+"&lang="+fullLang+"&pos="+pos+"&id=" + nextq);
-            $('#nextQuestion').attr("href", top.location.href.substring(0, top.location.href.indexOf('?')) + "?room="+roomId+"&lang="+fullLang+"&pos="+pos+"&id=" + nextq);
-            $('#nextQuestion').show('');
+            var url = totalQuestionsEndpoint;
+            var param = "type=collab&callback=?";
+            $.getJSON(url, param, function(data) {
+                
+                if(data.number >= nextq){
+
+                    $('#nextQuestion').attr("href", top.location.href.substring(0, top.location.href.indexOf('?')) + "?room="+roomId+"&lang="+fullLang+"&pos="+pos+"&id=" + nextq);
+                    
+                }else{
+                    $('#nextQuestion').removeAttr("href").attr("disabled","disabled").text("No more challenges!");
+                   
+                }
+                $('#nextQuestion').show('');
+             });   
         });
+    
 
     }
 

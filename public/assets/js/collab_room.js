@@ -402,6 +402,20 @@ $(document).ready(function() {
         }
     }
 
+    function enableAll(){
+                $('#runMapper').removeAttr()("disabled");
+        $('#runReducer').removeAttr()("disabled");
+        editorMapper.setReadOnly(false);
+        editorReducer.setReadOnly(false);
+    }
+
+    function disableAll(){
+        $('#runMapper').attr("disabled","disabled");
+        $('#runReducer').attr("disabled","disabled");
+        editorMapper.setReadOnly(true);
+        editorReducer.setReadOnly(true);
+    }
+
     // ----------------------------- Utility -----------------------------
 
     function GetURLParameter(sParam) {
@@ -446,3 +460,5 @@ $(document).keydown(function(e) {
         }
     }
 });
+
+

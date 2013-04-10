@@ -110,8 +110,8 @@ $(document).ready(function() {
             console.log(JSON.stringify(data));
             if (questionId >= data.number) {
                 $('#nextClass').attr("disabled", "disabled");
+                $('#nextClass').removeAttr("href");
             }
-
             for (var i = 1; i <= data.number; i++) {
                 addEpisodes(i);
             }

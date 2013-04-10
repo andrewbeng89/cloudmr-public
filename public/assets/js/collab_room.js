@@ -323,6 +323,7 @@ $(document).ready(function() {
             } else {
                 if (error != null) {
                     alert(error);
+                    hideProgress();
                 }
             }
 

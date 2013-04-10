@@ -34,6 +34,7 @@ $(document).ready(function() {
     realtime();
     loadQuestions();
     whichRun();
+    disableAll();
 
     function setupEditor() {
 
@@ -194,6 +195,7 @@ $(document).ready(function() {
                 takeSide();
                 realtime();
                 whichRun();
+                
             }
         });
     }
@@ -204,9 +206,11 @@ $(document).ready(function() {
             if (position === 'reducer') {
                 editorMapper.setReadOnly(true);
                 editorReducer.setReadOnly(false);
+                enableReducer();
             } else if (position === 'mapper') {
                 editorMapper.setReadOnly(false);
                 editorReducer.setReadOnly(true);
+                enableMapper();
             }
         });
     }
@@ -402,16 +406,23 @@ $(document).ready(function() {
         }
     }
 
-    function enableAll(){
-                $('#runMapper').removeAttr()("disabled");
-        $('#runReducer').removeAttr()("disabled");
-        editorMapper.setReadOnly(false);
-        editorReducer.setReadOnly(false);
+    function enableReducer(){
+        $('#runReducer').removeAttr("disabled");
+        $('#resetReducer').removeAttr("disabled");
+        $('#mapReduce').removeAttr("disabled");
+    }
+    function enableMapper(){
+        $('#runMapper').removeAttr("disabled");
+        $('#resetMapper').removeAttr("disabled");
+        $('#mapReduce').removeAttr("disabled");
     }
 
     function disableAll(){
         $('#runMapper').attr("disabled","disabled");
         $('#runReducer').attr("disabled","disabled");
+        $('#resetMapper').attr("disabled","disabled");
+        $('#resetReducer').attr("disabled","disabled");
+        $('#mapReduce').attr("disabled","disabled");
         editorMapper.setReadOnly(true);
         editorReducer.setReadOnly(true);
     }

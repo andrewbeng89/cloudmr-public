@@ -186,7 +186,7 @@ $(document).ready(function() {
             takeSide();
 
             if (roomCount == 2) {
-                alert("yo");
+                // alert("yo");
                 room.roomCount = roomCount;
                 room.pos = pos;
                 server.emit('closeRoom', room);

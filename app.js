@@ -471,7 +471,7 @@ sessionSockets.on('connection', function(err, socket, session) {
 		}
 		console.log(side);
 		console.log('setSide' + room.roomId + side, room);
-		socket.broadcast.emit('setSide' + room.roomId + side, room);
+		io.sockets.emit('setSide' + room.roomId + side, room);
 	});
 	
 	// Listen to connectroom event from client

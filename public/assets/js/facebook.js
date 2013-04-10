@@ -41,25 +41,7 @@ window.fbAsyncInit = function() {
 
 	});
 
-	function postToFeed() {
 
-        // calling the API ...
-        var obj = {
-          method: 'feed',
-          redirect_uri: 'http://ec2-54-251-120-78.ap-southeast-1.compute.amazonaws.com/web/index.html',
-          link: 'http://ec2-54-251-120-78.ap-southeast-1.compute.amazonaws.com/web/index.html',
-          picture: 'http://ec2-54-251-120-78.ap-southeast-1.compute.amazonaws.com/assets/img/Single%20Player.png',
-          name: 'Cloud MReduce',
-          caption: 'Divide and Conquer',
-          description: "Welcome to the Cloud MReduce, the one-stop learning portal for all things MapReduce! Cloud MReduce provides you an easy-to-understand MapReduce tutorial, and a platform to learn and practice various questions. Once you're familiar with MapReduce concepts, you could also teach MapReduce newbies in our real-time collaboration lobby"
-        };
-
-        function callback(response) {
-          document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
-        }
-
-        FB.ui(obj, callback);
-      }
 };
 
 // Load the SDK Asynchronously

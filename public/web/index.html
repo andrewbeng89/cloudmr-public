@@ -45,7 +45,7 @@
 							<button class="btn" id='fbsignin'>
 								Login
 							</button>
-							<a href="#" class="btn btn-primary" id='fbshare' onclick='postToFeed()'>
+							<a href="#" class="btn btn-primary" id='fbshare' onclick='postToFeed()  return false;'>
 								Share
 							</a>
 						</form>
@@ -202,6 +202,29 @@ var b=document.getElementsByTagName("script")[0];
 a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0015/6344.js?"+Math.floor(new Date().getTime()/3600000);
 a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
 </script>
+    <script> 
+      FB.init({appId: "281966821935203", status: true, cookie: true});
 
+	function postToFeed() {
+
+        // calling the API ...
+        var obj = {
+          method: 'feed',
+          redirect_uri: 'http://ec2-54-251-120-78.ap-southeast-1.compute.amazonaws.com/web/index.html',
+          link: 'http://ec2-54-251-120-78.ap-southeast-1.compute.amazonaws.com/web/index.html',
+          picture: 'http://ec2-54-251-120-78.ap-southeast-1.compute.amazonaws.com/assets/img/Single%20Player.png',
+          name: 'Cloud MReduce',
+          caption: 'Divide and Conquer',
+          description: "Welcome to the Cloud MReduce, the one-stop learning portal for all things MapReduce! Cloud MReduce provides you an easy-to-understand MapReduce tutorial, and a platform to learn and practice various questions. Once you're familiar with MapReduce concepts, you could also teach MapReduce newbies in our real-time collaboration lobby"
+        };
+
+        function callback(response) {
+          document.getElementById('msg').innerHTML = "Post ID: " + response['post_id'];
+        }
+
+        FB.ui(obj, callback);
+      }
+    
+    </script>
 </body>
 </html>

@@ -48,7 +48,7 @@
                                     Login
                                 </button>
                                 <a href="#" class="btn btn-primary" id='fbshare' onclick='postToFeed();  return false;'>
-                                Share
+                                Invite Collaborator
                             </a>
                             </form>
                             <ul class="nav">
@@ -266,14 +266,14 @@ a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}, 1);
 </script>
 <script> 
       FB.init({appId: "281966821935203", status: true, cookie: true});
-
+      var url = window.location.toString()
     function postToFeed() {
 
         // calling the API ...
         var obj = {
           method: 'feed',
           redirect_uri: 'http://ec2-54-251-120-78.ap-southeast-1.compute.amazonaws.com/web/index.html',
-          link: 'http://ec2-54-251-120-78.ap-southeast-1.compute.amazonaws.com/web/index.html',
+          link: url,
           picture: 'http://ec2-54-251-120-78.ap-southeast-1.compute.amazonaws.com/assets/img/Single%20Player.png',
           name: 'Cloud MReduce',
           caption: 'Divide and Conquer',

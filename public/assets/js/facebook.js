@@ -91,5 +91,5 @@ function testAPI() {
 }
 
 function updateLoginButton(){
-	$('#fbsignin').text(username);
+	$('#fbsignin').text(username).attr("disabled","disabled");
 }

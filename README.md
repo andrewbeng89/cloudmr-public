@@ -1,6 +1,8 @@
 Cloud MReduce
 =======
 
+Visit us at [Cloud MReduce](http://ec2-54-251-120-78.ap-southeast-1.compute.amazonaws.com/)
+
 Hey folks,
 
 Well to really honest, Mapreduce has been quite tough on all of us; getting the concepts and actually writing the 

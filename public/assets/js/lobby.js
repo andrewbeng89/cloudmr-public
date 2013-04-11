@@ -9,11 +9,11 @@ $(document).ready(function() {
 		success : function(data, textStatus, jqxhr) {
 			//console.log(data);
 			//data returned
-			console.log(textStatus);
+			// console.log(textStatus);
 			//success
-			console.log(jqxhr.status);
+			// console.log(jqxhr.status);
 			//200
-			console.log('Load was performed.');
+			// console.log('Load was performed.');
 			// Listen to fbInit:
 			// username and userid have already been returned and declared
 			$(document).on('fbInit', function() {
@@ -33,8 +33,8 @@ $(document).ready(function() {
 		var server = io.connect(lobbyendpoint);
 		var username = user_name;
 		var userid = user_id;
-		console.log('username: ' + user_name);
-		console.log('user_id: ' + user_id);
+		// console.log('username: ' + user_name);
+		// console.log('user_id: ' + user_id);
 
 		// ----------------------------- Setup files -----------------------------
 		connect();
@@ -51,20 +51,12 @@ $(document).ready(function() {
 			createRoom();
 		});
 
-		$('#join').click(function() {
-
-		});
-
 		// ----------------------------- Methods -----------------------------
-		function checkRoomStatus() {
-
-		}
-
 		function loadUser() {
 			server.on('connect', function(userList) {
 
 				// repopulate the whole userlist
-				console.log('userlist: ' + JSON.stringify(userList));
+				// console.log('userlist: ' + JSON.stringify(userList));
 
 				$('#onlineUsers tr').not(function() {
 					if ($(this).has('th').length) {
@@ -88,7 +80,7 @@ $(document).ready(function() {
 
 			server.on('loadRoom', function(roomList) {
 				//currently this is only loading of the NEW room and not all rooms.
-				console.log(JSON.stringify(roomList));
+				// console.log(JSON.stringify(roomList));
 				// for loop to loop through the object to add it to ALL rooms
 				$('#lobby tr').not(function() {
 					if ($(this).has('th').length) {
@@ -103,6 +95,7 @@ $(document).ready(function() {
 			});
 		}
 
+		// Create room from values
 		function createRoom() {
 			var form = $('#createroomForm');
 			var lang = $('.control-group input[name=languageoptions]:checked').val();
@@ -119,9 +112,8 @@ $(document).ready(function() {
 
 		}
 
+		// Add add display of rooms
 		function addRoom(room) {
-			// console.log('here');
-
 			var username = room.leader;
 			var pos = room.pos;
 			var lang = room.lang;
@@ -132,21 +124,20 @@ $(document).ready(function() {
 				$('#lobby tr:last').after("<tr id='" + SHA1(username) + "'><td></td><td>" + username + "</td><td>" + lang + "</td><td><a href='collaborate.html?room=" + SHA1(username) + "&lang=" + lang + "&pos=" + pos + "&id=1.1'><button class='btn btn-success' >Join</button></a></td></tr>");
 			}
 		}
-
+		
 		function removeRoom(roomId) {
-			//i think have to transfer this to the point it the second user enters the other room.
 			$('#tr' + roomId).remove();
 		}
 
-		function connect() {
 			// Emit username to server
+		function connect() {
 			server.emit('connect', username);
 		}
 
 		function removeUser() {
 			server.on('disconnect', function() {
 				$('#' + name).remove();
-				console.log('disconnecting ' + username);
+				// console.log('disconnecting ' + username);
 				server.emit('disconnect', username);
 			});
 		}

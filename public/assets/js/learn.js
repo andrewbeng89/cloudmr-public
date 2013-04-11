@@ -17,7 +17,6 @@ $(document).ready(function() {
     noQuestionCheck();
 
     function setupEditor() {
-        // editor.setValue("function test(){ console.log('hello world!')}");
         editor.setTheme("ace/theme/eclipse");
         editor.getSession().setMode("ace/mode/javascript");
         editor.setShowPrintMargin(false);
@@ -71,14 +70,12 @@ $(document).ready(function() {
     // ----------------------------- Methods -----------------------------
 
     // Load the question, the preloaded code, and the appropriate hint
-
     function loadQuestions() {
         
         var url = questionsEndpoint; //this is the url to call
         var param = "callback=?" + "&id=" + questionId; //add the related parameters
-
         $.getJSON(url, param).done(function(data) {
-            console.log(JSON.stringify(data));
+            // console.log(JSON.stringify(data));
             questionId = data.question_id;
             var question = data.question;
             var hint = data.hint;
@@ -91,23 +88,22 @@ $(document).ready(function() {
             reloadCode();
             setupEditor();
             var nextq = questionId + 1;
-            // $('#nextClass').removeAttr('id');
             $('#nextClass').attr("href", top.location.href.substring(0, top.location.href.indexOf('?')) + "?id=" + nextq);
         }).fail(function(jqxhr, textStatus, error) {
             var err = textStatus + ', ' + error;
-            console.log("Request Failed: " + err);
+            // console.log("Request Failed: " + err);
         });
         totalQuestions();
     }
 
     function totalQuestions() {
 
-        var url = totalQuestionsEndpoint; //this is the url to call
+        var url = totalQuestionsEndpoint; 
         var param = "type=solo&callback=?";
 
         showProgress();
         $.getJSON(url, param, function(data) {
-            console.log(JSON.stringify(data));
+            // console.log(JSON.stringify(data));
             if (questionId >= data.number) {
                 $('#nextClass').attr("disabled", "disabled");
                 $('#nextClass').removeAttr("href");
@@ -127,7 +123,7 @@ $(document).ready(function() {
         var param = "callback=?&lang=" + currentLang + "&q_id=" + questionId + "&solution=" + code; //lang, q_id, solution
         showProgress();
         $.getJSON(url, param, function(data) {
-            console.log(JSON.stringify(data));
+            // console.log(JSON.stringify(data));
             var error = data.errors;
             if (error == null) {
                 var call = data.results[0].call; //array
@@ -150,7 +146,6 @@ $(document).ready(function() {
     }
 
     function reloadCode() {
-        console.log('Code reloaded');
         var code = editor.getSession().getValue();
         editor.getSession().setValue(code);
     }
@@ -161,7 +156,6 @@ $(document).ready(function() {
             switch (String.fromCharCode(event.which).toLowerCase()) {
             case 'q':
                 event.preventDefault();
-                // alert('ctrl-q');
                 reloadCode();
                 break;
             }

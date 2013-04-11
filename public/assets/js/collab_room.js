@@ -93,7 +93,15 @@ $(document).ready(function() {
     $('#consoleMapper').text('');
     $('#consoleReducer').text('');
     $('#nextQuestion').hide('');
+     editorMapper.getSession().setValue("");
+     editorReducer.getSession().setValue("");
+    $('#resetMapper').click(function(){
+        editorMapper.getSession().setValue("");
+    });
 
+    $('#resetReducer').click(function(){
+       editorReducer.getSession().setValue("");
+    });
     // ----------------------------- Methods -----------------------------
 
     //Socket coding realtime

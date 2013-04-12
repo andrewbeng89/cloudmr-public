@@ -41,7 +41,7 @@ $(document).ready(function() {
 		loadUser();
 		removeUser();
 		loadRoom();
-		checkRoomStatus();
+		//checkRoomStatus();
 
 		$('#username').text("Hi "+ username+",");
 
